@@ -1,5 +1,5 @@
 {
-  "projectName": "f_afrik_student",
+  "projectName": "postfrontnew",
   "mode": "file-router",
   "typescript": true,
   "tailwind": true,
@@ -10,7 +10,6 @@
   "framework": "react-cra",
   "chosenAddOns": [
     "eslint",
-    "start",
     "shadcn",
     "tanstack-query"
   ]

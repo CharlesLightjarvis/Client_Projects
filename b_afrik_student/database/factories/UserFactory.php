@@ -41,4 +41,16 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+    /**
+     * Assign a random role to newly created users if none set.
+     */
+    public function configure(): static
+    {
+        return $this->afterCreating(function (\App\Models\User $user): void {
+            if ($user->roles()->count() === 0) {
+                $user->assignRole(fake()->randomElement(['admin', 'client', 'professor']));
+            }
+        });
+    }
 }
