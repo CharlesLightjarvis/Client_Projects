@@ -2,64 +2,73 @@
 
 namespace Database\Seeders;
 
+use App\Enums\PermissionEnum;
+use App\Enums\UserRoleEnum;
+use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
+        // 🔁 Nettoyer le cache Spatie
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // Create roles
-        $roles = [
-            ['name' => 'admin', 'guard_name' => 'web'],
-            ['name' => 'client', 'guard_name' => 'web'],
-            ['name' => 'professor', 'guard_name' => 'web'],
-        ];
-
-        foreach ($roles as $role) {
-            Role::firstOrCreate($role);
+        /*
+        |--------------------------------------------------------------------------
+        | 🔹 Création des rôles à partir de l'Enum UserRoleEnum
+        |--------------------------------------------------------------------------
+        */
+        foreach (UserRoleEnum::cases() as $roleEnum) {
+            Role::firstOrCreate([
+                'name' => $roleEnum->value,
+                'guard_name' => 'web',
+            ]);
+            // ❌ Enlevez le deuxième paramètre avec uuid
         }
 
-        // Create permissions
-        $permissions = [
-            ['name' => 'post.create', 'guard_name' => 'web'],
-            ['name' => 'post.read', 'guard_name' => 'web'],
-            ['name' => 'post.update', 'guard_name' => 'web'],
-            ['name' => 'post.delete', 'guard_name' => 'web'],
-            ['name' => 'user.manage', 'guard_name' => 'web'],
-        ];
-
-        foreach ($permissions as $permission) {
-            Permission::firstOrCreate($permission);
+        /*
+        |--------------------------------------------------------------------------
+        | 🔹 Création des permissions à partir de l'Enum PermissionEnum
+        |--------------------------------------------------------------------------
+        */
+        foreach (PermissionEnum::cases() as $permissionEnum) {
+            Permission::firstOrCreate([
+                'name' => $permissionEnum->value,
+                'guard_name' => 'web',
+            ]);
+            // ❌ Enlevez le deuxième paramètre avec uuid
         }
 
-        // Assign permissions to roles
-        $admin = Role::where('name', 'admin')->first();
-        $client = Role::where('name', 'client')->first();
-        $professor = Role::where('name', 'professor')->first();
+        /*
+        |--------------------------------------------------------------------------
+        | 🔹 Attribution des permissions aux rôles
+        |--------------------------------------------------------------------------
+        */
+        $admin = Role::where('name', UserRoleEnum::ADMIN->value)->first();
+        $student = Role::where('name', UserRoleEnum::STUDENT->value)->first();
+        $instructor = Role::where('name', UserRoleEnum::INSTRUCTOR->value)->first();
 
         if ($admin) {
             $admin->syncPermissions([
-                'post.create', 'post.read', 'post.update', 'post.delete', 'user.manage',
+                PermissionEnum::CREATE_USERS->value,
+                PermissionEnum::READ_USERS->value,
+                PermissionEnum::UPDATE_USERS->value,
+                PermissionEnum::DELETE_USERS->value,
             ]);
         }
 
-        if ($professor) {
-            $professor->syncPermissions([
-                'post.create', 'post.read', 'post.update',
+        if ($instructor) {
+            $instructor->syncPermissions([
+                PermissionEnum::READ_USERS->value,
             ]);
         }
 
-        if ($client) {
-            $client->syncPermissions([
-                'post.read','post.create', 'post.update',  'post.delete'
+        if ($student) {
+            $student->syncPermissions([
+                PermissionEnum::READ_USERS->value,
             ]);
         }
     }

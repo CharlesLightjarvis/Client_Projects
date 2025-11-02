@@ -1,0 +1,58 @@
+1. Active
+
+➡️ Signification :
+L’utilisateur est actuellement actif dans le système.
+Il a accès à toutes les fonctionnalités autorisées (connexion, utilisation du compte, etc.).
+
+💡 Exemple :
+
+Un utilisateur qui vient de se connecter normalement.
+
+Un membre ayant un abonnement valide.
+
+2. Inactive
+
+➡️ Signification :
+L’utilisateur n’est pas actif, mais son compte existe toujours.
+Souvent utilisé pour des comptes désactivés temporairement ou par choix de l’utilisateur.
+
+💡 Exemple :
+
+Un utilisateur qui a désactivé son compte sans le supprimer.
+
+Un compte non utilisé depuis longtemps.
+
+3. Suspended
+
+➡️ Signification :
+Le compte est suspendu temporairement, souvent à cause d’un problème : non-respect des règles, activité suspecte, etc.
+
+💡 Exemple :
+
+Un utilisateur bloqué pour non-respect des conditions d’utilisation.
+
+Un compte suspendu par l’administrateur en attente d’examen.
+
+4. Pending
+
+➡️ Signification :
+Le compte est en attente d’activation ou de validation.
+L’utilisateur s’est peut-être inscrit, mais n’a pas encore confirmé son e-mail ou été approuvé par un administrateur.
+
+💡 Exemple :
+
+Un nouveau compte en attente de confirmation par e-mail.
+
+Un compte en attente d’approbation manuelle par l’équipe support.
+
+5. Deleted
+
+➡️ Signification :
+Le compte a été supprimé.
+Selon la logique du système, les données peuvent être définitivement effacées ou simplement marquées comme supprimées (soft delete).
+
+💡 Exemple :
+
+Un utilisateur qui a supprimé son compte.
+
+Un compte supprimé par un administrateur.

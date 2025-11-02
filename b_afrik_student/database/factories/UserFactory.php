@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\UserRoleEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -24,7 +25,8 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'first_name' => fake()->firstName(),
+            'last_name'=> fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
@@ -49,7 +51,7 @@ class UserFactory extends Factory
     {
         return $this->afterCreating(function (\App\Models\User $user): void {
             if ($user->roles()->count() === 0) {
-                $user->assignRole(fake()->randomElement(['admin', 'client', 'professor']));
+                $user->assignRole(fake()->randomElement(UserRoleEnum::cases()));
             }
         });
     }

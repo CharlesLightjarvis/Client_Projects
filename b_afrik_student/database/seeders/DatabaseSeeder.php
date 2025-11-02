@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\UserRoleEnum;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -20,22 +21,25 @@ class DatabaseSeeder extends Seeder
 
         // Create baseline users with fixed emails, roles replaced (not appended)
         $admin = User::factory()->create([
-            'name' => 'Admin User',
+            'first_name' => 'Admin',
+            'last_name'=> 'User',
             'email' => 'admin@example.com',
         ]);
-        $admin->syncRoles('admin');
+        $admin->syncRoles(UserRoleEnum::ADMIN);
 
-        $professor = User::factory()->create([
-            'name' => 'Professor User',
-            'email' => 'professor@example.com',
+        $instructor = User::factory()->create([
+            'first_name' => 'Instructor',
+            'last_name'=> 'User',
+            'email' => 'instructor@example.com',
         ]);
-        $professor->syncRoles('professor');
+        $instructor->syncRoles(UserRoleEnum::INSTRUCTOR);
 
-        $client = User::factory()->create([
-            'name' => 'Client User',
-            'email' => 'client@example.com',
+        $student = User::factory()->create([
+            'first_name' => 'Student',
+            'last_name'=> 'User',
+            'email' => 'student@example.com',
         ]);
-        $client->syncRoles('client');
+        $student->syncRoles(UserRoleEnum::STUDENT);
 
         // Seed posts and other data
         $this->call([

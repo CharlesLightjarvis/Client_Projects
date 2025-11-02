@@ -2,7 +2,7 @@
 
 namespace App\Mcp\Tools;
 
-use App\Http\Services\WeatherService;
+use App\Services\WeatherService;
 use Illuminate\JsonSchema\JsonSchema;
 use Laravel\Mcp\Request;
 use Laravel\Mcp\Response;

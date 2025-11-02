@@ -13,7 +13,7 @@ return [
          * `Spatie\Permission\Contracts\Permission` contract.
          */
 
-        'permission' => Spatie\Permission\Models\Permission::class,
+        'permission' => \App\Models\Permission::class,
 
         /*
          * When using the "HasRoles" trait from this package, we need to know which
@@ -24,7 +24,7 @@ return [
          * `Spatie\Permission\Contracts\Role` contract.
          */
 
-        'role' => Spatie\Permission\Models\Role::class,
+        'role' => \App\Models\Role::class,
 
     ],
 
@@ -75,8 +75,8 @@ return [
         /*
          * Change this if you want to name the related pivots other than defaults
          */
-        'role_pivot_key' => null, // default 'role_id',
-        'permission_pivot_key' => null, // default 'permission_id',
+        'role_pivot_key' => 'role_uuid', // default 'role_id',
+        'permission_pivot_key' => 'permission_uuid', // default 'permission_id',
 
         /*
          * Change this if you want to name the related model primary key other than
@@ -86,7 +86,7 @@ return [
          * that case, name this `model_uuid`.
          */
 
-        'model_morph_key' => 'model_id',
+        'model_morph_key' => 'model_uuid',
 
         /*
          * Change this if you want to use the teams feature and your related model's
