@@ -2,6 +2,7 @@ import { createFileRoute, redirect } from '@tanstack/react-router'
 import { GalleryVerticalEnd } from 'lucide-react'
 import z from 'zod'
 import { LoginForm } from './-components/login-form'
+import loginImage from '@/assets/p_pic.png'
 
 export const Route = createFileRoute('/(auth)/login')({
   component: RouteComponent,
@@ -9,10 +10,10 @@ export const Route = createFileRoute('/(auth)/login')({
     redirect: z.string().optional(),
   }),
   beforeLoad: async ({ context }) => {
-    const { isAuthenticated, isAdmin } = context
+    const { isAuthenticated, isAdmin, isInstructor } = context
     if (isAuthenticated) {
       throw redirect({
-        to: isAdmin ? '/admin' : '/client',
+        to: isAdmin ? '/admin' : isInstructor ? '/instructor' : '/student',
       })
     }
   },
@@ -27,7 +28,7 @@ function RouteComponent() {
             <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
               <GalleryVerticalEnd className="size-4" />
             </div>
-            Acme Inc.
+            Afrik Student
           </a>
         </div>
         <div className="flex flex-1 items-center justify-center">
@@ -38,9 +39,9 @@ function RouteComponent() {
       </div>
       <div className="bg-muted relative hidden lg:block">
         <img
-          src="/placeholder.svg"
-          alt="Image"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          src={loginImage}
+          alt="AfrikStudent Login"
+          className="absolute inset-0 h-full w-full object-cover "
         />
       </div>
     </div>

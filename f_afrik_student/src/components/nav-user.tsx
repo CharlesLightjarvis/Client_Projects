@@ -41,9 +41,12 @@ export function NavUser() {
 
   // Default user data if not available
   const displayUser = {
-    name: user?.name || 'Guest',
+    first_name: user?.first_name || 'Guest',
+    last_name: user?.last_name || '',
     email: user?.email || 'guest@example.com',
     avatar: '',
+    full_name: `${user?.first_name || 'Guest'} ${user?.last_name || ''}`.trim(),
+    initials: `${user?.first_name?.charAt(0) || 'G'}${user?.last_name?.charAt(0) || ''}`.toUpperCase(),
   }
 
   return (
@@ -56,13 +59,18 @@ export function NavUser() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={displayUser.avatar} alt={displayUser.name} />
+                <AvatarImage
+                  src={displayUser.avatar}
+                  alt={displayUser.full_name}
+                />
                 <AvatarFallback className="rounded-lg">
-                  {displayUser.name.substring(0, 2).toUpperCase()}
+                  {displayUser.initials}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{displayUser.name}</span>
+                <span className="truncate font-medium">
+                  {displayUser.full_name}
+                </span>
                 <span className="truncate text-xs">{displayUser.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
@@ -79,15 +87,15 @@ export function NavUser() {
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage
                     src={displayUser.avatar}
-                    alt={displayUser.name}
+                    alt={displayUser.full_name}
                   />
                   <AvatarFallback className="rounded-lg">
-                    {displayUser.name.substring(0, 2).toUpperCase()}
+                    {displayUser.initials}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">
-                    {displayUser.name}
+                    {displayUser.full_name}
                   </span>
                   <span className="truncate text-xs">{displayUser.email}</span>
                 </div>

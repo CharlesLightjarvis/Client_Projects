@@ -13,7 +13,7 @@ export default defineConfig({
     tailwindcss(),
   ],
   server: {
-    host: 'posttest.test',
+    host: 'afrikstudent.test',
     port: 3000,
   },
   resolve: {

@@ -6,14 +6,18 @@
 export const PERMISSIONS = {
   // Post permissions
   POST: {
-    CREATE: 'post.create',
-    READ: 'post.read',
-    UPDATE: 'post.update',
-    DELETE: 'post.delete',
+    CREATE: 'create.posts',
+    READ: 'read.posts',
+    UPDATE: 'update.posts',
+    DELETE: 'delete.posts',
   },
 
   // User permissions
   USER: {
-    MANAGE: 'user.manage',
+    CREATE: 'create.users',
+    READ: 'read.users',
+    UPDATE: 'update.users',
+    DELETE: 'delete.users',
+    MANAGE: 'manage.users',
   },
 } as const

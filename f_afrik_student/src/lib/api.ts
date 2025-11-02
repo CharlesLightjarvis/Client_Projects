@@ -3,7 +3,7 @@ import axios from 'axios'
 import type { AxiosResponse, AxiosError } from 'axios'
 
 const api = axios.create({
-  baseURL: 'http://posttest.test', // LOCAL API URL
+  baseURL: 'http://afrikstudent.test', // LOCAL API URL
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',

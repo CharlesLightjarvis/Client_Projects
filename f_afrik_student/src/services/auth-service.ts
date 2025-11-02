@@ -1,5 +1,6 @@
 import api from '@/lib/api'
-import type { LoginCredentials, LoginResponse, User } from '@/types/user'
+import type { LoginCredentials, LoginResponse, User, UserFromBackend } from '@/types/user'
+import { transformUser } from '@/types/user'
 
 class AuthService {
   /**
@@ -13,19 +14,27 @@ class AuthService {
   /**
    * Login user with email and password
    */
-  async login(credentials: LoginCredentials): Promise<LoginResponse> {
+  async login(credentials: LoginCredentials): Promise<{ two_factor: boolean; user: User }> {
     console.log('🔑 Attempting login for:', credentials.email)
 
     // Get CSRF cookie first
     await this.getCsrfCookie()
 
     const response = await api.post<LoginResponse>('/api/login', credentials)
+
+    // Transform user from backend format to frontend format
+    const transformedUser = transformUser(response.data.user)
+
     console.log('✅ Login successful:', {
-      user: response.data.user.email,
-      role: response.data.user.role,
+      user: transformedUser.email,
+      role: transformedUser.role,
+      roleLabel: transformedUser.roleLabel,
     })
 
-    return response.data
+    return {
+      two_factor: response.data.two_factor,
+      user: transformedUser,
+    }
   }
 
   /**
@@ -41,8 +50,9 @@ class AuthService {
    * Get current authenticated user
    */
   async getCurrentUser(): Promise<User> {
-    const response = await api.get<{ user: User }>('/api/user')
-    return response.data.user
+    const response = await api.get<{ user: UserFromBackend }>('/api/user')
+    // Transform user from backend format to frontend format
+    return transformUser(response.data.user)
   }
 }
 

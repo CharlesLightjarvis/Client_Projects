@@ -45,11 +45,31 @@ export function NavMain({
           const hasActiveChild = item.items?.some((subItem) =>
             matchRoute({ to: subItem.url }),
           )
+          const isActive = matchRoute({ to: item.url })
 
           // Only show parent as active when sidebar is collapsed
           const isCollapsed = state === 'collapsed'
           const showParentActive = isCollapsed && hasActiveChild
 
+          // Si l'item n'a pas de sous-items, afficher un lien direct
+          if (!item.items || item.items.length === 0) {
+            return (
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton
+                  asChild
+                  tooltip={item.title}
+                  isActive={!!isActive}
+                >
+                  <Link to={item.url}>
+                    {item.icon && <item.icon />}
+                    <span>{item.title}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            )
+          }
+
+          // Si l'item a des sous-items, afficher un collapsible
           return (
             <Collapsible
               key={item.title}

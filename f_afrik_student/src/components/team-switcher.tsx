@@ -1,7 +1,13 @@
 'use client'
 
 import * as React from 'react'
-import { ChevronsUpDown, Shield, User } from 'lucide-react'
+import {
+  ChevronsUpDown,
+  Shield,
+  User,
+  GraduationCap,
+  School,
+} from 'lucide-react'
 import { useRouteContext } from '@tanstack/react-router'
 import type { RouterContext } from '@/routes/__root'
 
@@ -41,11 +47,17 @@ export function TeamSwitcher({
         name: 'Administration',
         plan: 'Compte Administrateur',
       }
-    } else if (role === 'client') {
+    } else if (role === 'instructor') {
       return {
-        icon: User,
-        name: 'Espace Client',
-        plan: 'Compte Client',
+        icon: GraduationCap,
+        name: 'Espace Instructeur',
+        plan: 'Compte Instructeur',
+      }
+    } else if (role === 'student') {
+      return {
+        icon: School,
+        name: 'Espace Etudiant',
+        plan: 'Compte Etudiant',
       }
     }
     return {

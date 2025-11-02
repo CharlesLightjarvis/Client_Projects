@@ -39,13 +39,29 @@ export function usePermissions() {
 
   /**
    * Check if user can perform CRUD operations on a resource
+   * Backend format: create.users, read.posts, etc. (action.resource)
    */
   const can = {
-    create: (resource: string) => hasPermission(`${resource}.create`),
-    read: (resource: string) => hasPermission(`${resource}.read`),
-    update: (resource: string) => hasPermission(`${resource}.update`),
-    delete: (resource: string) => hasPermission(`${resource}.delete`),
-    manage: (resource: string) => hasPermission(`${resource}.manage`),
+    create: (resource: string) => {
+      const pluralResource = resource.endsWith('s') ? resource : `${resource}s`
+      return hasPermission(`create.${pluralResource}`)
+    },
+    read: (resource: string) => {
+      const pluralResource = resource.endsWith('s') ? resource : `${resource}s`
+      return hasPermission(`read.${pluralResource}`)
+    },
+    update: (resource: string) => {
+      const pluralResource = resource.endsWith('s') ? resource : `${resource}s`
+      return hasPermission(`update.${pluralResource}`)
+    },
+    delete: (resource: string) => {
+      const pluralResource = resource.endsWith('s') ? resource : `${resource}s`
+      return hasPermission(`delete.${pluralResource}`)
+    },
+    manage: (resource: string) => {
+      const pluralResource = resource.endsWith('s') ? resource : `${resource}s`
+      return hasPermission(`manage.${pluralResource}`)
+    },
   }
 
   return {

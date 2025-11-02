@@ -6,7 +6,8 @@ export function useRouterContextState(): RouterContext {
 
   const role: UserRole = user?.role || null
   const isAdmin = role === 'admin'
-  const isClient = role === 'client'
+  const isInstructor = role === 'instructor'
+  const isStudent = role === 'student'
 
   const logout = async () => {
     console.log('🚪 Router context logout triggered')
@@ -19,7 +20,8 @@ export function useRouterContextState(): RouterContext {
     user,
     logout,
     isAdmin,
-    isClient,
+    isInstructor,
+    isStudent,
     isAuthenticated,
   }
 }

@@ -14,12 +14,14 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as authRegisterRouteImport } from './routes/(auth)/register'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
-import { Route as ProtectedClientRouteRouteImport } from './routes/_protected/client/route'
+import { Route as ProtectedStudentRouteRouteImport } from './routes/_protected/student/route'
+import { Route as ProtectedInstructorRouteRouteImport } from './routes/_protected/instructor/route'
 import { Route as ProtectedAdminRouteRouteImport } from './routes/_protected/admin/route'
-import { Route as ProtectedClientPostsRouteRouteImport } from './routes/_protected/client/posts/route'
+import { Route as ProtectedAdminUsersRouteRouteImport } from './routes/_protected/admin/users/route'
 import { Route as ProtectedAdminPostsRouteRouteImport } from './routes/_protected/admin/posts/route'
 import { Route as ProtectedAdminPaymentsRouteRouteImport } from './routes/_protected/admin/payments/route'
-import { Route as ProtectedClientDashboardIndexRouteImport } from './routes/_protected/client/dashboard/index'
+import { Route as ProtectedStudentDashboardIndexRouteImport } from './routes/_protected/student/dashboard/index'
+import { Route as ProtectedInstructorDashboardIndexRouteImport } from './routes/_protected/instructor/dashboard/index'
 import { Route as ProtectedAdminDashboardIndexRouteImport } from './routes/_protected/admin/dashboard/index'
 
 const ProtectedRouteRoute = ProtectedRouteRouteImport.update({
@@ -46,21 +48,27 @@ const authLoginRoute = authLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProtectedClientRouteRoute = ProtectedClientRouteRouteImport.update({
-  id: '/client',
-  path: '/client',
+const ProtectedStudentRouteRoute = ProtectedStudentRouteRouteImport.update({
+  id: '/student',
+  path: '/student',
   getParentRoute: () => ProtectedRouteRoute,
 } as any)
+const ProtectedInstructorRouteRoute =
+  ProtectedInstructorRouteRouteImport.update({
+    id: '/instructor',
+    path: '/instructor',
+    getParentRoute: () => ProtectedRouteRoute,
+  } as any)
 const ProtectedAdminRouteRoute = ProtectedAdminRouteRouteImport.update({
   id: '/admin',
   path: '/admin',
   getParentRoute: () => ProtectedRouteRoute,
 } as any)
-const ProtectedClientPostsRouteRoute =
-  ProtectedClientPostsRouteRouteImport.update({
-    id: '/posts',
-    path: '/posts',
-    getParentRoute: () => ProtectedClientRouteRoute,
+const ProtectedAdminUsersRouteRoute =
+  ProtectedAdminUsersRouteRouteImport.update({
+    id: '/users',
+    path: '/users',
+    getParentRoute: () => ProtectedAdminRouteRoute,
   } as any)
 const ProtectedAdminPostsRouteRoute =
   ProtectedAdminPostsRouteRouteImport.update({
@@ -74,11 +82,17 @@ const ProtectedAdminPaymentsRouteRoute =
     path: '/payments',
     getParentRoute: () => ProtectedAdminRouteRoute,
   } as any)
-const ProtectedClientDashboardIndexRoute =
-  ProtectedClientDashboardIndexRouteImport.update({
+const ProtectedStudentDashboardIndexRoute =
+  ProtectedStudentDashboardIndexRouteImport.update({
     id: '/dashboard/',
     path: '/dashboard/',
-    getParentRoute: () => ProtectedClientRouteRoute,
+    getParentRoute: () => ProtectedStudentRouteRoute,
+  } as any)
+const ProtectedInstructorDashboardIndexRoute =
+  ProtectedInstructorDashboardIndexRouteImport.update({
+    id: '/dashboard/',
+    path: '/dashboard/',
+    getParentRoute: () => ProtectedInstructorRouteRoute,
   } as any)
 const ProtectedAdminDashboardIndexRoute =
   ProtectedAdminDashboardIndexRouteImport.update({
@@ -90,85 +104,97 @@ const ProtectedAdminDashboardIndexRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof ProtectedAdminRouteRouteWithChildren
-  '/client': typeof ProtectedClientRouteRouteWithChildren
+  '/instructor': typeof ProtectedInstructorRouteRouteWithChildren
+  '/student': typeof ProtectedStudentRouteRouteWithChildren
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/admin/payments': typeof ProtectedAdminPaymentsRouteRoute
   '/admin/posts': typeof ProtectedAdminPostsRouteRoute
-  '/client/posts': typeof ProtectedClientPostsRouteRoute
+  '/admin/users': typeof ProtectedAdminUsersRouteRoute
   '/admin/dashboard': typeof ProtectedAdminDashboardIndexRoute
-  '/client/dashboard': typeof ProtectedClientDashboardIndexRoute
+  '/instructor/dashboard': typeof ProtectedInstructorDashboardIndexRoute
+  '/student/dashboard': typeof ProtectedStudentDashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof ProtectedAdminRouteRouteWithChildren
-  '/client': typeof ProtectedClientRouteRouteWithChildren
+  '/instructor': typeof ProtectedInstructorRouteRouteWithChildren
+  '/student': typeof ProtectedStudentRouteRouteWithChildren
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/admin/payments': typeof ProtectedAdminPaymentsRouteRoute
   '/admin/posts': typeof ProtectedAdminPostsRouteRoute
-  '/client/posts': typeof ProtectedClientPostsRouteRoute
+  '/admin/users': typeof ProtectedAdminUsersRouteRoute
   '/admin/dashboard': typeof ProtectedAdminDashboardIndexRoute
-  '/client/dashboard': typeof ProtectedClientDashboardIndexRoute
+  '/instructor/dashboard': typeof ProtectedInstructorDashboardIndexRoute
+  '/student/dashboard': typeof ProtectedStudentDashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_protected': typeof ProtectedRouteRouteWithChildren
   '/_protected/admin': typeof ProtectedAdminRouteRouteWithChildren
-  '/_protected/client': typeof ProtectedClientRouteRouteWithChildren
+  '/_protected/instructor': typeof ProtectedInstructorRouteRouteWithChildren
+  '/_protected/student': typeof ProtectedStudentRouteRouteWithChildren
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/register': typeof authRegisterRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/_protected/admin/payments': typeof ProtectedAdminPaymentsRouteRoute
   '/_protected/admin/posts': typeof ProtectedAdminPostsRouteRoute
-  '/_protected/client/posts': typeof ProtectedClientPostsRouteRoute
+  '/_protected/admin/users': typeof ProtectedAdminUsersRouteRoute
   '/_protected/admin/dashboard/': typeof ProtectedAdminDashboardIndexRoute
-  '/_protected/client/dashboard/': typeof ProtectedClientDashboardIndexRoute
+  '/_protected/instructor/dashboard/': typeof ProtectedInstructorDashboardIndexRoute
+  '/_protected/student/dashboard/': typeof ProtectedStudentDashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/admin'
-    | '/client'
+    | '/instructor'
+    | '/student'
     | '/login'
     | '/register'
     | '/demo/tanstack-query'
     | '/admin/payments'
     | '/admin/posts'
-    | '/client/posts'
+    | '/admin/users'
     | '/admin/dashboard'
-    | '/client/dashboard'
+    | '/instructor/dashboard'
+    | '/student/dashboard'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/admin'
-    | '/client'
+    | '/instructor'
+    | '/student'
     | '/login'
     | '/register'
     | '/demo/tanstack-query'
     | '/admin/payments'
     | '/admin/posts'
-    | '/client/posts'
+    | '/admin/users'
     | '/admin/dashboard'
-    | '/client/dashboard'
+    | '/instructor/dashboard'
+    | '/student/dashboard'
   id:
     | '__root__'
     | '/'
     | '/_protected'
     | '/_protected/admin'
-    | '/_protected/client'
+    | '/_protected/instructor'
+    | '/_protected/student'
     | '/(auth)/login'
     | '/(auth)/register'
     | '/demo/tanstack-query'
     | '/_protected/admin/payments'
     | '/_protected/admin/posts'
-    | '/_protected/client/posts'
+    | '/_protected/admin/users'
     | '/_protected/admin/dashboard/'
-    | '/_protected/client/dashboard/'
+    | '/_protected/instructor/dashboard/'
+    | '/_protected/student/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -216,11 +242,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_protected/client': {
-      id: '/_protected/client'
-      path: '/client'
-      fullPath: '/client'
-      preLoaderRoute: typeof ProtectedClientRouteRouteImport
+    '/_protected/student': {
+      id: '/_protected/student'
+      path: '/student'
+      fullPath: '/student'
+      preLoaderRoute: typeof ProtectedStudentRouteRouteImport
+      parentRoute: typeof ProtectedRouteRoute
+    }
+    '/_protected/instructor': {
+      id: '/_protected/instructor'
+      path: '/instructor'
+      fullPath: '/instructor'
+      preLoaderRoute: typeof ProtectedInstructorRouteRouteImport
       parentRoute: typeof ProtectedRouteRoute
     }
     '/_protected/admin': {
@@ -230,12 +263,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedAdminRouteRouteImport
       parentRoute: typeof ProtectedRouteRoute
     }
-    '/_protected/client/posts': {
-      id: '/_protected/client/posts'
-      path: '/posts'
-      fullPath: '/client/posts'
-      preLoaderRoute: typeof ProtectedClientPostsRouteRouteImport
-      parentRoute: typeof ProtectedClientRouteRoute
+    '/_protected/admin/users': {
+      id: '/_protected/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof ProtectedAdminUsersRouteRouteImport
+      parentRoute: typeof ProtectedAdminRouteRoute
     }
     '/_protected/admin/posts': {
       id: '/_protected/admin/posts'
@@ -251,12 +284,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedAdminPaymentsRouteRouteImport
       parentRoute: typeof ProtectedAdminRouteRoute
     }
-    '/_protected/client/dashboard/': {
-      id: '/_protected/client/dashboard/'
+    '/_protected/student/dashboard/': {
+      id: '/_protected/student/dashboard/'
       path: '/dashboard'
-      fullPath: '/client/dashboard'
-      preLoaderRoute: typeof ProtectedClientDashboardIndexRouteImport
-      parentRoute: typeof ProtectedClientRouteRoute
+      fullPath: '/student/dashboard'
+      preLoaderRoute: typeof ProtectedStudentDashboardIndexRouteImport
+      parentRoute: typeof ProtectedStudentRouteRoute
+    }
+    '/_protected/instructor/dashboard/': {
+      id: '/_protected/instructor/dashboard/'
+      path: '/dashboard'
+      fullPath: '/instructor/dashboard'
+      preLoaderRoute: typeof ProtectedInstructorDashboardIndexRouteImport
+      parentRoute: typeof ProtectedInstructorRouteRoute
     }
     '/_protected/admin/dashboard/': {
       id: '/_protected/admin/dashboard/'
@@ -271,39 +311,58 @@ declare module '@tanstack/react-router' {
 interface ProtectedAdminRouteRouteChildren {
   ProtectedAdminPaymentsRouteRoute: typeof ProtectedAdminPaymentsRouteRoute
   ProtectedAdminPostsRouteRoute: typeof ProtectedAdminPostsRouteRoute
+  ProtectedAdminUsersRouteRoute: typeof ProtectedAdminUsersRouteRoute
   ProtectedAdminDashboardIndexRoute: typeof ProtectedAdminDashboardIndexRoute
 }
 
 const ProtectedAdminRouteRouteChildren: ProtectedAdminRouteRouteChildren = {
   ProtectedAdminPaymentsRouteRoute: ProtectedAdminPaymentsRouteRoute,
   ProtectedAdminPostsRouteRoute: ProtectedAdminPostsRouteRoute,
+  ProtectedAdminUsersRouteRoute: ProtectedAdminUsersRouteRoute,
   ProtectedAdminDashboardIndexRoute: ProtectedAdminDashboardIndexRoute,
 }
 
 const ProtectedAdminRouteRouteWithChildren =
   ProtectedAdminRouteRoute._addFileChildren(ProtectedAdminRouteRouteChildren)
 
-interface ProtectedClientRouteRouteChildren {
-  ProtectedClientPostsRouteRoute: typeof ProtectedClientPostsRouteRoute
-  ProtectedClientDashboardIndexRoute: typeof ProtectedClientDashboardIndexRoute
+interface ProtectedInstructorRouteRouteChildren {
+  ProtectedInstructorDashboardIndexRoute: typeof ProtectedInstructorDashboardIndexRoute
 }
 
-const ProtectedClientRouteRouteChildren: ProtectedClientRouteRouteChildren = {
-  ProtectedClientPostsRouteRoute: ProtectedClientPostsRouteRoute,
-  ProtectedClientDashboardIndexRoute: ProtectedClientDashboardIndexRoute,
+const ProtectedInstructorRouteRouteChildren: ProtectedInstructorRouteRouteChildren =
+  {
+    ProtectedInstructorDashboardIndexRoute:
+      ProtectedInstructorDashboardIndexRoute,
+  }
+
+const ProtectedInstructorRouteRouteWithChildren =
+  ProtectedInstructorRouteRoute._addFileChildren(
+    ProtectedInstructorRouteRouteChildren,
+  )
+
+interface ProtectedStudentRouteRouteChildren {
+  ProtectedStudentDashboardIndexRoute: typeof ProtectedStudentDashboardIndexRoute
 }
 
-const ProtectedClientRouteRouteWithChildren =
-  ProtectedClientRouteRoute._addFileChildren(ProtectedClientRouteRouteChildren)
+const ProtectedStudentRouteRouteChildren: ProtectedStudentRouteRouteChildren = {
+  ProtectedStudentDashboardIndexRoute: ProtectedStudentDashboardIndexRoute,
+}
+
+const ProtectedStudentRouteRouteWithChildren =
+  ProtectedStudentRouteRoute._addFileChildren(
+    ProtectedStudentRouteRouteChildren,
+  )
 
 interface ProtectedRouteRouteChildren {
   ProtectedAdminRouteRoute: typeof ProtectedAdminRouteRouteWithChildren
-  ProtectedClientRouteRoute: typeof ProtectedClientRouteRouteWithChildren
+  ProtectedInstructorRouteRoute: typeof ProtectedInstructorRouteRouteWithChildren
+  ProtectedStudentRouteRoute: typeof ProtectedStudentRouteRouteWithChildren
 }
 
 const ProtectedRouteRouteChildren: ProtectedRouteRouteChildren = {
   ProtectedAdminRouteRoute: ProtectedAdminRouteRouteWithChildren,
-  ProtectedClientRouteRoute: ProtectedClientRouteRouteWithChildren,
+  ProtectedInstructorRouteRoute: ProtectedInstructorRouteRouteWithChildren,
+  ProtectedStudentRouteRoute: ProtectedStudentRouteRouteWithChildren,
 }
 
 const ProtectedRouteRouteWithChildren = ProtectedRouteRoute._addFileChildren(

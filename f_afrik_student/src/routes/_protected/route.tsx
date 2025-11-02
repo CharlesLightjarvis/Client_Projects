@@ -32,7 +32,9 @@ export const Route = createFileRoute('/_protected')({
 
     if (
       !context.role ||
-      (context.role !== 'admin' && context.role !== 'client')
+      (context.role !== 'admin' &&
+       context.role !== 'instructor' &&
+       context.role !== 'student')
     ) {
       console.error('🚨 Security: Invalid role detected, forcing logout')
       context.logout()
@@ -56,8 +58,8 @@ function ProtectedRouteComponent() {
 
     if (parts.length === 0) return []
 
-    // Skip the first part if it's the role (admin/client)
-    const startIndex = parts[0] === 'admin' || parts[0] === 'client' ? 1 : 0
+    // Skip the first part if it's the role (admin/instructor/student)
+    const startIndex = parts[0] === 'admin' || parts[0] === 'instructor' || parts[0] === 'student' ? 1 : 0
     const relevantParts = parts.slice(startIndex)
 
     const crumbs = relevantParts.map((part, index) => {
@@ -94,10 +96,16 @@ function ProtectedRouteComponent() {
                         to={
                           role === 'admin'
                             ? '/admin/dashboard'
-                            : '/client/dashboard'
+                            : role === 'instructor'
+                              ? '/instructor/dashboard'
+                              : '/student/dashboard'
                         }
                       >
-                        {role === 'admin' ? 'Administration' : 'Espace Client'}
+                        {role === 'admin'
+                          ? 'Administration'
+                          : role === 'instructor'
+                            ? 'Espace Formateur'
+                            : 'Espace Étudiant'}
                       </Link>
                     </BreadcrumbLink>
                   </BreadcrumbItem>

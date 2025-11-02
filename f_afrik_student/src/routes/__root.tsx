@@ -10,13 +10,14 @@ import { ThemeProvider } from '@/components/theme-provider'
 
 import type { User } from '@/types/user'
 
-export type UserRole = 'admin' | 'client' | null
+export type UserRole = 'admin' | 'instructor' | 'student' | null
 export type RouterContext = {
   role: UserRole
   user: User | null
   logout: () => void
   isAdmin: boolean
-  isClient: boolean
+  isInstructor: boolean
+  isStudent: boolean
   isAuthenticated: boolean
 }
 

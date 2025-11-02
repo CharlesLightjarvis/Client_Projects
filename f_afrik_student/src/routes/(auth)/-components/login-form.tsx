@@ -53,8 +53,10 @@ export function LoginForm({
         // Redirect based on role
         if (user?.role === 'admin') {
           navigate({ to: '/admin/dashboard' })
+        } else if (user?.role === 'instructor') {
+          navigate({ to: '/instructor/dashboard' })
         } else {
-          navigate({ to: '/client/dashboard' })
+          navigate({ to: '/student/dashboard' })
         }
       } else {
         console.error('❌ Login failed - Full result:', {
