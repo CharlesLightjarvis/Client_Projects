@@ -41,9 +41,22 @@ class DatabaseSeeder extends Seeder
         ]);
         $student->syncRoles(UserRoleEnum::STUDENT);
 
-        // Seed posts and other data
+        // Create additional users for testing
+        User::factory(5)->create()->each(function ($user) {
+            $user->syncRoles(UserRoleEnum::INSTRUCTOR);
+        });
+
+        User::factory(20)->create()->each(function ($user) {
+            $user->syncRoles(UserRoleEnum::STUDENT);
+        });
+
+        // Seed formations, modules, lessons and other data
         $this->call([
             PostSeeder::class,
+            FormationSeeder::class,
+            CourseSessionSeeder::class,
+            EnrollmentSeeder::class,
+            LessonProgressSeeder::class,
         ]);
     }
 }

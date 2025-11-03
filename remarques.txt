@@ -1,0 +1,39 @@
+🎯 Endpoints API disponibles
+Course Sessions:
+GET /api/course-sessions - Liste
+POST /api/course-sessions - Créer
+GET /api/course-sessions/{id} - Détail
+PUT/PATCH /api/course-sessions/{id} - Modifier
+DELETE /api/course-sessions/{id} - Supprimer
+
+
+Enrollments:
+GET /api/enrollments - Liste
+POST /api/enrollments - Inscrire un étudiant
+GET /api/enrollments/{id} - Détail
+PUT/PATCH /api/enrollments/{id} - Modifier
+DELETE /api/enrollments/{id} - Annuler
+
+
+Progress:
+POST /api/lessons/{id}/complete - Marquer leçon complétée
+GET /api/students/{id}/progress - Progression d'un étudiant
+GET /api/students/{id}/formations/{id}/completion - % complétion formation
+GET /api/students/{id}/modules/{id}/completion - % complétion module
+Votre système de gestion de centre de formation est maintenant opérationnel avec toutes les fonctionnalités principales du MVP ! 🚀
+
+
+
+Excellente question! La confirmation d'inscription intervient dans le workflow d'inscription que j'ai créé. Laisse-moi t'expliquer tout le processus.
+Le cycle de vie d'une inscription
+1. Création de l'inscription (Statut: PENDING)
+Quand un admin inscrit un étudiant via l'API:
+POST /api/enrollments
+{
+  "student_id": "123",
+  "course_session_id": "456",
+  "payment_status": "unpaid"
+}
+Par défaut, l'inscription est créée avec le statut PENDING (en attente).
+2. Confirmation de l'inscription (Statut: CONFIRMED)
+L'admin peut ensuite confirmer l'inscription en appelant la méthode du service:

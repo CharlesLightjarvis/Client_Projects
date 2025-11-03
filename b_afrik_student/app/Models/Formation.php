@@ -28,4 +28,12 @@ class Formation extends Model
     {
         return $this->hasMany(Module::class);
     }
+
+    /**
+     * Get the course sessions for the formation.
+     */
+    public function courseSessions(): HasMany
+    {
+        return $this->hasMany(CourseSession::class);
+    }
 }

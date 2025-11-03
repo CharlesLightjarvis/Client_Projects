@@ -72,6 +72,11 @@ class RolesAndPermissionsSeeder extends Seeder
         PermissionEnum::READ_LESSONS->value,
         PermissionEnum::UPDATE_LESSONS->value,
         PermissionEnum::DELETE_LESSONS->value,
+
+        PermissionEnum::CREATE_SESSIONS->value,
+        PermissionEnum::READ_SESSIONS->value,
+        PermissionEnum::UPDATE_SESSIONS->value,
+        PermissionEnum::DELETE_SESSIONS->value,
     ]);
 }
 

@@ -58,4 +58,38 @@ class User extends Authenticatable
     public function posts() {
         return $this->hasMany(Post::class);
     }
+
+    /**
+     * Get the enrollments for the student.
+     */
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class, 'student_id');
+    }
+
+    /**
+     * Get the course sessions taught by the instructor.
+     */
+    public function taughtCourseSessions()
+    {
+        return $this->hasMany(CourseSession::class, 'instructor_id');
+    }
+
+    /**
+     * Get the lesson progress for the student.
+     */
+    public function lessonProgress()
+    {
+        return $this->hasMany(LessonProgress::class, 'student_id');
+    }
+
+    /**
+     * Get the course sessions the user is enrolled in (as a student).
+     */
+    public function enrolledCourseSessions()
+    {
+        return $this->belongsToMany(CourseSession::class, 'enrollments', 'student_id', 'course_session_id')
+            ->withPivot('enrollment_date', 'status', 'payment_status', 'payment_amount')
+            ->withTimestamps();
+    }
 }
