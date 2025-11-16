@@ -82,8 +82,9 @@ export const useModuleStore = create<ModuleStore>()(
         set({ loading: true, error: null })
         try {
           const { module, message } = await moduleService.createModule(data)
+          // Add new module at the beginning (backend uses DESC order)
           set((state) => ({
-            modules: [...state.modules, module],
+            modules: [module, ...state.modules],
             loading: false,
             error: null,
           }))

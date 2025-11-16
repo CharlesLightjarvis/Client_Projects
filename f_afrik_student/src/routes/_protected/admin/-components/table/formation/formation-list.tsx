@@ -4,8 +4,8 @@ import { useFormations } from '@/hooks/use-formations'
 import { usePermissions } from '@/hooks/use-permissions'
 import { PermissionGuard } from '@/components/PermissionGuard'
 import { useEffect, useState, useRef } from 'react'
-import { CreateFormation } from '../../formations/CreateFormation'
-import { UpdateFormation } from '../../formations/UpdateFormation'
+import { CreateFormationStepper } from '../../formations/CreateFormationStepper'
+import { UpdateFormationStepper } from '../../formations/UpdateFormationStepper'
 import { DeleteFormation } from '../../formations/DeleteFormation'
 import type { Formation } from '@/types/formation'
 import { toast } from 'sonner'
@@ -104,7 +104,7 @@ export default function FormationList() {
 
         {/* Dialog component for creating */}
         <PermissionGuard permissions={PERMISSIONS.FORMATION.CREATE}>
-          <CreateFormation
+          <CreateFormationStepper
             open={createDialogOpen}
             onOpenChange={setCreateDialogOpen}
           />
@@ -147,14 +147,14 @@ export default function FormationList() {
 
       {/* Dialog components wrapped in PermissionGuard */}
       <PermissionGuard permissions={PERMISSIONS.FORMATION.CREATE}>
-        <CreateFormation
+        <CreateFormationStepper
           open={createDialogOpen}
           onOpenChange={setCreateDialogOpen}
         />
       </PermissionGuard>
 
       <PermissionGuard permissions={PERMISSIONS.FORMATION.UPDATE}>
-        <UpdateFormation
+        <UpdateFormationStepper
           formation={selectedFormation}
           open={updateDialogOpen}
           onOpenChange={setUpdateDialogOpen}

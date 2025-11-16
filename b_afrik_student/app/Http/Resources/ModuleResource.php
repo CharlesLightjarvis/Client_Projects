@@ -19,6 +19,9 @@ class ModuleResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'formation_id' => $this->formation_id,
+            'formation' => FormationResource::make($this->whenLoaded('formation')),
+            'order' => $this->order,
+            'lessons' => LessonResource::collection($this->whenLoaded('lessons')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

@@ -97,9 +97,9 @@ export const useFormationStore = create<FormationStore>()(
         try {
           const { formation, message } = await formationService.createFormation(data)
 
-          // Add new formation to the list
+          // Add new formation to the beginning of the list (backend uses DESC order)
           set((state) => ({
-            formations: [...state.formations, formation],
+            formations: [formation, ...state.formations],
             loading: false,
             error: null,
           }))
@@ -127,9 +127,12 @@ export const useFormationStore = create<FormationStore>()(
         try {
           const { formation, message } = await formationService.updateFormation(id, data)
 
-          // Update formation in the list
+          // Move updated formation to the beginning of the list (backend uses DESC order)
           set((state) => ({
-            formations: state.formations.map((f) => (f.id === id ? formation : f)),
+            formations: [
+              formation,
+              ...state.formations.filter((f) => f.id !== id),
+            ],
             currentFormation:
               state.currentFormation?.id === id ? formation : state.currentFormation,
             loading: false,

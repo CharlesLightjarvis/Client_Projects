@@ -21,7 +21,7 @@ export function DeleteModule({ module, open, onOpenChange }: DeleteModuleProps) 
   const { deleteModule, loading } = useModuleStore()
 
   const handleDelete = async () => {
-    if (!module) return
+    if (!module?.id) return
 
     const result = await deleteModule(module.id)
 

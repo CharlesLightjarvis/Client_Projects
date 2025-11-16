@@ -17,6 +17,8 @@ const transformLesson = (lesson: LessonFromBackend): Lesson => {
     id: lesson.id,
     title: lesson.title,
     content: lesson.content,
+    link: lesson.link,
+    order: lesson.order,
     module_id: lesson.module_id,
     created_at: lesson.created_at,
     updated_at: lesson.updated_at,

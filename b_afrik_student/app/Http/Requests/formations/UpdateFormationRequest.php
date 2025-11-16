@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\formations;
 
+use App\Enums\FormationLevel;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateFormationRequest extends FormRequest
 {
@@ -22,8 +24,16 @@ class UpdateFormationRequest extends FormRequest
     public function rules(): array
     {
         return [
+            // Formation basic info (all optional for partial updates)
             'title' => 'sometimes|required|string|max:255',
             'description' => 'sometimes|nullable|string',
+            'learning_objectives' => 'sometimes|nullable|string',
+            'target_skills' => 'sometimes|nullable|array',
+            'target_skills.*' => 'string',
+            'level' => ['sometimes', 'required', 'string', Rule::enum(FormationLevel::class)],
+            'duration' => 'sometimes|required|integer|min:1',
+            'image' => 'sometimes|nullable|string',
+            'price' => 'sometimes|nullable|numeric|min:0',
         ];
     }
 }

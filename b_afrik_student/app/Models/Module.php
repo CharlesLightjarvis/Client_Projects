@@ -21,6 +21,7 @@ class Module extends Model
         'title',
         'description',
         'formation_id',
+        'order'
     ];
 
     /**

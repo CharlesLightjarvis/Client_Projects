@@ -8,13 +8,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { MoreHorizontal } from 'lucide-react'
+import { MoreHorizontal, Users, UserPlus } from 'lucide-react'
 import { DataTableColumnHeader } from '@/components/ui/data-table-column-header'
 import { cn } from '@/lib/utils'
 
 interface ColumnsProps {
   onEdit: (session: Session) => void
   onDelete: (session: Session) => void
+  onViewEnrolled: (session: Session) => void
+  onEnrollStudents: (session: Session) => void
 }
 
 const statusColors: Record<string, string> = {
@@ -27,34 +29,18 @@ const statusColors: Record<string, string> = {
 export const createColumns = ({
   onEdit,
   onDelete,
+  onViewEnrolled,
+  onEnrollStudents,
 }: ColumnsProps): ColumnDef<Session>[] => [
   {
     id: 'formation',
     accessorFn: (row) => row.formation?.title,
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Formation" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Formation" />
+    ),
     cell: ({ row }) => {
       const formation = row.original.formation
       return <div className="font-medium">{formation?.title || '-'}</div>
-    },
-  },
-  {
-    id: 'instructor',
-    accessorFn: (row) =>
-      row.instructor
-        ? `${row.instructor.first_name} ${row.instructor.last_name}`
-        : '-',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Instructeur" />
-    ),
-    cell: ({ row }) => {
-      const instructor = row.original.instructor
-      return (
-        <div>
-          {instructor
-            ? `${instructor.first_name} ${instructor.last_name}`
-            : '-'}
-        </div>
-      )
     },
   },
   {
@@ -95,7 +81,9 @@ export const createColumns = ({
   },
   {
     accessorKey: 'status',
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Statut" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Statut" />
+    ),
     cell: ({ row }) => {
       const status = row.original.status
       const statusLabel = row.original.statusLabel
@@ -104,7 +92,7 @@ export const createColumns = ({
         <div
           className={cn(
             'inline-flex items-center gap-2 rounded-md border px-2.5 py-0.5',
-            statusColors[status] || 'text-gray-600 bg-gray-50 border-gray-200'
+            statusColors[status] || 'text-gray-600 bg-gray-50 border-gray-200',
           )}
         >
           <span className="text-xs font-medium">{statusLabel || status}</span>
@@ -126,14 +114,34 @@ export const createColumns = ({
       )
     },
   },
+
   {
-    accessorKey: 'location',
+    id: 'instructors',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Localisation" />
+      <DataTableColumnHeader column={column} title="Instructeurs" />
     ),
     cell: ({ row }) => {
-      const location = row.getValue('location') as string | null
-      return <div className="text-sm">{location || '-'}</div>
+      const session = row.original
+      const instructors = session.current_instructors || []
+      if (instructors.length === 0) {
+        return <div className="text-muted-foreground text-sm">-</div>
+      }
+      return (
+        <div className="max-w-[200px]">
+          {instructors.map((mi, idx) => (
+            <div key={idx} className="text-sm">
+              {mi.instructor
+                ? `${mi.instructor.first_name} ${mi.instructor.last_name}`
+                : '-'}
+              {mi.module && (
+                <span className="text-xs text-muted-foreground ml-1">
+                  ({mi.module.title})
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+      )
     },
   },
   {
@@ -151,6 +159,17 @@ export const createColumns = ({
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem onClick={() => onViewEnrolled(session)}>
+              <Users className="mr-2 h-4 w-4" />
+              Voir les inscrits
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => onEnrollStudents(session)}
+              disabled={session.is_full}
+            >
+              <UserPlus className="mr-2 h-4 w-4" />
+              Inscrire des étudiants
+            </DropdownMenuItem>
             <DropdownMenuItem onClick={() => onEdit(session)}>
               Modifier
             </DropdownMenuItem>

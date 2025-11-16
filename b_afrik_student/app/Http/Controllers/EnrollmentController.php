@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\enrollments\StoreEnrollmentRequest;
+use App\Http\Requests\enrollments\EnrollStudentsRequest;
 use App\Http\Requests\enrollments\UpdateEnrollmentRequest;
+use App\Http\Requests\enrollments\UnenrollStudentsRequest;
 use App\Http\Resources\EnrollmentResource;
 use App\Models\Enrollment;
 use App\Services\EnrollmentService;
@@ -19,98 +20,45 @@ class EnrollmentController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Store a newly created resource in storage (Enroll students - single or bulk).
      */
-    public function index(): JsonResponse
-    {
-        $enrollments = $this->enrollmentService->getAllEnrollments();
-
-        return $this->successResponse(
-            EnrollmentResource::collection($enrollments),
-            'Enrollments retrieved successfully'
-        );
-    }
-
-    /**
-     * Store a newly created resource in storage (Enroll a student).
-     */
-    public function store(StoreEnrollmentRequest $request): JsonResponse
+    public function store(EnrollStudentsRequest $request): JsonResponse
     {
         try {
-            $enrollment = $this->enrollmentService->enrollStudent($request->validated());
+            $result = $this->enrollmentService->enrollStudents($request->validated());
 
             return $this->createdSuccessResponse(
-                new EnrollmentResource($enrollment),
-                'Student enrolled successfully'
+                [
+                    'success' => $result['success'],
+                    'enrollments' => EnrollmentResource::collection($result['enrollments']),
+                ],
+                $result['success'] === 1
+                    ? 'Student enrolled successfully'
+                    : "{$result['success']} students enrolled successfully"
             );
         } catch (\Exception $e) {
             return $this->errorResponse($e->getMessage(), 400);
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Enrollment $enrollment): JsonResponse
-    {
-        $enrollment->load(['student', 'courseSession.formation', 'courseSession.instructor']);
-
-        return $this->successResponse(
-            new EnrollmentResource($enrollment),
-            'Enrollment retrieved successfully'
-        );
-    }
 
     /**
-     * Update the specified resource in storage.
+     * Unenroll (cancel) students in bulk.
      */
-    public function update(UpdateEnrollmentRequest $request, Enrollment $enrollment): JsonResponse
+    public function unenrollStudents(UnenrollStudentsRequest $request): JsonResponse
     {
-        $enrollment = $this->enrollmentService->updateEnrollment($enrollment, $request->validated());
+        try {
+            $result = $this->enrollmentService->unenrollStudents($request->validated());
 
-        return $this->successResponse(
-            new EnrollmentResource($enrollment),
-            'Enrollment updated successfully'
-        );
+            return $this->successResponse(
+                [
+                    'success' => $result['success'],
+                ],
+                $result['message']
+            );
+        } catch (\Exception $e) {
+            return $this->errorResponse($e->getMessage(), 400);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage (Cancel enrollment).
-     */
-    public function destroy(Enrollment $enrollment): JsonResponse
-    {
-        $this->enrollmentService->cancelEnrollment($enrollment);
-
-        return $this->deletedSuccessResponse('Enrollment cancelled successfully');
-    }
-
-    /**
-     * Confirm an enrollment.
-     */
-    public function confirm(Enrollment $enrollment): JsonResponse
-    {
-        $this->enrollmentService->confirmEnrollment($enrollment);
-
-        $enrollment->load(['student', 'courseSession']);
-
-        return $this->successResponse(
-            new EnrollmentResource($enrollment->fresh()),
-            'Enrollment confirmed successfully'
-        );
-    }
-
-    /**
-     * Cancel an enrollment (alternative to destroy).
-     */
-    public function cancelEnrollment(Enrollment $enrollment): JsonResponse
-    {
-        $this->enrollmentService->cancelEnrollment($enrollment);
-
-        $enrollment->load(['student', 'courseSession']);
-
-        return $this->successResponse(
-            new EnrollmentResource($enrollment->fresh()),
-            'Enrollment cancelled successfully'
-        );
-    }
 }

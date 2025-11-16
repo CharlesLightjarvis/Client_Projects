@@ -45,7 +45,10 @@ export function CreateLesson({ open, onOpenChange }: CreateLessonProps) {
   })
 
   const onSubmit = async (data: CreateLessonSchema) => {
-    const result = await createLesson(data)
+    const result = await createLesson({
+      ...data,
+      order: 0, // Par défaut, on met 0 si order n'est pas spécifié
+    })
 
     if (result.success) {
       toast.success(result.message || 'Leçon créée avec succès')
@@ -125,7 +128,7 @@ export function CreateLesson({ open, onOpenChange }: CreateLessonProps) {
                     </SelectTrigger>
                     <SelectContent>
                       {modules.map((module) => (
-                        <SelectItem key={module.id} value={module.id}>
+                        <SelectItem key={module.id} value={module.id || ''}>
                           {module.title}
                         </SelectItem>
                       ))}

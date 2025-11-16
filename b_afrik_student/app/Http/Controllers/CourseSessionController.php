@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\course_sessions\StoreSessionRequest;
-use App\Http\Requests\course_sessions\UpdateSessionRequest;
+use App\Http\Requests\course_sessions\StoreCourseSessionRequest;
+use App\Http\Requests\course_sessions\UpdateCourseSessionRequest;
 use App\Http\Resources\CourseSessionResource;
+use App\Http\Resources\UserResource;
 use App\Models\CourseSession;
 use App\Services\CourseSessionService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class CourseSessionController extends Controller
 {
@@ -35,11 +37,9 @@ class CourseSessionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSessionRequest $request): JsonResponse
+    public function store(StoreCourseSessionRequest $request): JsonResponse
     {
         $courseSession = $this->courseSessionService->createCourseSession($request->validated());
-
-        $courseSession->load(['formation', 'instructor', 'enrollments.student']);
 
         return $this->createdSuccessResponse(
             CourseSessionResource::make($courseSession),
@@ -52,7 +52,7 @@ class CourseSessionController extends Controller
      */
     public function show(CourseSession $courseSession): JsonResponse
     {
-        $courseSession->load(['formation', 'instructor', 'enrollments.student']);
+        $courseSession = $this->courseSessionService->getCourseSession($courseSession);
 
         return $this->successResponse(
             CourseSessionResource::make($courseSession),
@@ -63,11 +63,9 @@ class CourseSessionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSessionRequest $request, CourseSession $courseSession): JsonResponse
+    public function update(UpdateCourseSessionRequest $request, CourseSession $courseSession): JsonResponse
     {
         $courseSession = $this->courseSessionService->updateCourseSession($courseSession, $request->validated());
-
-        $courseSession->load(['formation', 'instructor', 'enrollments.student']);
 
         return $this->successResponse(
             CourseSessionResource::make($courseSession),
@@ -102,6 +100,33 @@ class CourseSessionController extends Controller
         return $this->successResponse(
             CourseSessionResource::collection($courseSessions),
             'Course sessions retrieved successfully for student'
+        );
+    }
+
+    /**
+     * Get students enrolled in a specific course session.
+     */
+    public function getSessionStudents(CourseSession $courseSession): JsonResponse
+    {
+        $students = $this->courseSessionService->getSessionStudents($courseSession);
+
+        // Students are already formatted as arrays with enrollment_id, return directly
+        return $this->successResponse(
+            $students,
+            'Students retrieved successfully'
+        );
+    }
+
+    /**
+     * Get students available for enrollment (not yet enrolled in this session).
+     */
+    public function getAvailableStudents(CourseSession $courseSession): JsonResponse
+    {
+        $students = $this->courseSessionService->getAvailableStudents($courseSession->id);
+
+        return $this->successResponse(
+            UserResource::collection($students),
+            'Available students retrieved successfully'
         );
     }
 

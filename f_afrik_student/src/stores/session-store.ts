@@ -151,9 +151,9 @@ export const useSessionStore = create<SessionStore>()(
         try {
           const { session, message } = await sessionService.createSession(data)
 
-          // Add new session to the list
+          // Add new session at the beginning (backend uses DESC order)
           set((state) => ({
-            sessions: [...state.sessions, session],
+            sessions: [session, ...state.sessions],
             loading: false,
             error: null,
           }))

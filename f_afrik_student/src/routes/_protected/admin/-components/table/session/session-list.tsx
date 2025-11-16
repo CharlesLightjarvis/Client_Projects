@@ -4,9 +4,11 @@ import { useSessions } from '@/hooks/use-sessions'
 import { usePermissions } from '@/hooks/use-permissions'
 import { PermissionGuard } from '@/components/PermissionGuard'
 import { useEffect, useState, useRef } from 'react'
-import { CreateSession } from '../../sessions/CreateSession'
-import { UpdateSession } from '../../sessions/UpdateSession'
+import { CreateSessionStepper } from '../../sessions/CreateSessionStepper'
+import { UpdateSessionStepper } from '../../sessions/UpdateSessionStepper'
 import { DeleteSession } from '../../sessions/DeleteSession'
+import { ViewEnrolledStudents } from '../../enrollments/ViewEnrolledStudents'
+import { EnrollStudents } from '../../enrollments/EnrollStudents'
 import type { Session } from '@/types/session'
 import { toast } from 'sonner'
 import { PERMISSIONS } from '@/lib/permissions'
@@ -21,6 +23,8 @@ export default function SessionList() {
   const [createDialogOpen, setCreateDialogOpen] = useState(false)
   const [updateDialogOpen, setUpdateDialogOpen] = useState(false)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [viewEnrolledDialogOpen, setViewEnrolledDialogOpen] = useState(false)
+  const [enrollStudentsDialogOpen, setEnrollStudentsDialogOpen] = useState(false)
   const [selectedSession, setSelectedSession] = useState<Session | null>(null)
 
   useEffect(() => {
@@ -48,9 +52,33 @@ export default function SessionList() {
     setDeleteDialogOpen(true)
   }
 
+  const handleViewEnrolled = (session: Session) => {
+    setSelectedSession(session)
+    setViewEnrolledDialogOpen(true)
+  }
+
+  const handleEnrollStudents = (session: Session) => {
+    setSelectedSession(session)
+    setEnrollStudentsDialogOpen(true)
+  }
+
+  const handleEnrollFromView = () => {
+    setViewEnrolledDialogOpen(false)
+    setEnrollStudentsDialogOpen(true)
+  }
+
+  const handleEnrollSuccess = () => {
+    // Refresh sessions list after successful enrollment
+    fetchSessions()
+    // Optionally reopen the view enrolled dialog to see the new students
+    setViewEnrolledDialogOpen(true)
+  }
+
   const columns = createColumns({
     onEdit: handleEdit,
     onDelete: handleDelete,
+    onViewEnrolled: handleViewEnrolled,
+    onEnrollStudents: handleEnrollStudents,
   })
 
   if (loading && sessions.length === 0) {
@@ -97,7 +125,7 @@ export default function SessionList() {
         </div>
 
         <PermissionGuard permissions={PERMISSIONS.SESSION.CREATE}>
-          <CreateSession open={createDialogOpen} onOpenChange={setCreateDialogOpen} />
+          <CreateSessionStepper open={createDialogOpen} onOpenChange={setCreateDialogOpen} />
         </PermissionGuard>
       </>
     )
@@ -136,11 +164,11 @@ export default function SessionList() {
       </div>
 
       <PermissionGuard permissions={PERMISSIONS.SESSION.CREATE}>
-        <CreateSession open={createDialogOpen} onOpenChange={setCreateDialogOpen} />
+        <CreateSessionStepper open={createDialogOpen} onOpenChange={setCreateDialogOpen} />
       </PermissionGuard>
 
       <PermissionGuard permissions={PERMISSIONS.SESSION.UPDATE}>
-        <UpdateSession
+        <UpdateSessionStepper
           session={selectedSession}
           open={updateDialogOpen}
           onOpenChange={setUpdateDialogOpen}
@@ -154,6 +182,21 @@ export default function SessionList() {
           onOpenChange={setDeleteDialogOpen}
         />
       </PermissionGuard>
+
+      {/* Enrollment dialogs */}
+      <ViewEnrolledStudents
+        session={selectedSession}
+        open={viewEnrolledDialogOpen}
+        onOpenChange={setViewEnrolledDialogOpen}
+        onEnrollClick={handleEnrollFromView}
+      />
+
+      <EnrollStudents
+        session={selectedSession}
+        open={enrollStudentsDialogOpen}
+        onOpenChange={setEnrollStudentsDialogOpen}
+        onSuccess={handleEnrollSuccess}
+      />
     </>
   )
 }

@@ -68,14 +68,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the course sessions taught by the instructor.
-     */
-    public function taughtCourseSessions()
-    {
-        return $this->hasMany(CourseSession::class, 'instructor_id');
-    }
-
-    /**
      * Get the lesson progress for the student.
      */
     public function lessonProgress()
@@ -84,12 +76,27 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the course sessions the user is enrolled in (as a student).
+     * Get the module-session instructor assignments for this instructor.
+     * relation pour savoir quels modules et pour quelle session un professeur est affecte (relation avec ModuleSessionInstructor)
      */
-    public function enrolledCourseSessions()
+    public function sessionModules()
     {
-        return $this->belongsToMany(CourseSession::class, 'enrollments', 'student_id', 'course_session_id')
-            ->withPivot('enrollment_date', 'status', 'payment_status', 'payment_amount')
-            ->withTimestamps();
+        return $this->hasMany(ModuleSessionInstructor::class, 'instructor_id');
+    }
+
+    /**
+     * Get all course sessions where this instructor teaches.
+     * Récupérer toutes les sessions où un prof enseigne
+     */
+    public function instructingSessions()
+    {
+        return $this->hasManyThrough(
+            CourseSession::class,
+            ModuleSessionInstructor::class,
+            'instructor_id',
+            'id',
+            'id',
+            'course_session_id'
+        )->distinct();
     }
 }

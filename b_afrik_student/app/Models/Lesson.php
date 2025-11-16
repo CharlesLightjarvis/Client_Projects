@@ -21,6 +21,8 @@ class Lesson extends Model
         'title',
         'content',
         'module_id',
+        'link',
+        'order',
     ];
 
     /**
@@ -37,5 +39,13 @@ class Lesson extends Model
     public function progress(): HasMany
     {
         return $this->hasMany(LessonProgress::class);
+    }
+
+    /**
+     * Get the attachments for the lesson.
+     */
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class);
     }
 }

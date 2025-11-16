@@ -50,14 +50,14 @@ export function UpdateLesson({ lesson, open, onOpenChange }: UpdateLessonProps) 
     if (lesson) {
       form.reset({
         title: lesson.title,
-        content: lesson.content,
-        module_id: lesson.module_id,
+        content: lesson.content ?? '',
+        module_id: lesson.module_id ?? '',
       })
     }
   }, [lesson, form])
 
   const onSubmit = async (data: UpdateLessonSchema) => {
-    if (!lesson) return
+    if (!lesson?.id) return
 
     const result = await updateLesson(lesson.id, data)
 
@@ -135,7 +135,7 @@ export function UpdateLesson({ lesson, open, onOpenChange }: UpdateLessonProps) 
                     </SelectTrigger>
                     <SelectContent>
                       {modules.map((module) => (
-                        <SelectItem key={module.id} value={module.id}>
+                        <SelectItem key={module.id} value={module.id || ''}>
                           {module.title}
                         </SelectItem>
                       ))}

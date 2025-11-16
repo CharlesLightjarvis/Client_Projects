@@ -17,7 +17,6 @@ class CourseSession extends Model
 
     protected $fillable = [
         'formation_id',
-        'instructor_id',
         'start_date',
         'end_date',
         'status',
@@ -41,14 +40,6 @@ class CourseSession extends Model
     }
 
     /**
-     * Get the instructor (user) that teaches this course session.
-     */
-    public function instructor(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'instructor_id');
-    }
-
-    /**
      * Get the enrollments for this course session.
      */
     public function enrollments(): HasMany
@@ -68,17 +59,38 @@ class CourseSession extends Model
 
     /**
      * Check if the course session is full.
+     * Only counts confirmed enrollments.
      */
     public function isFull(): bool
     {
-        return $this->enrollments()->count() >= $this->max_students;
+        return $this->enrollments()->where('status', \App\Enums\EnrollmentStatus::CONFIRMED)->count() >= $this->max_students;
     }
 
     /**
      * Get available spots in the course session.
+     * Only counts confirmed enrollments.
      */
     public function availableSpots(): int
     {
-        return max(0, $this->max_students - $this->enrollments()->count());
+        $confirmedEnrollments = $this->enrollments()->where('status', \App\Enums\EnrollmentStatus::CONFIRMED)->count();
+        return max(0, $this->max_students - $confirmedEnrollments);
+    }
+
+    /**
+     * Get only the current active instructors for this session.
+     */
+    public function currentInstructors(): HasMany
+    {
+        return $this->hasMany(ModuleSessionInstructor::class)
+            ->whereNull('ended_at');
+    }
+
+    /**
+     * Get the complete instructor history for this session (ordered by date).
+     */
+    public function instructorHistory(): HasMany
+    {
+        return $this->hasMany(ModuleSessionInstructor::class)
+            ->orderBy('started_at');
     }
 }

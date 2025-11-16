@@ -42,11 +42,22 @@ export function DeleteSession({ session, open, onOpenChange }: DeleteSessionProp
           <DialogTitle>Confirmer la suppression</DialogTitle>
           <DialogDescription>
             Êtes-vous sûr de vouloir supprimer la session de formation{' '}
-            <span className="font-semibold">"{session.formation.title}"</span> avec
-            l'instructeur{' '}
-            <span className="font-semibold">
-              {session.instructor.first_name} {session.instructor.last_name}
-            </span>
+            <span className="font-semibold">"{session.formation.title}"</span>
+            {session.current_instructors && session.current_instructors.length > 0 && (
+              <>
+                {' '}avec {session.current_instructors.length > 1 ? 'les instructeurs' : "l'instructeur"}{' '}
+                <span className="font-semibold">
+                  {session.current_instructors
+                    .map((mi) =>
+                      mi.instructor
+                        ? `${mi.instructor.first_name} ${mi.instructor.last_name}`
+                        : ''
+                    )
+                    .filter(Boolean)
+                    .join(', ')}
+                </span>
+              </>
+            )}
             ?
             <br />
             <br />

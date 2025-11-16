@@ -46,27 +46,11 @@ class Enrollment extends Model
     }
 
     /**
-     * Check if the enrollment is confirmed.
-     */
-    public function isConfirmed(): bool
-    {
-        return $this->status === EnrollmentStatus::CONFIRMED;
-    }
-
-    /**
      * Check if payment is complete.
      */
     public function isPaid(): bool
     {
         return $this->payment_status === PaymentStatus::PAID;
-    }
-
-    /**
-     * Confirm the enrollment.
-     */
-    public function confirm(): void
-    {
-        $this->update(['status' => EnrollmentStatus::CONFIRMED]);
     }
 
     /**

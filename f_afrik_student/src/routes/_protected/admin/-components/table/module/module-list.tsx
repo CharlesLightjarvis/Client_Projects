@@ -4,8 +4,8 @@ import { useModules } from '@/hooks/use-modules'
 import { usePermissions } from '@/hooks/use-permissions'
 import { PermissionGuard } from '@/components/PermissionGuard'
 import { useEffect, useState, useRef } from 'react'
-import { CreateModule } from '../../modules/CreateModule'
-import { UpdateModule } from '../../modules/UpdateModule'
+import { CreateModuleStepper } from '../../modules/CreateModuleStepper'
+import { UpdateModuleStepper } from '../../modules/UpdateModuleStepper'
 import { DeleteModule } from '../../modules/DeleteModule'
 import type { Module } from '@/types/module'
 import { toast } from 'sonner'
@@ -95,7 +95,7 @@ export default function ModuleList() {
         </div>
 
         <PermissionGuard permissions={PERMISSIONS.MODULE.CREATE}>
-          <CreateModule open={createDialogOpen} onOpenChange={setCreateDialogOpen} />
+          <CreateModuleStepper open={createDialogOpen} onOpenChange={setCreateDialogOpen} />
         </PermissionGuard>
       </>
     )
@@ -132,11 +132,11 @@ export default function ModuleList() {
       </div>
 
       <PermissionGuard permissions={PERMISSIONS.MODULE.CREATE}>
-        <CreateModule open={createDialogOpen} onOpenChange={setCreateDialogOpen} />
+        <CreateModuleStepper open={createDialogOpen} onOpenChange={setCreateDialogOpen} />
       </PermissionGuard>
 
       <PermissionGuard permissions={PERMISSIONS.MODULE.UPDATE}>
-        <UpdateModule
+        <UpdateModuleStepper
           module={selectedModule}
           open={updateDialogOpen}
           onOpenChange={setUpdateDialogOpen}

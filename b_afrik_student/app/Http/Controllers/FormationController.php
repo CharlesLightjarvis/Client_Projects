@@ -25,11 +25,13 @@ class FormationController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * Can create formation with modules and lessons in one request (stepper mode).
      */
     public function store(StoreFormationRequest $request)
     {
         $formation = $this->formationService->createFormation($request->validated());
-        return $this->successResponse(
+
+        return $this->createdSuccessResponse(
             FormationResource::make($formation),
             'Formation created successfully'
         );
@@ -40,6 +42,8 @@ class FormationController extends Controller
      */
     public function show(Formation $formation)
     {
+        $formation = $this->formationService->getFormation($formation);
+
         return $this->successResponse(
             FormationResource::make($formation),
             'Formation fetched successfully'

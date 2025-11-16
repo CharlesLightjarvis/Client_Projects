@@ -15,7 +15,8 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->foreignUuid('formation_id')->constrained()->onDelete('cascade');
+            $table->foreignUuid('formation_id')->constrained()->cascadeOnDelete();
+            $table->integer('order')->default(1); // Module 1, 2, 3...
             $table->timestamps();
         });
     }

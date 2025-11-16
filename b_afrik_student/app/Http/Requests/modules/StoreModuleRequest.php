@@ -25,6 +25,25 @@ class StoreModuleRequest extends FormRequest
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'formation_id' => 'required|uuid|exists:formations,id',
+            'order' => 'nullable|integer|min:1',
+            'lessons' => 'nullable|array',
+            'lessons.*.title' => 'required|string|max:255',
+            'lessons.*.content' => 'nullable|string',
+            'lessons.*.link' => 'nullable|url',
+            'lessons.*.order' => 'nullable|integer|min:1',
+        ];
+    }
+
+    /**
+     * Custom error messages for validation.
+     */
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'Le titre du module est requis.',
+            'formation_id.required' => 'L\'ID de la formation est requis.',
+            'formation_id.exists' => 'La formation spécifiée n\'existe pas.',
+            'lessons.*.title.required' => 'Le titre de la leçon est requis.',
         ];
     }
 }

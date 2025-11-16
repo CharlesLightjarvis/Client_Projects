@@ -14,7 +14,7 @@ export interface SessionInstructor {
 // Interface pour le status (version frontend)
 export type SessionStatus =
   | 'scheduled'
-  | 'in_progress'
+  | 'ongoing'
   | 'completed'
   | 'cancelled'
 
@@ -39,6 +39,20 @@ export interface StatusObject {
   label: string
 }
 
+// Interface pour une affectation d'instructeur à un module
+export interface ModuleInstructorData {
+  id: string
+  started_at: string
+  ended_at?: string | null
+  is_current?: boolean
+  module: {
+    id: string
+    title: string
+    description: string | null
+  } | null
+  instructor: SessionInstructor | null
+}
+
 export interface Session {
   id: string
   formation: {
@@ -48,7 +62,9 @@ export interface Session {
     created_at: string
     updated_at: string
   }
-  instructor: SessionInstructor
+  current_instructors?: ModuleInstructorData[]
+  instructor_history?: ModuleInstructorData[]
+  module_instructors?: ModuleInstructorData[]
   start_date: string
   end_date: string
   status: SessionStatus
@@ -71,7 +87,9 @@ export interface SessionFromBackend {
     created_at: string
     updated_at: string
   }
-  instructor: SessionInstructorFromBackend
+  current_instructors?: any[]
+  instructor_history?: any[]
+  module_instructors?: any[]
   start_date: string
   end_date: string
   status: StatusObject
@@ -91,17 +109,9 @@ export function transformSession(
   return {
     id: sessionFromBackend.id,
     formation: sessionFromBackend.formation,
-    instructor: {
-      id: sessionFromBackend.instructor.id,
-      first_name: sessionFromBackend.instructor.first_name,
-      last_name: sessionFromBackend.instructor.last_name,
-      email: sessionFromBackend.instructor.email,
-      role: sessionFromBackend.instructor.role?.value || null,
-      roleLabel: sessionFromBackend.instructor.role?.label,
-      permissions: sessionFromBackend.instructor.permissions,
-      created_at: sessionFromBackend.instructor.created_at,
-      updated_at: sessionFromBackend.instructor.updated_at,
-    },
+    current_instructors: sessionFromBackend.current_instructors,
+    instructor_history: sessionFromBackend.instructor_history,
+    module_instructors: sessionFromBackend.module_instructors,
     start_date: sessionFromBackend.start_date,
     end_date: sessionFromBackend.end_date,
     status: sessionFromBackend.status.value as SessionStatus,
@@ -116,13 +126,20 @@ export function transformSession(
   }
 }
 
+// Type pour l'affectation d'un instructeur à un module
+export interface ModuleInstructorAssignment {
+  module_id: string
+  instructor_id: string
+}
+
 export interface CreateSessionData {
   formation_id: string
-  instructor_id: string
   start_date: string
   end_date: string
-  max_students?: number
-  location?: string
+  status?: SessionStatus
+  max_students?: number | null
+  location?: string | null
+  module_instructors?: ModuleInstructorAssignment[]
 }
 
 export interface UpdateSessionData {
@@ -130,8 +147,10 @@ export interface UpdateSessionData {
   instructor_id?: string
   start_date?: string
   end_date?: string
-  max_students?: number
-  location?: string
+  status?: SessionStatus
+  max_students?: number | null
+  location?: string | null
+  module_instructors?: ModuleInstructorAssignment[]
 }
 
 // ============================================

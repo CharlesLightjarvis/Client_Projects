@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->text('content')->nullable();
             $table->foreignUuid('module_id')->constrained()->onDelete('cascade');
+            $table->string('link')->nullable()->comment('Can be a YouTube, Vimeo, or external resource link');
+            $table->integer('order')->default(1)->comment('Lesson order within the module');
             $table->timestamps();
         });
     }

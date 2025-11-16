@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\FormationLevel;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,12 @@ class Formation extends Model
     protected $fillable = [
         'title',
         'description',
+        'learning_objectives',
+        'target_skills',
+        'level',
+        'duration',
+        'image',
+        'price'
     ];
 
     /**
@@ -26,7 +33,7 @@ class Formation extends Model
      */
     public function modules(): HasMany
     {
-        return $this->hasMany(Module::class);
+        return $this->hasMany(Module::class)->orderBy('order');
     }
 
     /**
@@ -35,5 +42,13 @@ class Formation extends Model
     public function courseSessions(): HasMany
     {
         return $this->hasMany(CourseSession::class);
+    }
+
+    protected function casts(): array
+    {
+        return[
+            'target_skills' => 'array',
+            'level' => FormationLevel::class,
+        ];
     }
 }

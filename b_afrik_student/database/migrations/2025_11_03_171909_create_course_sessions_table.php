@@ -15,7 +15,6 @@ return new class extends Migration
         Schema::create('course_sessions', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('formation_id')->constrained()->cascadeOnDelete();
-            $table->foreignUuid('instructor_id')->constrained('users')->cascadeOnDelete();
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->string('status')->default(SessionStatus::SCHEDULED->value);

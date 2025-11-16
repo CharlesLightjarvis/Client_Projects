@@ -21,7 +21,7 @@ export function DeleteLesson({ lesson, open, onOpenChange }: DeleteLessonProps) 
   const { deleteLesson, loading } = useLessonStore()
 
   const handleDelete = async () => {
-    if (!lesson) return
+    if (!lesson?.id) return
 
     const result = await deleteLesson(lesson.id)
 

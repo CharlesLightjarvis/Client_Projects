@@ -27,7 +27,6 @@ class EnrollmentResource extends JsonResource
                 'label' => $this->payment_status->label(),
             ],
             'payment_amount' => $this->payment_amount,
-            'is_confirmed' => $this->isConfirmed(),
             'is_paid' => $this->isPaid(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

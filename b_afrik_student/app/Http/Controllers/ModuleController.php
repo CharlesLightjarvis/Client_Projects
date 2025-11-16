@@ -23,17 +23,6 @@ class ModuleController extends Controller
         );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreModuleRequest $request)
-    {
-        $module = $this->moduleService->createModule($request->validated());
-        return $this->successResponse(
-            ModuleResource::make($module),
-            'Module created successfully'
-        );
-    }
 
     /**
      * Display the specified resource.
@@ -43,6 +32,19 @@ class ModuleController extends Controller
         return $this->successResponse(
             ModuleResource::make($module),
             'Module fetched successfully'
+        );
+    }
+
+      /**
+     * Store a single module with its lessons.
+     */
+    public function store(StoreModuleRequest $request)
+    {
+        $module = $this->moduleService->createModule($request->validated());
+
+        return $this->createdSuccessResponse(
+            ModuleResource::make($module),
+            'Module created successfully'
         );
     }
 
@@ -66,4 +68,6 @@ class ModuleController extends Controller
         $module->delete();
         return $this->deletedSuccessResponse('Module deleted successfully');
     }
+
+  
 }

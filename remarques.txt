@@ -37,3 +37,19 @@ POST /api/enrollments
 Par défaut, l'inscription est créée avec le statut PENDING (en attente).
 2. Confirmation de l'inscription (Statut: CONFIRMED)
 L'admin peut ensuite confirmer l'inscription en appelant la méthode du service:
+
+
+
+
+
+
+remplir une formation completement via la boite de dialogue de formation avec un stepper
+lors de lajout dun module on va assigner le prof par defaut pour ce module la...
+mais peut changer lors dune session specifique => ex : charles est prof par defaut pour ce module mais pour la session
+de novembre il est indisponible on va donc lors de la creation dune session le remplacer par un autre prof sans pour 
+autant le remplacer comme prof par defaut
+
+Quand une session est créée, il faut automatiquement copier les profs par défaut dans module_session_instructors.
+
+
+formations -> modules -> enseignant -> sessions 

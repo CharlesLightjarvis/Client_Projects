@@ -57,7 +57,10 @@ class ModuleService {
     data: UpdateModuleData,
   ): Promise<{ module: Module; message: string }> {
     try {
-      const response = await api.put<ApiResponse<Module>>(`/api/modules/${id}`, data)
+      const response = await api.put<ApiResponse<Module>>(
+        `/api/modules/${id}`,
+        data,
+      )
 
       return {
         module: response.data.data,

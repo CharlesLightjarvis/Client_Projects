@@ -1,24 +1,30 @@
+import type { Lesson, CreateLessonData, UpdateLessonData } from './lesson'
+
 // Interface pour le module
 export interface Module {
-  id: string
+  id?: string
+  formation_id?: string
   title: string
-  description: string
-  formation_id: string
-  created_at: string
-  updated_at: string
+  description: string | null
+  instructor_id: string | null
+  order: number
+  lessons?: Lesson[]
 }
 
 // Types pour la gestion des modules (CRUD)
 export interface CreateModuleData {
-  title: string
-  description: string
   formation_id: string
+  title: string
+  description?: string | null
+  order: number
+  lessons?: CreateLessonData[]
 }
 
 export interface UpdateModuleData {
   title?: string
-  description?: string
-  formation_id?: string
+  description?: string | null
+  order?: number
+  lessons?: UpdateLessonData[]
 }
 
 export interface ApiResponse<T> {

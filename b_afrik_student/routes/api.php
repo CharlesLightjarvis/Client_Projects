@@ -3,7 +3,6 @@
 use App\Http\Controllers\UserController;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
-use App\Http\Controllers\PostController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\FormationController;
@@ -14,21 +13,36 @@ use Illuminate\Support\Facades\Route;
 
 
 
+// Enrollment actions - bulk unenroll (MUST be before apiResource)
+Route::delete('enrollments/unenroll', [EnrollmentController::class, 'unenrollStudents']);
+
 Route::apiResource('users', UserController::class);
 Route::apiResource('lessons', LessonController::class);
-Route::apiResource('modules', ModuleController::class);
 Route::apiResource('formations', FormationController::class);
 Route::apiResource('course-sessions', CourseSessionController::class);
 Route::apiResource('enrollments', EnrollmentController::class);
-
-Route::get('/instructors/{instructorId}/course-sessions', [CourseSessionController::class, 'getCourseSessionsByInstructor']);
-
-Route::get('/students/{studentId}/course-sessions', [CourseSessionController::class, 'getCourseSessionsByStudent']);
+Route::apiResource('modules', ModuleController::class);
 
 
-// Enrollment actions
-Route::post('enrollments/{enrollment}/confirm', [EnrollmentController::class, 'confirm']);
-Route::post('enrollments/{enrollment}/cancel', [EnrollmentController::class, 'cancelEnrollment']);
+
+// Get available students (not yet enrolled) for a course session
+Route::get('course-sessions/{courseSession}/available-students', [CourseSessionController::class, 'getAvailableStudents']);
+
+// Get students enrolled in a course session
+Route::get('course-sessions/{courseSession}/students', [CourseSessionController::class, 'getSessionStudents']);
+
+
+
+
+
+
+
+Route::get('instructors/{instructorId}/course-sessions', [CourseSessionController::class, 'getCourseSessionsByInstructor']);
+
+Route::get('students/{studentId}/course-sessions', [CourseSessionController::class, 'getCourseSessionsByStudent']);
+
+
+
 
 // Progress routes
 Route::post('lessons/{lessonId}/complete', [ProgressController::class, 'markLessonCompleted']);
