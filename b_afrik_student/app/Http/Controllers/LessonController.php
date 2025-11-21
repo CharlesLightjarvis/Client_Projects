@@ -63,7 +63,7 @@ class LessonController extends Controller
      */
     public function destroy(Lesson $lesson)
     {
-        $lesson->delete();
+        $this->lessonService->deleteLesson($lesson);
         return $this->deletedSuccessResponse('Lesson deleted successfully');
     }
 }

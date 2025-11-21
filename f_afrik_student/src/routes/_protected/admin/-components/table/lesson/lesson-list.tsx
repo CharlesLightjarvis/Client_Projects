@@ -4,8 +4,8 @@ import { useLessons } from '@/hooks/use-lessons'
 import { usePermissions } from '@/hooks/use-permissions'
 import { PermissionGuard } from '@/components/PermissionGuard'
 import { useEffect, useState, useRef } from 'react'
-import { CreateLesson } from '../../lessons/CreateLesson'
-import { UpdateLesson } from '../../lessons/UpdateLesson'
+import { CreateLessonStepper } from '../../lessons/CreateLessonStepper'
+import { UpdateLessonStepper } from '../../lessons/UpdateLessonStepper'
 import { DeleteLesson } from '../../lessons/DeleteLesson'
 import type { Lesson } from '@/types/lesson'
 import { toast } from 'sonner'
@@ -95,7 +95,7 @@ export default function LessonList() {
         </div>
 
         <PermissionGuard permissions={PERMISSIONS.LESSON.CREATE}>
-          <CreateLesson open={createDialogOpen} onOpenChange={setCreateDialogOpen} />
+          <CreateLessonStepper open={createDialogOpen} onOpenChange={setCreateDialogOpen} />
         </PermissionGuard>
       </>
     )
@@ -132,11 +132,11 @@ export default function LessonList() {
       </div>
 
       <PermissionGuard permissions={PERMISSIONS.LESSON.CREATE}>
-        <CreateLesson open={createDialogOpen} onOpenChange={setCreateDialogOpen} />
+        <CreateLessonStepper open={createDialogOpen} onOpenChange={setCreateDialogOpen} />
       </PermissionGuard>
 
       <PermissionGuard permissions={PERMISSIONS.LESSON.UPDATE}>
-        <UpdateLesson
+        <UpdateLessonStepper
           lesson={selectedLesson}
           open={updateDialogOpen}
           onOpenChange={setUpdateDialogOpen}

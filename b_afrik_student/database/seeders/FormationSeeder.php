@@ -49,7 +49,6 @@ class FormationSeeder extends Seeder
             'module_id' => $autocadBasics->id,
             'title' => 'Introduction à AutoCAD',
             'content' => 'Découverte de l\'interface et des outils de base',
-            'link' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
             'order' => 1,
         ]);
 
@@ -57,7 +56,6 @@ class FormationSeeder extends Seeder
             'module_id' => $autocadBasics->id,
             'title' => 'Les outils de dessin',
             'content' => 'Maîtrise des outils de dessin: lignes, cercles, arcs',
-            'link' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
             'order' => 2,
         ]);
 
@@ -65,7 +63,6 @@ class FormationSeeder extends Seeder
             'module_id' => $autocadBasics->id,
             'title' => 'Les calques',
             'content' => 'Gestion et organisation des calques',
-            'link' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
             'order' => 3,
         ]);
 
@@ -80,7 +77,6 @@ class FormationSeeder extends Seeder
             'module_id' => $autocadAdvanced->id,
             'title' => 'Modélisation 3D',
             'content' => 'Introduction à la modélisation en 3 dimensions',
-            'link' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
             'order' => 1,
         ]);
 
@@ -88,7 +84,6 @@ class FormationSeeder extends Seeder
             'module_id' => $autocadAdvanced->id,
             'title' => 'Rendu et présentation',
             'content' => 'Création de rendus photoréalistes',
-            'link' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
             'order' => 2,
         ]);
 
@@ -115,7 +110,6 @@ class FormationSeeder extends Seeder
             'module_id' => $revitBasics->id,
             'title' => 'Le BIM et Revit',
             'content' => 'Comprendre le Building Information Modeling',
-            'link' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
             'order' => 1,
         ]);
 
@@ -123,7 +117,6 @@ class FormationSeeder extends Seeder
             'module_id' => $revitBasics->id,
             'title' => 'Modélisation de base',
             'content' => 'Créer des murs, portes et fenêtres',
-            'link' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
             'order' => 2,
         ]);
 
@@ -138,7 +131,6 @@ class FormationSeeder extends Seeder
             'module_id' => $revitAdvanced->id,
             'title' => 'Création de familles',
             'content' => 'Développer des familles paramétriques personnalisées',
-            'link' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
             'order' => 1,
         ]);
 
@@ -165,7 +157,6 @@ class FormationSeeder extends Seeder
             'module_id' => $sketchupBasics->id,
             'title' => 'Interface SketchUp',
             'content' => 'Navigation et outils de base',
-            'link' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
             'order' => 1,
         ]);
 
@@ -173,7 +164,6 @@ class FormationSeeder extends Seeder
             'module_id' => $sketchupBasics->id,
             'title' => 'Modélisation simple',
             'content' => 'Créer des formes et volumes simples',
-            'link' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
             'order' => 2,
         ]);
 

@@ -9,6 +9,7 @@ export interface FileWithPreview {
 export interface UseFileUploadOptions {
   accept?: string
   maxSize?: number
+  maxFiles?: number
   multiple?: boolean
   onFilesSelected?: (files: FileWithPreview[]) => void
 }
@@ -39,12 +40,26 @@ export interface UseFileUploadActions {
 
 export type UseFileUploadReturn = [UseFileUploadState, UseFileUploadActions]
 
+// Utility function to format bytes to human-readable format
+export function formatBytes(bytes: number, decimals: number = 2): string {
+  if (bytes === 0) return '0 Bytes'
+
+  const k = 1024
+  const dm = decimals < 0 ? 0 : decimals
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
+}
+
 export function useFileUpload(
   options: UseFileUploadOptions = {},
 ): UseFileUploadReturn {
   const {
     accept = '*',
     maxSize = 10 * 1024 * 1024, // 5MB par défaut
+    maxFiles,
     multiple = false,
     onFilesSelected,
   } = options
@@ -125,7 +140,15 @@ export function useFileUpload(
       })
 
       if (multiple) {
-        setFiles((prev) => [...prev, ...filesWithPreview])
+        setFiles((prev) => {
+          const newFiles = [...prev, ...filesWithPreview]
+          // Check maxFiles limit
+          if (maxFiles && newFiles.length > maxFiles) {
+            setErrors([`Vous ne pouvez télécharger que ${maxFiles} fichier${maxFiles > 1 ? 's' : ''} maximum`])
+            return prev
+          }
+          return newFiles
+        })
       } else {
         // Pour single file, nettoyer l'ancien preview
         files.forEach((f) => URL.revokeObjectURL(f.preview))
@@ -139,7 +162,7 @@ export function useFileUpload(
       )
       onFilesSelected?.(filesWithPreview)
     },
-    [validateFiles, multiple, files, onFilesSelected],
+    [validateFiles, multiple, maxFiles, files, onFilesSelected],
   )
 
   const handleDragEnter = useCallback((e: React.DragEvent<HTMLDivElement>) => {

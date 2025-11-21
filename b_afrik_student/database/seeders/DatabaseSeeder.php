@@ -54,6 +54,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PostSeeder::class,
             FormationSeeder::class,
+            AttachmentSeeder::class, // Must be after FormationSeeder (creates lessons)
             CourseSessionSeeder::class,
             EnrollmentSeeder::class,
             LessonProgressSeeder::class,

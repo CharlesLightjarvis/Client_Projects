@@ -9,12 +9,20 @@ interface LessonState {
   error: string | null
   fetchLessons: () => Promise<void>
   createLesson: (
-    data: CreateLessonData
-  ) => Promise<{ success: boolean; message: string }>
+    data: CreateLessonData,
+  ) => Promise<{
+    success: boolean
+    message: string
+    errors?: Record<string, string[]>
+  }>
   updateLesson: (
     id: string,
-    data: UpdateLessonData
-  ) => Promise<{ success: boolean; message: string }>
+    data: UpdateLessonData,
+  ) => Promise<{
+    success: boolean
+    message: string
+    errors?: Record<string, string[]>
+  }>
   deleteLesson: (id: string) => Promise<{ success: boolean; message: string }>
 }
 
@@ -32,10 +40,13 @@ export const useLessonStore = create<LessonState>()(
         set({ loading: true, error: null })
         try {
           const lessons = await lessonService.getLessons()
+          console.log(lessons)
           set({ lessons, loading: false })
         } catch (error) {
           const message =
-            error instanceof Error ? error.message : 'Erreur lors du chargement des leçons'
+            error instanceof Error
+              ? error.message
+              : 'Erreur lors du chargement des leçons'
           set({ error: message, loading: false })
         }
       },
@@ -45,15 +56,21 @@ export const useLessonStore = create<LessonState>()(
         try {
           const { lesson, message } = await lessonService.createLesson(data)
           set((state) => ({
-            lessons: [...state.lessons, lesson],
+            lessons: [lesson, ...state.lessons],
             loading: false,
           }))
           return { success: true, message }
-        } catch (error) {
+        } catch (error: any) {
           const message =
-            error instanceof Error ? error.message : 'Erreur lors de la création de la leçon'
+            error instanceof Error
+              ? error.message
+              : 'Erreur lors de la création de la leçon'
           set({ error: message, loading: false })
-          return { success: false, message }
+          return {
+            success: false,
+            message,
+            errors: error?.errors,
+          }
         }
       },
 
@@ -66,13 +83,17 @@ export const useLessonStore = create<LessonState>()(
             loading: false,
           }))
           return { success: true, message }
-        } catch (error) {
+        } catch (error: any) {
           const message =
             error instanceof Error
               ? error.message
               : 'Erreur lors de la mise à jour de la leçon'
           set({ error: message, loading: false })
-          return { success: false, message }
+          return {
+            success: false,
+            message,
+            errors: error?.errors,
+          }
         }
       },
 
@@ -95,6 +116,6 @@ export const useLessonStore = create<LessonState>()(
         }
       },
     })),
-    { name: 'lesson-store' }
-  )
+    { name: 'lesson-store' },
+  ),
 )

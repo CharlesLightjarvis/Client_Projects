@@ -11,14 +11,15 @@ class Attachment extends Model
     use HasFactory, HasUuids;
 
     protected $fillable = [
-        'lesson_id',
         'name',
         'url',
         'type',
+        'attachable_id',   // ID du modèle lié (leçon, module, formation)
+        'attachable_type', // Type du modèle lié
     ];
 
-    public function lesson()
+    public function attachable()
     {
-        return $this->belongsTo(Lesson::class);
+        return $this->morphTo();
     }
 }

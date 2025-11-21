@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('attachments', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignId('lesson_id')->constrained()->onDelete('cascade');
+            // Polymorphic relation
+            $table->uuidMorphs('attachable'); // attachable_id + attachable_type
             $table->string('name');
-            $table->string('url')->comment('Cloudinary URL or external file link');
-            $table->string('type')->nullable()->comment('pdf, video, ppt, zip, image, etc.');
+            $table->string('url')->comment('Local file path or external URL');
+            $table->string('type')->nullable()->comment('pdf, video, ppt, zip, image, youtube, google_drive, etc.');
             $table->timestamps();
         });
     }

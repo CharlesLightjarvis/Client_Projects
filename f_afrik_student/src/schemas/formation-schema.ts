@@ -60,7 +60,7 @@ export const createFormationDefaultValues: CreateFormationFormData = {
   title: '',
   description: null,
   learning_objectives: null,
-  target_skills: null,
+  target_skills: [],
   level: FormationLevel.EASY,
   duration: 1,
   image_url: null,

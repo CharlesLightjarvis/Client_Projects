@@ -38,7 +38,20 @@ class FormationService {
       // Append all data fields
       Object.keys(data).forEach((key) => {
         const value = data[key as keyof CreateFormationData]
-        if (value !== undefined && value !== null) {
+
+        // Handle target_skills specially - convert null to empty array
+        if (key === 'target_skills') {
+          const skills = value as string[] | null
+          if (skills && skills.length > 0) {
+            // If there are skills, append each one
+            skills.forEach((skill) => {
+              formData.append('target_skills[]', skill)
+            })
+          } else {
+            // If null or empty, send empty array
+            formData.append('target_skills', JSON.stringify([]))
+          }
+        } else if (value !== undefined && value !== null) {
           // Handle file uploads specially
           if (key === 'image_url' && value instanceof File) {
             formData.append('image_url', value)
@@ -89,7 +102,21 @@ class FormationService {
       // Append all data fields
       Object.keys(data).forEach((key) => {
         const value = data[key as keyof UpdateFormationData]
-        if (value !== undefined && value !== null) {
+
+        // Handle target_skills specially - convert null to empty array
+        if (key === 'target_skills') {
+          const skills = value as string[] | null | undefined
+          if (skills && skills.length > 0) {
+            // If there are skills, append each one
+            skills.forEach((skill) => {
+              formData.append('target_skills[]', skill)
+            })
+          } else if (skills !== undefined) {
+            // If explicitly set to null or empty array, send empty array
+            formData.append('target_skills', JSON.stringify([]))
+          }
+          // If undefined, don't send it at all (for partial updates)
+        } else if (value !== undefined && value !== null) {
           // Handle file uploads specially
           if (key === 'image_url' && value instanceof File) {
             formData.append('image_url', value)

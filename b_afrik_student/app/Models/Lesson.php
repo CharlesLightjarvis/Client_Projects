@@ -21,7 +21,6 @@ class Lesson extends Model
         'title',
         'content',
         'module_id',
-        'link',
         'order',
     ];
 
@@ -46,6 +45,6 @@ class Lesson extends Model
      */
     public function attachments()
     {
-        return $this->hasMany(Attachment::class);
+        return $this->morphMany(Attachment::class, 'attachable');
     }
 }

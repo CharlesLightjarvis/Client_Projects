@@ -10,7 +10,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { MoreHorizontal, Clock, BookOpen } from 'lucide-react'
+import { MoreHorizontal, Clock, ImageOff } from 'lucide-react'
 import { DataTableColumnHeader } from '@/components/ui/data-table-column-header'
 
 interface ColumnsProps {
@@ -28,7 +28,9 @@ const formatPrice = (price: number | null) => {
 }
 
 // Helper pour la couleur du badge de niveau
-const getLevelBadgeVariant = (level: string): 'default' | 'secondary' | 'destructive' => {
+const getLevelBadgeVariant = (
+  level: string,
+): 'default' | 'secondary' | 'destructive' => {
   switch (level) {
     case 'easy':
       return 'secondary'
@@ -47,7 +49,9 @@ export const createColumns = ({
 }: ColumnsProps): ColumnDef<Formation>[] => [
   {
     accessorKey: 'title',
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Formation" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Formation" />
+    ),
     cell: ({ row }) => {
       const title = row.getValue('title') as string
       const imageUrl = row.original.image_url
@@ -57,7 +61,7 @@ export const createColumns = ({
           <Avatar className="h-10 w-10">
             <AvatarImage src={imageUrl || undefined} alt={title} />
             <AvatarFallback>
-              <BookOpen className="h-5 w-5" />
+              <ImageOff className="h-5 w-5" />
             </AvatarFallback>
           </Avatar>
           <div className="font-medium">{title}</div>
@@ -68,20 +72,22 @@ export const createColumns = ({
   {
     id: 'level',
     accessorFn: (row) => row.level?.label,
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Niveau" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Niveau" />
+    ),
     cell: ({ row }) => {
       const level = row.original.level
       if (!level) return <div>-</div>
       return (
-        <Badge variant={getLevelBadgeVariant(level.value)}>
-          {level.label}
-        </Badge>
+        <Badge variant={getLevelBadgeVariant(level.value)}>{level.label}</Badge>
       )
     },
   },
   {
     accessorKey: 'duration',
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Durée" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Durée" />
+    ),
     cell: ({ row }) => {
       const duration = row.getValue('duration') as number
       return (
@@ -94,7 +100,9 @@ export const createColumns = ({
   },
   {
     accessorKey: 'price',
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Prix" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Prix" />
+    ),
     cell: ({ row }) => {
       const price = row.getValue('price') as number | null
       return <div className="text-sm font-medium">{formatPrice(price)}</div>
@@ -108,7 +116,10 @@ export const createColumns = ({
     cell: ({ row }) => {
       const description = row.getValue('description') as string | null
       return (
-        <div className="max-w-[300px] truncate text-sm text-muted-foreground" title={description || ''}>
+        <div
+          className="max-w-[300px] truncate text-sm text-muted-foreground"
+          title={description || ''}
+        >
           {description || '-'}
         </div>
       )
