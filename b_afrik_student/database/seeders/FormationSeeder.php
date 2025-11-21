@@ -33,7 +33,7 @@ class FormationSeeder extends Seeder
             'target_skills' => ['Dessin technique', 'Modélisation 3D', 'Gestion de projets CAO'],
             'level' => 'medium',
             'duration' => 40, // 40 heures
-            'image' => 'https://images.unsplash.com/photo-1503387762-592deb58ef4e',
+            'image_url' => 'https://images.unsplash.com/photo-1503387762-592deb58ef4e',
             'price' => 499.99,
         ]);
 
@@ -100,7 +100,7 @@ class FormationSeeder extends Seeder
             'target_skills' => ['BIM', 'Modélisation architecturale', 'Familles Revit', 'Documentation'],
             'level' => 'hard',
             'duration' => 50, // 50 heures
-            'image' => 'https://images.unsplash.com/photo-1503387762-592deb58ef4e',
+            'image_url' => 'https://images.unsplash.com/photo-1503387762-592deb58ef4e',
             'price' => 599.99,
         ]);
 
@@ -150,7 +150,7 @@ class FormationSeeder extends Seeder
             'target_skills' => ['Modélisation 3D rapide', 'Rendu SketchUp', 'Plugins'],
             'level' => 'easy',
             'duration' => 30, // 30 heures
-            'image' => 'https://images.unsplash.com/photo-1503387762-592deb58ef4e',
+            'image_url' => 'https://images.unsplash.com/photo-1503387762-592deb58ef4e',
             'price' => 399.99,
         ]);
 

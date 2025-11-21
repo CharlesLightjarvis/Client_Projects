@@ -2,6 +2,7 @@ import { type Formation } from '@/types/formation'
 import { type ColumnDef } from '@tanstack/react-table'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,7 +10,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { MoreHorizontal, Clock } from 'lucide-react'
+import { MoreHorizontal, Clock, BookOpen } from 'lucide-react'
 import { DataTableColumnHeader } from '@/components/ui/data-table-column-header'
 
 interface ColumnsProps {
@@ -46,9 +47,22 @@ export const createColumns = ({
 }: ColumnsProps): ColumnDef<Formation>[] => [
   {
     accessorKey: 'title',
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Titre" />,
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Formation" />,
     cell: ({ row }) => {
-      return <div className="font-medium">{row.getValue('title')}</div>
+      const title = row.getValue('title') as string
+      const imageUrl = row.original.image_url
+
+      return (
+        <div className="flex items-center gap-3">
+          <Avatar className="h-10 w-10">
+            <AvatarImage src={imageUrl || undefined} alt={title} />
+            <AvatarFallback>
+              <BookOpen className="h-5 w-5" />
+            </AvatarFallback>
+          </Avatar>
+          <div className="font-medium">{title}</div>
+        </div>
+      )
     },
   },
   {

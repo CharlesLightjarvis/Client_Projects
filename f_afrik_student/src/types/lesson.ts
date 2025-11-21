@@ -6,6 +6,7 @@ export interface Lesson {
   link: string | null
   order: number
   module_id?: string
+  image_url?: string | null
   created_at?: string
   updated_at?: string
 }
@@ -18,6 +19,7 @@ export interface LessonFromBackend {
   link: string | null
   order: number
   module_id: string
+  image_url?: string | null
   created_at: string
   updated_at: string
 }
@@ -29,6 +31,7 @@ export interface CreateLessonData {
   link?: string | null
   order?: number
   module_id?: string
+  image_url?: File | null
 }
 
 export interface UpdateLessonData {
@@ -37,6 +40,7 @@ export interface UpdateLessonData {
   link?: string | null
   order?: number
   module_id?: string
+  image_url?: File | null
 }
 
 export interface ApiResponse<T> {

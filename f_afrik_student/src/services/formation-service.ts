@@ -19,7 +19,9 @@ class FormationService {
    * GET - Retrieve single formation by ID
    */
   async getFormationById(id: string): Promise<Formation> {
-    const response = await api.get<ApiResponse<Formation>>(`/api/formations/${id}`)
+    const response = await api.get<ApiResponse<Formation>>(
+      `/api/formations/${id}`,
+    )
     return response.data.data
   }
 
@@ -30,7 +32,31 @@ class FormationService {
     data: CreateFormationData,
   ): Promise<{ formation: Formation; message: string }> {
     try {
-      const response = await api.post<ApiResponse<Formation>>('/api/formations', data)
+      // Create FormData for file upload
+      const formData = new FormData()
+
+      // Append all data fields
+      Object.keys(data).forEach((key) => {
+        const value = data[key as keyof CreateFormationData]
+        if (value !== undefined && value !== null) {
+          // Handle file uploads specially
+          if (key === 'image_url' && value instanceof File) {
+            formData.append('image_url', value)
+          } else if (key !== 'image_url') {
+            formData.append(key, value as string | Blob)
+          }
+        }
+      })
+
+      const response = await api.post<ApiResponse<Formation>>(
+        '/api/formations',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      )
 
       return {
         formation: response.data.data,
@@ -57,9 +83,30 @@ class FormationService {
     data: UpdateFormationData,
   ): Promise<{ formation: Formation; message: string }> {
     try {
-      const response = await api.put<ApiResponse<Formation>>(
-        `/api/formations/${id}`,
-        data,
+      // Create FormData for file upload
+      const formData = new FormData()
+
+      // Append all data fields
+      Object.keys(data).forEach((key) => {
+        const value = data[key as keyof UpdateFormationData]
+        if (value !== undefined && value !== null) {
+          // Handle file uploads specially
+          if (key === 'image_url' && value instanceof File) {
+            formData.append('image_url', value)
+          } else if (key !== 'image_url') {
+            formData.append(key, value as string | Blob)
+          }
+        }
+      })
+
+      const response = await api.post<ApiResponse<Formation>>(
+        `/api/formations/${id}?_method=PUT`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
       )
 
       return {
@@ -84,7 +131,9 @@ class FormationService {
    */
   async deleteFormation(id: string): Promise<{ message: string }> {
     try {
-      const response = await api.delete<ApiResponse<null>>(`/api/formations/${id}`)
+      const response = await api.delete<ApiResponse<null>>(
+        `/api/formations/${id}`,
+      )
 
       return {
         message: response.data.message,

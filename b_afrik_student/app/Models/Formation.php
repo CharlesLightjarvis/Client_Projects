@@ -24,7 +24,7 @@ class Formation extends Model
         'target_skills',
         'level',
         'duration',
-        'image',
+        'image_url',
         'price'
     ];
 

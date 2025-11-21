@@ -31,7 +31,7 @@ class FormationFactory extends Factory
             ],
             'level' => fake()->randomElement(FormationLevel::cases()),
             'duration' => fake()->numberBetween(10, 200), // Durée en heures
-            'image' => null,
+            'image_url' => null,
             'price' => fake()->randomFloat(2, 100, 5000),
         ];
     }

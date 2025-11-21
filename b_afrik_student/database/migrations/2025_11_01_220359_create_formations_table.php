@@ -20,7 +20,7 @@ return new class extends Migration
             $table->json('target_skills')->nullable(); // List of skills
             $table->string('level')->default(FormationLevel::EASY->value);
             $table->integer('duration')->comment('Duration in hours');
-            $table->string('image')->nullable();
+            $table->string('image_url')->nullable();
             $table->decimal('price', 8, 2)->nullable(); // Ex: 99.99
             $table->timestamps();
         });

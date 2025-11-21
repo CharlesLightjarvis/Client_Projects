@@ -25,7 +25,9 @@ class FormationResource extends JsonResource
                 'label' => $this->level?->label()
             ],
             'duration' => $this->duration,
-            'image' => $this->image,
+            'image_url' => $this->image_url
+            ? asset('storage/' . $this->image_url)
+            : null,
             'price' => $this->price,
             'modules' => ModuleResource::collection($this->whenLoaded('modules')),
             // 'course_sessions' => CourseSessionResource::collection($this->whenLoaded('courseSessions')),

@@ -1,6 +1,10 @@
 import { create } from 'zustand'
 import { devtools, subscribeWithSelector } from 'zustand/middleware'
-import type { Formation, CreateFormationData, UpdateFormationData } from '@/types/formation'
+import type {
+  Formation,
+  CreateFormationData,
+  UpdateFormationData,
+} from '@/types/formation'
 import { formationService } from '@/services/formation-service'
 
 interface FormationState {
@@ -54,6 +58,8 @@ export const useFormationStore = create<FormationStore>()(
         set({ loading: true, error: null })
         try {
           const formations = await formationService.getAllFormations()
+          console.log('Formations fetched:', formations)
+
           set({
             formations,
             loading: false,
@@ -95,7 +101,8 @@ export const useFormationStore = create<FormationStore>()(
       createFormation: async (data: CreateFormationData) => {
         set({ loading: true, error: null })
         try {
-          const { formation, message } = await formationService.createFormation(data)
+          const { formation, message } =
+            await formationService.createFormation(data)
 
           // Add new formation to the beginning of the list (backend uses DESC order)
           set((state) => ({
@@ -110,7 +117,8 @@ export const useFormationStore = create<FormationStore>()(
           console.error('❌ Failed to create formation:', error.message)
           set({
             loading: false,
-            error: error.message || 'Erreur lors de la création de la formation',
+            error:
+              error.message || 'Erreur lors de la création de la formation',
           })
 
           return {
@@ -125,7 +133,10 @@ export const useFormationStore = create<FormationStore>()(
       updateFormation: async (id: string, data: UpdateFormationData) => {
         set({ loading: true, error: null })
         try {
-          const { formation, message } = await formationService.updateFormation(id, data)
+          const { formation, message } = await formationService.updateFormation(
+            id,
+            data,
+          )
 
           // Move updated formation to the beginning of the list (backend uses DESC order)
           set((state) => ({
@@ -134,7 +145,9 @@ export const useFormationStore = create<FormationStore>()(
               ...state.formations.filter((f) => f.id !== id),
             ],
             currentFormation:
-              state.currentFormation?.id === id ? formation : state.currentFormation,
+              state.currentFormation?.id === id
+                ? formation
+                : state.currentFormation,
             loading: false,
             error: null,
           }))
@@ -145,7 +158,8 @@ export const useFormationStore = create<FormationStore>()(
           console.error('❌ Failed to update formation:', error.message)
           set({
             loading: false,
-            error: error.message || 'Erreur lors de la mise à jour de la formation',
+            error:
+              error.message || 'Erreur lors de la mise à jour de la formation',
           })
 
           return {
@@ -177,7 +191,8 @@ export const useFormationStore = create<FormationStore>()(
           console.error('❌ Failed to delete formation:', error.message)
           set({
             loading: false,
-            error: error.message || 'Erreur lors de la suppression de la formation',
+            error:
+              error.message || 'Erreur lors de la suppression de la formation',
           })
 
           return {

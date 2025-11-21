@@ -32,7 +32,7 @@ class UpdateFormationRequest extends FormRequest
             'target_skills.*' => 'string',
             'level' => ['sometimes', 'required', 'string', Rule::enum(FormationLevel::class)],
             'duration' => 'sometimes|required|integer|min:1',
-            'image' => 'sometimes|nullable|string',
+            'image_url' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240', // 10 MB = 10240 KB
             'price' => 'sometimes|nullable|numeric|min:0',
         ];
     }

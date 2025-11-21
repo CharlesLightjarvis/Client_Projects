@@ -16,7 +16,7 @@ export const createFormationSchema = z.object({
     .int()
     .min(1, 'La durée doit être au moins 1 heure')
     .max(10000, 'La durée ne peut pas dépasser 10000 heures'),
-  image: z.string().url('L\'image doit être une URL valide').optional().nullable(),
+  image_url: z.instanceof(File, { message: 'Veuillez sélectionner une image' }).optional().nullable(),
   price: z
     .number()
     .min(0, 'Le prix ne peut pas être négatif')
@@ -42,7 +42,7 @@ export const updateFormationSchema = z.object({
     .min(1, 'La durée doit être au moins 1 heure')
     .max(10000, 'La durée ne peut pas dépasser 10000 heures')
     .optional(),
-  image: z.string().url('L\'image doit être une URL valide').optional().nullable(),
+  image_url: z.instanceof(File, { message: 'Veuillez sélectionner une image' }).optional().nullable(),
   price: z
     .number()
     .min(0, 'Le prix ne peut pas être négatif')
@@ -63,7 +63,7 @@ export const createFormationDefaultValues: CreateFormationFormData = {
   target_skills: null,
   level: FormationLevel.EASY,
   duration: 1,
-  image: null,
+  image_url: null,
   price: null,
 }
 
@@ -75,7 +75,7 @@ export const getUpdateFormationDefaultValues = (formation: {
   target_skills: string[] | null
   level: { value: FormationLevel; label: string }
   duration: number
-  image: string | null
+  image_url: string | null
   price: number | null
 }): UpdateFormationFormData => ({
   title: formation.title,
@@ -84,6 +84,6 @@ export const getUpdateFormationDefaultValues = (formation: {
   target_skills: formation.target_skills,
   level: formation.level.value,
   duration: formation.duration,
-  image: formation.image,
+  image_url: null, // L'image existante sera gérée séparément dans le composant
   price: formation.price,
 })

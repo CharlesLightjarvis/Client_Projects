@@ -67,7 +67,7 @@ class FormationController extends Controller
      */
     public function destroy(Formation $formation)
     {
-        $formation->delete();
+        $this->formationService->deleteFormation($formation);
         return $this->deletedSuccessResponse('Formation deleted successfully');
     }
 }

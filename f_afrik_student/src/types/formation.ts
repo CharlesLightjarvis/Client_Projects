@@ -26,7 +26,7 @@ export interface Formation {
   target_skills: string[] | null
   level: LevelType
   duration: number
-  image: string | null
+  image_url: string | null
   price: number | null
   modules?: Module[]
   created_at: string
@@ -41,7 +41,7 @@ export interface CreateFormationData {
   target_skills?: string[] | null
   level: FormationLevel
   duration: number
-  image?: string | null
+  image_url?: File | null // Changed from string to File for upload
   price?: number | null
   module_ids?: string[]
 }
@@ -54,7 +54,7 @@ export interface UpdateFormationData {
   target_skills?: string[] | null
   level?: FormationLevel
   duration?: number
-  image?: string | null
+  image_url?: File | null // Changed from string to File for upload
   price?: number | null
   module_ids?: string[]
 }
