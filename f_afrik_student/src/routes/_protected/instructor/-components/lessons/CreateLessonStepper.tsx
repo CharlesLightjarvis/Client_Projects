@@ -382,7 +382,7 @@ export function CreateLessonStepper({
                       <FieldLabel htmlFor="module_id">Module</FieldLabel>
                       <Select
                         onValueChange={field.onChange}
-                        value={field.value}
+                        value={field.value ?? undefined}
                         disabled={loading}
                       >
                         <SelectTrigger id="module_id">

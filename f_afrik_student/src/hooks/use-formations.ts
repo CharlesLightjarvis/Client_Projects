@@ -16,6 +16,7 @@ export const useFormations = () => {
   // Get actions directly from store without creating new objects
   const {
     fetchFormations,
+    fetchStudentFormations,
     fetchFormation,
     createFormation,
     updateFormation,
@@ -32,6 +33,7 @@ export const useFormations = () => {
     error,
     // Actions
     fetchFormations,
+    fetchStudentFormations,
     fetchFormation,
     createFormation,
     updateFormation,

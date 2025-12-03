@@ -232,33 +232,10 @@ export const navigationMain: NavigationItem[] = [
     allowedRoles: ['student'],
   },
   {
-    title: 'Mes Sessions',
-    url: '/student/sessions',
-    icon: Brackets,
-    allowedRoles: ['student'],
-  },
-  {
     title: 'Mes formations',
     url: '/student/formations',
     icon: BookOpen,
     allowedRoles: ['student'],
-    items: [
-      {
-        title: 'Formations en cours',
-        url: '/student/formations',
-        allowedRoles: ['student'],
-      },
-      {
-        title: 'Formations complétées',
-        url: '/student/formations/completed',
-        allowedRoles: ['student'],
-      },
-      {
-        title: 'Catalogue',
-        url: '/student/formations/catalog',
-        allowedRoles: ['student'],
-      },
-    ],
   },
   {
     title: 'Mes certifications',

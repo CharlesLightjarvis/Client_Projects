@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\EnrollmentStatus;
 use App\Models\Formation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +17,7 @@ class FormationService
      */
     public function getAllFormations(): Collection
     {
-        return Formation::with(['modules.lessons'])
+        return Formation::with(['modules.lessons.attachments'])
             ->orderBy('created_at', 'desc')
             ->get();
     }
@@ -26,7 +27,7 @@ class FormationService
      */
     public function getFormation(Formation $formation): Formation
     {
-        return $formation->load(['modules.lessons', 'courseSessions']);
+        return $formation->load(['modules.lessons.attachments', 'courseSessions']);
     }
 
     /**
@@ -64,7 +65,7 @@ class FormationService
             // Update formation basic info only
             $formation->update($data);
 
-            return $formation->fresh(['modules.lessons']);
+            return $formation->fresh(['modules.lessons.attachments']);
         });
     }
 
@@ -110,6 +111,21 @@ class FormationService
         if (Storage::disk('public')->exists($path)) {
             Storage::disk('public')->delete($path);
         }
+    }
+
+    /**
+     * Get all formations where a student is enrolled (active enrollments only).
+     */
+    public function getStudentEnrolledFormations(string $studentId): Collection
+    {
+        return Formation::whereHas('courseSessions.enrollments', function ($query) use ($studentId) {
+            $query->where('student_id', $studentId)
+                  ->whereIn('status', [EnrollmentStatus::CONFIRMED]);
+        })
+        ->with(['modules.lessons.attachments'])
+        ->orderBy('created_at', 'desc')
+        ->get()
+        ->unique('id');
     }
 
 }

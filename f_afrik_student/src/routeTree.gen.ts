@@ -17,7 +17,7 @@ import { Route as authLoginRouteImport } from './routes/(auth)/login'
 import { Route as ProtectedStudentRouteRouteImport } from './routes/_protected/student/route'
 import { Route as ProtectedInstructorRouteRouteImport } from './routes/_protected/instructor/route'
 import { Route as ProtectedAdminRouteRouteImport } from './routes/_protected/admin/route'
-import { Route as ProtectedStudentSessionsRouteRouteImport } from './routes/_protected/student/sessions/route'
+import { Route as ProtectedStudentFormationsRouteRouteImport } from './routes/_protected/student/formations/route'
 import { Route as ProtectedInstructorSessionsRouteRouteImport } from './routes/_protected/instructor/sessions/route'
 import { Route as ProtectedInstructorLessonsRouteRouteImport } from './routes/_protected/instructor/lessons/route'
 import { Route as ProtectedAdminUsersRouteRouteImport } from './routes/_protected/admin/users/route'
@@ -27,9 +27,13 @@ import { Route as ProtectedAdminPaymentsRouteRouteImport } from './routes/_prote
 import { Route as ProtectedAdminModulesRouteRouteImport } from './routes/_protected/admin/modules/route'
 import { Route as ProtectedAdminLessonsRouteRouteImport } from './routes/_protected/admin/lessons/route'
 import { Route as ProtectedAdminFormationsRouteRouteImport } from './routes/_protected/admin/formations/route'
+import { Route as ProtectedStudentFormationsIndexRouteImport } from './routes/_protected/student/formations/index'
 import { Route as ProtectedStudentDashboardIndexRouteImport } from './routes/_protected/student/dashboard/index'
 import { Route as ProtectedInstructorDashboardIndexRouteImport } from './routes/_protected/instructor/dashboard/index'
 import { Route as ProtectedAdminDashboardIndexRouteImport } from './routes/_protected/admin/dashboard/index'
+import { Route as ProtectedStudentFormationsFormationIdIndexRouteImport } from './routes/_protected/student/formations/$formationId/index'
+import { Route as ProtectedStudentFormationsFormationIdLessonsRouteRouteImport } from './routes/_protected/student/formations/$formationId/lessons/route'
+import { Route as ProtectedStudentFormationsFormationIdLessonsLessonIdRouteImport } from './routes/_protected/student/formations/$formationId/lessons/$lessonId'
 
 const ProtectedRouteRoute = ProtectedRouteRouteImport.update({
   id: '/_protected',
@@ -71,10 +75,10 @@ const ProtectedAdminRouteRoute = ProtectedAdminRouteRouteImport.update({
   path: '/admin',
   getParentRoute: () => ProtectedRouteRoute,
 } as any)
-const ProtectedStudentSessionsRouteRoute =
-  ProtectedStudentSessionsRouteRouteImport.update({
-    id: '/sessions',
-    path: '/sessions',
+const ProtectedStudentFormationsRouteRoute =
+  ProtectedStudentFormationsRouteRouteImport.update({
+    id: '/formations',
+    path: '/formations',
     getParentRoute: () => ProtectedStudentRouteRoute,
   } as any)
 const ProtectedInstructorSessionsRouteRoute =
@@ -131,6 +135,12 @@ const ProtectedAdminFormationsRouteRoute =
     path: '/formations',
     getParentRoute: () => ProtectedAdminRouteRoute,
   } as any)
+const ProtectedStudentFormationsIndexRoute =
+  ProtectedStudentFormationsIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => ProtectedStudentFormationsRouteRoute,
+  } as any)
 const ProtectedStudentDashboardIndexRoute =
   ProtectedStudentDashboardIndexRouteImport.update({
     id: '/dashboard/',
@@ -148,6 +158,25 @@ const ProtectedAdminDashboardIndexRoute =
     id: '/dashboard/',
     path: '/dashboard/',
     getParentRoute: () => ProtectedAdminRouteRoute,
+  } as any)
+const ProtectedStudentFormationsFormationIdIndexRoute =
+  ProtectedStudentFormationsFormationIdIndexRouteImport.update({
+    id: '/$formationId/',
+    path: '/$formationId/',
+    getParentRoute: () => ProtectedStudentFormationsRouteRoute,
+  } as any)
+const ProtectedStudentFormationsFormationIdLessonsRouteRoute =
+  ProtectedStudentFormationsFormationIdLessonsRouteRouteImport.update({
+    id: '/$formationId/lessons',
+    path: '/$formationId/lessons',
+    getParentRoute: () => ProtectedStudentFormationsRouteRoute,
+  } as any)
+const ProtectedStudentFormationsFormationIdLessonsLessonIdRoute =
+  ProtectedStudentFormationsFormationIdLessonsLessonIdRouteImport.update({
+    id: '/$lessonId',
+    path: '/$lessonId',
+    getParentRoute: () =>
+      ProtectedStudentFormationsFormationIdLessonsRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -167,10 +196,14 @@ export interface FileRoutesByFullPath {
   '/admin/users': typeof ProtectedAdminUsersRouteRoute
   '/instructor/lessons': typeof ProtectedInstructorLessonsRouteRoute
   '/instructor/sessions': typeof ProtectedInstructorSessionsRouteRoute
-  '/student/sessions': typeof ProtectedStudentSessionsRouteRoute
+  '/student/formations': typeof ProtectedStudentFormationsRouteRouteWithChildren
   '/admin/dashboard': typeof ProtectedAdminDashboardIndexRoute
   '/instructor/dashboard': typeof ProtectedInstructorDashboardIndexRoute
   '/student/dashboard': typeof ProtectedStudentDashboardIndexRoute
+  '/student/formations/': typeof ProtectedStudentFormationsIndexRoute
+  '/student/formations/$formationId/lessons': typeof ProtectedStudentFormationsFormationIdLessonsRouteRouteWithChildren
+  '/student/formations/$formationId': typeof ProtectedStudentFormationsFormationIdIndexRoute
+  '/student/formations/$formationId/lessons/$lessonId': typeof ProtectedStudentFormationsFormationIdLessonsLessonIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -189,10 +222,13 @@ export interface FileRoutesByTo {
   '/admin/users': typeof ProtectedAdminUsersRouteRoute
   '/instructor/lessons': typeof ProtectedInstructorLessonsRouteRoute
   '/instructor/sessions': typeof ProtectedInstructorSessionsRouteRoute
-  '/student/sessions': typeof ProtectedStudentSessionsRouteRoute
   '/admin/dashboard': typeof ProtectedAdminDashboardIndexRoute
   '/instructor/dashboard': typeof ProtectedInstructorDashboardIndexRoute
   '/student/dashboard': typeof ProtectedStudentDashboardIndexRoute
+  '/student/formations': typeof ProtectedStudentFormationsIndexRoute
+  '/student/formations/$formationId/lessons': typeof ProtectedStudentFormationsFormationIdLessonsRouteRouteWithChildren
+  '/student/formations/$formationId': typeof ProtectedStudentFormationsFormationIdIndexRoute
+  '/student/formations/$formationId/lessons/$lessonId': typeof ProtectedStudentFormationsFormationIdLessonsLessonIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -213,10 +249,14 @@ export interface FileRoutesById {
   '/_protected/admin/users': typeof ProtectedAdminUsersRouteRoute
   '/_protected/instructor/lessons': typeof ProtectedInstructorLessonsRouteRoute
   '/_protected/instructor/sessions': typeof ProtectedInstructorSessionsRouteRoute
-  '/_protected/student/sessions': typeof ProtectedStudentSessionsRouteRoute
+  '/_protected/student/formations': typeof ProtectedStudentFormationsRouteRouteWithChildren
   '/_protected/admin/dashboard/': typeof ProtectedAdminDashboardIndexRoute
   '/_protected/instructor/dashboard/': typeof ProtectedInstructorDashboardIndexRoute
   '/_protected/student/dashboard/': typeof ProtectedStudentDashboardIndexRoute
+  '/_protected/student/formations/': typeof ProtectedStudentFormationsIndexRoute
+  '/_protected/student/formations/$formationId/lessons': typeof ProtectedStudentFormationsFormationIdLessonsRouteRouteWithChildren
+  '/_protected/student/formations/$formationId/': typeof ProtectedStudentFormationsFormationIdIndexRoute
+  '/_protected/student/formations/$formationId/lessons/$lessonId': typeof ProtectedStudentFormationsFormationIdLessonsLessonIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -237,10 +277,14 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/instructor/lessons'
     | '/instructor/sessions'
-    | '/student/sessions'
+    | '/student/formations'
     | '/admin/dashboard'
     | '/instructor/dashboard'
     | '/student/dashboard'
+    | '/student/formations/'
+    | '/student/formations/$formationId/lessons'
+    | '/student/formations/$formationId'
+    | '/student/formations/$formationId/lessons/$lessonId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -259,10 +303,13 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/instructor/lessons'
     | '/instructor/sessions'
-    | '/student/sessions'
     | '/admin/dashboard'
     | '/instructor/dashboard'
     | '/student/dashboard'
+    | '/student/formations'
+    | '/student/formations/$formationId/lessons'
+    | '/student/formations/$formationId'
+    | '/student/formations/$formationId/lessons/$lessonId'
   id:
     | '__root__'
     | '/'
@@ -282,10 +329,14 @@ export interface FileRouteTypes {
     | '/_protected/admin/users'
     | '/_protected/instructor/lessons'
     | '/_protected/instructor/sessions'
-    | '/_protected/student/sessions'
+    | '/_protected/student/formations'
     | '/_protected/admin/dashboard/'
     | '/_protected/instructor/dashboard/'
     | '/_protected/student/dashboard/'
+    | '/_protected/student/formations/'
+    | '/_protected/student/formations/$formationId/lessons'
+    | '/_protected/student/formations/$formationId/'
+    | '/_protected/student/formations/$formationId/lessons/$lessonId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -354,11 +405,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedAdminRouteRouteImport
       parentRoute: typeof ProtectedRouteRoute
     }
-    '/_protected/student/sessions': {
-      id: '/_protected/student/sessions'
-      path: '/sessions'
-      fullPath: '/student/sessions'
-      preLoaderRoute: typeof ProtectedStudentSessionsRouteRouteImport
+    '/_protected/student/formations': {
+      id: '/_protected/student/formations'
+      path: '/formations'
+      fullPath: '/student/formations'
+      preLoaderRoute: typeof ProtectedStudentFormationsRouteRouteImport
       parentRoute: typeof ProtectedStudentRouteRoute
     }
     '/_protected/instructor/sessions': {
@@ -424,6 +475,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedAdminFormationsRouteRouteImport
       parentRoute: typeof ProtectedAdminRouteRoute
     }
+    '/_protected/student/formations/': {
+      id: '/_protected/student/formations/'
+      path: '/'
+      fullPath: '/student/formations/'
+      preLoaderRoute: typeof ProtectedStudentFormationsIndexRouteImport
+      parentRoute: typeof ProtectedStudentFormationsRouteRoute
+    }
     '/_protected/student/dashboard/': {
       id: '/_protected/student/dashboard/'
       path: '/dashboard'
@@ -444,6 +502,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/dashboard'
       preLoaderRoute: typeof ProtectedAdminDashboardIndexRouteImport
       parentRoute: typeof ProtectedAdminRouteRoute
+    }
+    '/_protected/student/formations/$formationId/': {
+      id: '/_protected/student/formations/$formationId/'
+      path: '/$formationId'
+      fullPath: '/student/formations/$formationId'
+      preLoaderRoute: typeof ProtectedStudentFormationsFormationIdIndexRouteImport
+      parentRoute: typeof ProtectedStudentFormationsRouteRoute
+    }
+    '/_protected/student/formations/$formationId/lessons': {
+      id: '/_protected/student/formations/$formationId/lessons'
+      path: '/$formationId/lessons'
+      fullPath: '/student/formations/$formationId/lessons'
+      preLoaderRoute: typeof ProtectedStudentFormationsFormationIdLessonsRouteRouteImport
+      parentRoute: typeof ProtectedStudentFormationsRouteRoute
+    }
+    '/_protected/student/formations/$formationId/lessons/$lessonId': {
+      id: '/_protected/student/formations/$formationId/lessons/$lessonId'
+      path: '/$lessonId'
+      fullPath: '/student/formations/$formationId/lessons/$lessonId'
+      preLoaderRoute: typeof ProtectedStudentFormationsFormationIdLessonsLessonIdRouteImport
+      parentRoute: typeof ProtectedStudentFormationsFormationIdLessonsRouteRoute
     }
   }
 }
@@ -493,13 +572,49 @@ const ProtectedInstructorRouteRouteWithChildren =
     ProtectedInstructorRouteRouteChildren,
   )
 
+interface ProtectedStudentFormationsFormationIdLessonsRouteRouteChildren {
+  ProtectedStudentFormationsFormationIdLessonsLessonIdRoute: typeof ProtectedStudentFormationsFormationIdLessonsLessonIdRoute
+}
+
+const ProtectedStudentFormationsFormationIdLessonsRouteRouteChildren: ProtectedStudentFormationsFormationIdLessonsRouteRouteChildren =
+  {
+    ProtectedStudentFormationsFormationIdLessonsLessonIdRoute:
+      ProtectedStudentFormationsFormationIdLessonsLessonIdRoute,
+  }
+
+const ProtectedStudentFormationsFormationIdLessonsRouteRouteWithChildren =
+  ProtectedStudentFormationsFormationIdLessonsRouteRoute._addFileChildren(
+    ProtectedStudentFormationsFormationIdLessonsRouteRouteChildren,
+  )
+
+interface ProtectedStudentFormationsRouteRouteChildren {
+  ProtectedStudentFormationsIndexRoute: typeof ProtectedStudentFormationsIndexRoute
+  ProtectedStudentFormationsFormationIdLessonsRouteRoute: typeof ProtectedStudentFormationsFormationIdLessonsRouteRouteWithChildren
+  ProtectedStudentFormationsFormationIdIndexRoute: typeof ProtectedStudentFormationsFormationIdIndexRoute
+}
+
+const ProtectedStudentFormationsRouteRouteChildren: ProtectedStudentFormationsRouteRouteChildren =
+  {
+    ProtectedStudentFormationsIndexRoute: ProtectedStudentFormationsIndexRoute,
+    ProtectedStudentFormationsFormationIdLessonsRouteRoute:
+      ProtectedStudentFormationsFormationIdLessonsRouteRouteWithChildren,
+    ProtectedStudentFormationsFormationIdIndexRoute:
+      ProtectedStudentFormationsFormationIdIndexRoute,
+  }
+
+const ProtectedStudentFormationsRouteRouteWithChildren =
+  ProtectedStudentFormationsRouteRoute._addFileChildren(
+    ProtectedStudentFormationsRouteRouteChildren,
+  )
+
 interface ProtectedStudentRouteRouteChildren {
-  ProtectedStudentSessionsRouteRoute: typeof ProtectedStudentSessionsRouteRoute
+  ProtectedStudentFormationsRouteRoute: typeof ProtectedStudentFormationsRouteRouteWithChildren
   ProtectedStudentDashboardIndexRoute: typeof ProtectedStudentDashboardIndexRoute
 }
 
 const ProtectedStudentRouteRouteChildren: ProtectedStudentRouteRouteChildren = {
-  ProtectedStudentSessionsRouteRoute: ProtectedStudentSessionsRouteRoute,
+  ProtectedStudentFormationsRouteRoute:
+    ProtectedStudentFormationsRouteRouteWithChildren,
   ProtectedStudentDashboardIndexRoute: ProtectedStudentDashboardIndexRoute,
 }
 

@@ -9,7 +9,6 @@ use App\Http\Controllers\FormationController;
 use App\Http\Controllers\CourseSessionController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\ProgressController;
-use App\Http\Controllers\AttachmentController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -23,6 +22,9 @@ Route::apiResource('formations', FormationController::class);
 Route::apiResource('course-sessions', CourseSessionController::class);
 Route::apiResource('enrollments', EnrollmentController::class);
 Route::apiResource('modules', ModuleController::class);
+
+// Get formations where the authenticated student is enrolled
+Route::get('student/formations', [FormationController::class, 'getStudentEnrolledFormations'])->middleware('auth:sanctum');
 
 
 

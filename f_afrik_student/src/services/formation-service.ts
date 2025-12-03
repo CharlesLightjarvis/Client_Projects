@@ -16,6 +16,16 @@ class FormationService {
   }
 
   /**
+   * GET - Retrieve student formations
+   */
+  async getStudentFormations(): Promise<Formation[]> {
+    const response = await api.get<ApiResponse<Formation[]>>(
+      '/api/student/formations',
+    )
+    return response.data.data
+  }
+
+  /**
    * GET - Retrieve single formation by ID
    */
   async getFormationById(id: string): Promise<Formation> {

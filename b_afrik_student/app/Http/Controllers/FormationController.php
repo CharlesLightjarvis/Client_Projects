@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRoleEnum;
 use App\Http\Requests\formations\StoreFormationRequest;
 use App\Http\Requests\formations\UpdateFormationRequest;
 use App\Http\Resources\FormationResource;
 use App\Models\Formation;
 use App\Services\FormationService;
+use Illuminate\Http\Request;
 
 class FormationController extends Controller
 {
@@ -69,5 +71,28 @@ class FormationController extends Controller
     {
         $this->formationService->deleteFormation($formation);
         return $this->deletedSuccessResponse('Formation deleted successfully');
+    }
+
+    /**
+     * Get all formations where the authenticated student is enrolled.
+     */
+    public function getStudentEnrolledFormations(Request $request)
+    {
+        $user = $request->user();
+
+        // Vérifier que l'utilisateur a le rôle student
+        if (!$user->hasRole(UserRoleEnum::STUDENT->value)) {
+            return $this->errorResponse(
+                'Access denied. Only students can access their enrolled formations.',
+                403
+            );
+        }
+
+        $formations = $this->formationService->getStudentEnrolledFormations($user->id);
+
+        return $this->successResponse(
+            FormationResource::collection($formations),
+            'Student enrolled formations retrieved successfully'
+        );
     }
 }

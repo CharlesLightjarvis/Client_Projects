@@ -16,6 +16,7 @@ interface FormationState {
 
 interface FormationActions {
   fetchFormations: () => Promise<void>
+  fetchStudentFormations: () => Promise<void>
   fetchFormation: (id: string) => Promise<void>
   createFormation: (data: CreateFormationData) => Promise<{
     success: boolean
@@ -72,6 +73,34 @@ export const useFormationStore = create<FormationStore>()(
             formations: [],
             loading: false,
             error: error.message || 'Erreur lors du chargement des formations',
+          })
+        }
+      },
+
+      // Fetch student formations from API
+      fetchStudentFormations: async () => {
+        // Prevent duplicate calls
+        if (get().loading) return
+
+        set({ loading: true, error: null })
+        try {
+          const formations = await formationService.getStudentFormations()
+          console.log('Student formations fetched:', formations)
+
+          set({
+            formations,
+            loading: false,
+            error: null,
+          })
+          console.log('✅ Student formations fetched:', formations.length)
+        } catch (error: any) {
+          console.error('❌ Failed to fetch student formations:', error.message)
+          set({
+            formations: [],
+            loading: false,
+            error:
+              error.message ||
+              'Erreur lors du chargement des formations étudiantes',
           })
         }
       },
