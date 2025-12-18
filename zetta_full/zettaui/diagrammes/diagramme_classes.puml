@@ -1,0 +1,254 @@
+@startuml
+!theme plain
+title Diagramme de Classes - Site Vitrine SkillForge
+
+' ===== COUCHE PRESENTATION (React Components) =====
+package "Presentation Layer" {
+  class MainNav {
+    +render(): JSX.Element
+    +handleNavigation(): void
+  }
+  
+  class UpperNav {
+    +render(): JSX.Element
+  }
+  
+  class HeroSlider {
+    +slides: Slide[]
+    +currentSlide: number
+    +render(): JSX.Element
+    +nextSlide(): void
+    +prevSlide(): void
+  }
+  
+  class FeaturedCourses {
+    +formations: Formation[]
+    +render(): JSX.Element
+    +loadFeaturedCourses(): void
+  }
+  
+  class Testimonials {
+    +testimonials: Testimonial[]
+    +render(): JSX.Element
+  }
+  
+  class Footer {
+    +render(): JSX.Element
+  }
+  
+  class LoadingScreen {
+    +isLoading: boolean
+    +render(): JSX.Element
+  }
+}
+
+' ===== COUCHE ROUTING =====
+package "Routing Layer" {
+  class RouteConfig {
+    +routes: Route[]
+    +index(): Route
+    +route(path: string, component: string): Route
+  }
+  
+  note right of RouteConfig
+    Routes configurées:
+    - / (home)
+    - /about
+    - /certifications
+    - /formations
+    - /formations/:slug
+    - /blog
+    - /contact
+  end note
+}
+
+' ===== COUCHE DONNEES METIER =====
+package "Business Domain" {
+  class Teacher {
+    +id: string
+    +fullName: string
+    +email: string
+    +imageUrl?: string
+    +role: string
+    +bio?: string
+    +title?: string
+    +status: "ACTIVE" | "INACTIVE"
+    +created_at: string
+    +updated_at: string
+  }
+
+  class Category {
+    +id: string
+    +name: string
+    +slug: string
+    +description?: string
+    +created_at: string
+    +updated_at: string
+  }
+
+  class Certification {
+    +id: string
+    +image?: string
+    +name: string
+    +slug: string
+    +description?: string
+    +created_at: string
+    +updated_at: string
+  }
+
+  class Lesson {
+    +id: string
+    +name: string
+    +description?: string
+  }
+
+  class Module {
+    +id: string
+    +name: string
+    +description: string
+    +lessons: Lesson[]
+  }
+
+  class Session {
+    +id: string
+    +start_date: string
+    +end_date: string
+    +course_type: "DAY" | "NIGHT"
+    +capacity: number
+    +enrolled_students: number
+    +teacher: Teacher
+  }
+
+  class Formation {
+    +id: string
+    +name: string
+    +slug: string
+    +description?: string
+    +image?: string
+    +level: "beginner" | "intermediate" | "advanced"
+    +duration: number
+    +price: number
+    +discount_price?: number
+    +teacher: Teacher
+    +category: Category
+    +sessions: Session[]
+    +link: string
+    +certifications: Certification[]
+    +created_at: string
+    +updated_at: string
+  }
+
+  class FormationDetails {
+    +id: string
+    +name: string
+    +slug: string
+    +description?: string
+    +image?: string
+    +level: "beginner" | "intermediate" | "advanced"
+    +duration: number
+    +price: number
+    +discount_price?: number
+    +teacher: Teacher
+    +category: Category
+    +sessions: Session[]
+    +link: string
+    +certifications: Certification[]
+    +prerequisites: string[]
+    +objectives: string[]
+    +modules: Module[]
+    +created_at: string
+    +updated_at: string
+  }
+}
+
+' ===== COUCHE DONNEES STATIQUES =====
+package "Static Data" {
+  class CertificationsData {
+    +certifications: CertificationInfo[]
+    +getCertificationBySlug(slug: string): CertificationInfo
+    +getAllCertifications(): CertificationInfo[]
+  }
+  
+  class CertificationInfo {
+    +slug: string
+    +title: string
+    +description: string
+    +duration: string
+    +level: string
+    +fullDescription: string
+    +modules: string[]
+    +price: string
+    +startDates: string[]
+  }
+}
+
+' ===== COUCHE SERVICES =====
+package "Services Layer" {
+  class ApiService {
+    +baseURL: string
+    +get(endpoint: string): Promise<any>
+    +post(endpoint: string, data: any): Promise<any>
+    +put(endpoint: string, data: any): Promise<any>
+    +delete(endpoint: string): Promise<any>
+  }
+  
+  class EchoService {
+    +connection: Echo
+    +connect(): void
+    +listen(channel: string, event: string): void
+    +disconnect(): void
+  }
+}
+
+' ===== COUCHE STATE MANAGEMENT =====
+package "State Management" {
+  class Store {
+    +state: AppState
+    +actions: Actions
+    +getState(): AppState
+    +setState(newState: Partial<AppState>): void
+  }
+}
+
+' ===== RELATIONS METIER =====
+Formation ||--|| Teacher : "enseigné par"
+Formation ||--|| Category : "appartient à"
+Formation ||--o{ Session : "propose"
+Formation }o--o{ Certification : "délivre"
+
+FormationDetails ||--|| Teacher : "enseigné par"
+FormationDetails ||--|| Category : "appartient à"
+FormationDetails ||--o{ Session : "propose"
+FormationDetails }o--o{ Certification : "délivre"
+FormationDetails ||--o{ Module : "contient"
+
+Module ||--o{ Lesson : "contient"
+Session ||--|| Teacher : "animé par"
+
+' ===== RELATIONS TECHNIQUES =====
+FeaturedCourses ..> Formation : "affiche"
+FeaturedCourses ..> ApiService : "utilise"
+RouteConfig ..> Formation : "route vers"
+RouteConfig ..> FormationDetails : "route vers"
+CertificationsData ..> CertificationInfo : "contient"
+Store ..> Formation : "stocke"
+EchoService ..> Store : "met à jour"
+
+' ===== NOTES =====
+note top of Formation
+  Entité principale pour l'affichage
+  des formations sur le site vitrine
+end note
+
+note top of FormationDetails
+  Version détaillée avec modules
+  et prérequis pour la page détail
+end note
+
+note top of CertificationsData
+  Données statiques des certifications
+  disponibles (web-full-stack, mobile-dev,
+  devops-cloud, ai-ml, cybersecurity, data-science)
+end note
+
+@enduml 

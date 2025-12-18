@@ -1,0 +1,337 @@
+@startuml Diagramme de Classe - Système Zetta
+
+title Diagramme de Classe - Système de Gestion de Formations Zetta
+
+' Configuration du style
+skinparam classAttributeIconSize 0
+skinparam classFontSize 10
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+
+' === CLASSES PRINCIPALES ===
+
+class User {
+  -id: UUID
+  -fullName: string
+  -email: string
+  -imageUrl: string
+  -password: string
+  -status: string
+  -email_verified_at: datetime
+  -bio: text
+  -title: string
+  -phone: string
+  --
+  +teachingSessions(): HasMany
+  +enrolledSessions(): BelongsToMany
+  +certifications(): BelongsToMany
+  +formations(): BelongsToMany
+  +attendances(): HasMany
+  +payments(): HasMany
+}
+
+class Formation {
+  -id: UUID
+  -name: string
+  -slug: string
+  -description: text
+  -image: string
+  -level: enum
+  -duration: integer
+  -price: integer
+  -discount_price: integer
+  -category_id: UUID
+  -prerequisites: json
+  -objectives: json
+  --
+  +getLinkAttribute(): string
+  +category(): BelongsTo
+  +students(): BelongsToMany
+  +certifications(): BelongsToMany
+  +modules(): BelongsToMany
+  +sessions(): HasMany
+  +interests(): HasMany
+  +payments(): HasMany
+}
+
+class FormationSession {
+  -id: UUID
+  -formation_id: UUID
+  -teacher_id: UUID
+  -course_type: enum
+  -start_date: date
+  -end_date: date
+  -capacity: integer
+  -status: enum
+  -enrolled_students: integer
+  --
+  +formation(): BelongsTo
+  +teacher(): BelongsTo
+  +students(): BelongsToMany
+  +hasAvailableSpots(): boolean
+  +attendances(): HasMany
+  +payments(): HasMany
+  +schedules(): HasMany
+}
+
+class Module {
+  -id: UUID
+  -formation_id: UUID
+  -name: string
+  -slug: string
+  -description: text
+  --
+  +formations(): BelongsToMany
+  +lessons(): HasMany
+  +questions(): MorphMany
+}
+
+class Lesson {
+  -id: UUID
+  -name: string
+  -module_id: UUID
+  -description: text
+  -slug: string
+  -duration: integer
+  --
+  +module(): BelongsTo
+  +resources(): HasMany
+}
+
+class Category {
+  -id: UUID
+  -name: string
+  -slug: string
+  -description: text
+  --
+  +formations(): HasMany
+}
+
+class Certification {
+  -id: UUID
+  -name: string
+  -description: text
+  -image: string
+  -provider: string
+  -validity_period: string
+  -level: enum
+  -slug: string
+  -benefits: json
+  -skills: json
+  -best_for: json
+  -prerequisites: json
+  -link: string
+  --
+  +getLinkAttribute(): string
+  +formations(): BelongsToMany
+  +students(): BelongsToMany
+  +progressTrackings(): MorphMany
+  +quizConfiguration(): MorphOne
+}
+
+class Question {
+  -id: UUID
+  -questionable_type: string
+  -questionable_id: UUID
+  -question: text
+  -answers: json
+  -type: enum
+  -difficulty: enum
+  -points: integer
+  --
+  +questionable(): MorphTo
+}
+
+class QuizConfiguration {
+  -id: UUID
+  -configurable_type: string
+  -configurable_id: UUID
+  -total_questions: integer
+  -difficulty_distribution: json
+  -module_distribution: json
+  -passing_score: integer
+  -time_limit: integer
+  --
+  +configurable(): MorphTo
+}
+
+class ProgressTracking {
+  -id: UUID
+  -user_id: UUID
+  -trackable_type: string
+  -trackable_id: UUID
+  -answer_details: json
+  -score: integer
+  -passed: boolean
+  -attempt_number: integer
+  -completed_at: datetime
+  -question_ids: json
+  --
+  +user(): BelongsTo
+  +trackable(): MorphTo
+}
+
+class Attendance {
+  -id: UUID
+  -session_id: UUID
+  -student_id: UUID
+  -date: date
+  -status: enum
+  -notes: text
+  --
+  +session(): BelongsTo
+  +student(): BelongsTo
+  +formation(): Formation
+}
+
+class Payment {
+  -id: UUID
+  -student_id: UUID
+  -session_id: UUID
+  -formation_id: UUID
+  -amount: decimal
+  -remaining_amount: decimal
+  -payment_method: string
+  -status: enum
+  -notes: text
+  -payment_date: date
+  --
+  +student(): BelongsTo
+  +session(): BelongsTo
+  +formation(): BelongsTo
+}
+
+class Resource {
+  -id: UUID
+  -lesson_id: UUID
+  -title: string
+  -description: text
+  -file_path: string
+  -type: string
+  -size: integer
+  --
+  +lesson(): BelongsTo
+}
+
+class CourseSchedule {
+  -id: UUID
+  -session_id: UUID
+  -start_time: time
+  -end_time: time
+  -room: string
+  -recurrence: string
+  -start_date: date
+  -end_date: date
+  -teacher_id: UUID
+  --
+  +session(): BelongsTo
+  +teacher(): BelongsTo
+  +days(): HasMany
+  +formation(): Formation
+}
+
+class CourseScheduleDay {
+  -id: UUID
+  -course_schedule_id: UUID
+  -day_of_week: integer
+  --
+  +schedule(): BelongsTo
+  +getDayNameAttribute(): string
+}
+
+class FormationInterest {
+  -id: UUID
+  -formation_id: UUID
+  -fullName: string
+  -email: string
+  -phone: string
+  -message: text
+  -status: enum
+  --
+  +formation(): BelongsTo
+}
+
+' === RELATIONS ===
+
+' Relations User
+User ||--o{ FormationSession : "enseigne"
+User }o--o{ FormationSession : "inscrit"
+User }o--o{ Formation : "inscrit"
+User }o--o{ Certification : "inscrit"
+User ||--o{ Attendance : "présence"
+User ||--o{ Payment : "paiement"
+
+' Relations Formation
+Formation ||--o{ FormationSession : "contient"
+Formation ||--o{ FormationInterest : "intérêts"
+Formation ||--o{ Payment : "paiements"
+Formation }o--o{ Module : "compose"
+Formation }o--o{ Certification : "certifie"
+Category ||--o{ Formation : "catégorise"
+
+' Relations FormationSession
+FormationSession ||--o{ Attendance : "présences"
+FormationSession ||--o{ Payment : "paiements"
+FormationSession ||--o{ CourseSchedule : "planifie"
+
+' Relations Module
+Module ||--o{ Lesson : "contient"
+Module }o--o{ Formation : "compose"
+
+' Relations Lesson
+Lesson ||--o{ Resource : "ressources"
+
+' Relations Certification
+Certification ||--o{ ProgressTracking : "suivi"
+Certification ||--|| QuizConfiguration : "configuration"
+
+' Relations polymorphiques
+Question }o--|| Module : "questionne"
+Question }o--|| Certification : "questionne"
+QuizConfiguration }o--|| Certification : "configure"
+ProgressTracking }o--|| Certification : "suit"
+
+' Relations CourseSchedule
+CourseSchedule ||--o{ CourseScheduleDay : "jours"
+
+' === NOTES ===
+note top of User
+  Utilise les traits:
+  - HasUuids
+  - HasFactory
+  - Notifiable
+  - HasRoles (Spatie)
+end note
+
+note top of Formation
+  Polymorphique pour:
+  - Questions
+  - QuizConfiguration
+end note
+
+note top of Certification
+  Polymorphique pour:
+  - Questions
+  - QuizConfiguration
+  - ProgressTracking
+end note
+
+note top of Question
+  Polymorphique:
+  - questionable_type
+  - questionable_id
+end note
+
+note top of QuizConfiguration
+  Polymorphique:
+  - configurable_type
+  - configurable_id
+end note
+
+note top of ProgressTracking
+  Polymorphique:
+  - trackable_type
+  - trackable_id
+end note
+
+@enduml 

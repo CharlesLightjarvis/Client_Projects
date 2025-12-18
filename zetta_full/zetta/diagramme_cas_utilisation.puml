@@ -1,0 +1,109 @@
+@startuml Diagramme de Cas d'Utilisation Principal - Zetta
+
+title Diagramme de Cas d'Utilisation Principal - Système Zetta
+
+left to right direction
+
+actor "Invité" as Guest
+actor "Étudiant" as Student
+actor "Professeur" as Teacher
+actor "Administrateur" as Admin
+
+' Héritage des rôles
+Student -up-|> Guest
+Teacher -up-|> Guest
+Admin -up-|> Teacher
+Admin -up-|> Student
+
+rectangle "Système de Gestion de Formations Zetta" {
+    
+    package "Accès Public" {
+        usecase "Consulter le catalogue" as UC_CATALOG
+        note right of UC_CATALOG
+          - Formations
+          - Catégories
+          - Sessions
+          - Certifications
+        end note
+        usecase "Soumettre un intérêt" as UC_INTEREST
+    }
+    
+    package "Authentification" {
+        usecase "Se connecter" as UC_LOGIN
+        usecase "Gérer son profil" as UC_PROFILE
+    }
+    
+    package "Espace Étudiant" {
+        usecase "Gérer ses formations" as UC_STUDENT_FORMATIONS
+        usecase "Passer des quiz" as UC_STUDENT_QUIZ
+        usecase "Suivre ses paiements" as UC_STUDENT_PAYMENTS
+        usecase "Consulter son planning" as UC_STUDENT_SCHEDULE
+    }
+    
+    package "Espace Professeur" {
+        usecase "Gérer ses sessions" as UC_TEACHER_SESSIONS
+        usecase "Gérer les présences" as UC_TEACHER_ATTENDANCE
+        usecase "Gérer les ressources" as UC_TEACHER_RESOURCES
+    }
+    
+    package "Administration" {
+        usecase "Gestion des utilisateurs" as UC_ADMIN_USERS
+        usecase "Gestion du contenu" as UC_ADMIN_CONTENT
+        usecase "Gestion des inscriptions" as UC_ADMIN_ENROLLMENT
+        usecase "Gestion financière" as UC_ADMIN_FINANCE
+    }
+    
+    package "IA Prism" {
+        usecase "Utiliser l'IA Prism" as UC_PRISM
+    }
+}
+
+' === RELATIONS PRINCIPALES ===
+Guest --> UC_CATALOG
+Guest --> UC_INTEREST
+
+Student --> UC_LOGIN
+Student --> UC_PROFILE
+Student --> UC_STUDENT_FORMATIONS
+Student --> UC_STUDENT_QUIZ
+Student --> UC_STUDENT_PAYMENTS
+Student --> UC_STUDENT_SCHEDULE
+Student --> UC_PRISM
+
+Teacher --> UC_LOGIN
+Teacher --> UC_PROFILE
+Teacher --> UC_TEACHER_SESSIONS
+Teacher --> UC_TEACHER_ATTENDANCE
+Teacher --> UC_TEACHER_RESOURCES
+Teacher --> UC_PRISM
+
+Admin --> UC_ADMIN_USERS
+Admin --> UC_ADMIN_CONTENT
+Admin --> UC_ADMIN_ENROLLMENT
+Admin --> UC_ADMIN_FINANCE
+Admin --> UC_PRISM
+
+' === INCLUSIONS ===
+UC_STUDENT_QUIZ ..> UC_STUDENT_FORMATIONS : <<include>>
+UC_TEACHER_ATTENDANCE ..> UC_TEACHER_SESSIONS : <<include>>
+UC_TEACHER_RESOURCES ..> UC_TEACHER_SESSIONS : <<include>>
+
+' === NOTES ===
+note bottom of UC_INTEREST
+  Création automatique
+  d'un compte étudiant
+  après approbation
+end note
+
+note bottom of UC_ADMIN_ENROLLMENT
+  Inclut la gestion
+  des intérêts et
+  inscriptions
+end note
+
+note bottom of UC_PRISM
+  Assistant IA pour
+  questions/réponses
+end note
+
+@enduml 

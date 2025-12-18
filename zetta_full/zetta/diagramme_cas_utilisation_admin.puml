@@ -1,0 +1,154 @@
+@startuml Diagramme de Cas d'Utilisation Administration - Zetta
+
+title Diagramme de Cas d'Utilisation Administration - Système Zetta
+
+left to right direction
+
+actor "Administrateur" as Admin
+
+rectangle "Fonctionnalités d'Administration" {
+    
+    package "Gestion des Utilisateurs" {
+        usecase "Gérer les utilisateurs" as UC_USERS
+        usecase "Gérer les rôles" as UC_ROLES
+        usecase "Consulter les étudiants" as UC_STUDENTS
+        usecase "Consulter les sessions et formations d'un étudiant" as UC_STUDENT_DETAILS
+    }
+    
+    package "Gestion du Contenu Pédagogique" {
+        usecase "Gérer les formations" as UC_FORMATIONS
+        usecase "Gérer les sessions" as UC_SESSIONS
+        usecase "Gérer les modules" as UC_MODULES
+        usecase "Gérer les leçons" as UC_LESSONS
+        usecase "Gérer les catégories" as UC_CATEGORIES
+        usecase "Gérer les certifications" as UC_CERTIFICATIONS
+    }
+    
+    package "Gestion des Inscriptions" {
+        usecase "Gérer les intérêts de formation" as UC_INTERESTS
+        usecase "Approuver un intérêt" as UC_APPROVE_INTEREST
+        usecase "Inscrire un étudiant à une session" as UC_ENROLL_SESSION
+        usecase "Désinscrire un étudiant d'une session" as UC_UNENROLL_SESSION
+        usecase "Inscrire un étudiant à une formation" as UC_ENROLL_FORMATION
+        usecase "Désinscrire un étudiant d'une formation" as UC_UNENROLL_FORMATION
+        usecase "Consulter les étudiants d'une session" as UC_SESSION_STUDENTS
+        usecase "Consulter les étudiants d'une formation" as UC_FORMATION_STUDENTS
+    }
+    
+    package "Gestion Financière" {
+        usecase "Gérer les paiements" as UC_PAYMENTS
+    }
+    
+    package "Gestion des Quiz" {
+        usecase "Gérer les configurations de quiz" as UC_QUIZ_CONFIG
+        usecase "Créer une configuration de quiz" as UC_CREATE_QUIZ_CONFIG
+        usecase "Modifier une configuration de quiz" as UC_UPDATE_QUIZ_CONFIG
+        usecase "Supprimer une configuration de quiz" as UC_DELETE_QUIZ_CONFIG
+        usecase "Gérer les questions" as UC_QUESTIONS
+        usecase "Créer une question" as UC_CREATE_QUESTION
+        usecase "Modifier une question" as UC_UPDATE_QUESTION
+        usecase "Supprimer une question" as UC_DELETE_QUESTION
+        usecase "Générer un quiz" as UC_GENERATE_QUIZ
+        usecase "Consulter les modules d'une certification" as UC_CERT_MODULES
+    }
+    
+    package "Gestion des Emplois du Temps" {
+        usecase "Gérer les emplois du temps" as UC_SCHEDULES
+        usecase "Créer un emploi du temps" as UC_CREATE_SCHEDULE
+        usecase "Modifier un emploi du temps" as UC_UPDATE_SCHEDULE
+        usecase "Supprimer un emploi du temps" as UC_DELETE_SCHEDULE
+        usecase "Consulter les emplois du temps par session" as UC_SESSION_SCHEDULES
+        usecase "Consulter les emplois du temps par semaine" as UC_WEEK_SCHEDULES
+        usecase "Consulter les emplois du temps par plage de dates" as UC_DATE_SCHEDULES
+    }
+    
+    package "Rapports et Statistiques" {
+        usecase "Consulter les statistiques" as UC_STATS
+    }
+}
+
+' === RELATIONS ADMIN ===
+Admin --> UC_USERS
+Admin --> UC_ROLES
+Admin --> UC_STUDENTS
+Admin --> UC_STUDENT_DETAILS
+
+Admin --> UC_FORMATIONS
+Admin --> UC_SESSIONS
+Admin --> UC_MODULES
+Admin --> UC_LESSONS
+Admin --> UC_CATEGORIES
+Admin --> UC_CERTIFICATIONS
+
+Admin --> UC_INTERESTS
+Admin --> UC_APPROVE_INTEREST
+Admin --> UC_ENROLL_SESSION
+Admin --> UC_UNENROLL_SESSION
+Admin --> UC_ENROLL_FORMATION
+Admin --> UC_UNENROLL_FORMATION
+Admin --> UC_SESSION_STUDENTS
+Admin --> UC_FORMATION_STUDENTS
+
+Admin --> UC_PAYMENTS
+
+Admin --> UC_QUIZ_CONFIG
+Admin --> UC_CREATE_QUIZ_CONFIG
+Admin --> UC_UPDATE_QUIZ_CONFIG
+Admin --> UC_DELETE_QUIZ_CONFIG
+Admin --> UC_QUESTIONS
+Admin --> UC_CREATE_QUESTION
+Admin --> UC_UPDATE_QUESTION
+Admin --> UC_DELETE_QUESTION
+Admin --> UC_GENERATE_QUIZ
+Admin --> UC_CERT_MODULES
+
+Admin --> UC_SCHEDULES
+Admin --> UC_CREATE_SCHEDULE
+Admin --> UC_UPDATE_SCHEDULE
+Admin --> UC_DELETE_SCHEDULE
+Admin --> UC_SESSION_SCHEDULES
+Admin --> UC_WEEK_SCHEDULES
+Admin --> UC_DATE_SCHEDULES
+
+Admin --> UC_STATS
+
+' === INCLUSIONS ===
+UC_QUIZ_CONFIG ..> UC_CREATE_QUIZ_CONFIG : <<include>>
+UC_QUIZ_CONFIG ..> UC_UPDATE_QUIZ_CONFIG : <<include>>
+UC_QUIZ_CONFIG ..> UC_DELETE_QUIZ_CONFIG : <<include>>
+
+UC_QUESTIONS ..> UC_CREATE_QUESTION : <<include>>
+UC_QUESTIONS ..> UC_UPDATE_QUESTION : <<include>>
+UC_QUESTIONS ..> UC_DELETE_QUESTION : <<include>>
+
+UC_SCHEDULES ..> UC_CREATE_SCHEDULE : <<include>>
+UC_SCHEDULES ..> UC_UPDATE_SCHEDULE : <<include>>
+UC_SCHEDULES ..> UC_DELETE_SCHEDULE : <<include>>
+UC_SCHEDULES ..> UC_SESSION_SCHEDULES : <<include>>
+UC_SCHEDULES ..> UC_WEEK_SCHEDULES : <<include>>
+UC_SCHEDULES ..> UC_DATE_SCHEDULES : <<include>>
+
+' === NOTES ===
+note right of UC_APPROVE_INTEREST
+  Processus automatique :
+  1. Création du compte étudiant
+  2. Inscription à la formation
+  3. Inscription à la session
+  4. Envoi d'email avec identifiants
+end note
+
+note right of UC_GENERATE_QUIZ
+  Génération automatique
+  basée sur la configuration
+  et les questions disponibles
+end note
+
+note right of UC_STATS
+  Statistiques globales :
+  - Nombre d'étudiants
+  - Taux de réussite
+  - Revenus
+  - Présences
+end note
+
+@enduml 

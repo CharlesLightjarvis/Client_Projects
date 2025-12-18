@@ -3,8 +3,8 @@ import axios from 'axios'
 import type { AxiosResponse, AxiosError } from 'axios'
 
 const api = axios.create({
-  baseURL: 'http://afrikstudent.test', // LOCAL API URL
-  // baseURL: 'https://api.talkenoo.click', // PRODUCTION API URL
+  // baseURL: 'http://afrikstudent.test', // LOCAL API URL
+  baseURL: 'https://api.talkenoo.click', // PRODUCTION API URL
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
