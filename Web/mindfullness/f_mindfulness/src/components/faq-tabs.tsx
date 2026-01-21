@@ -1,154 +1,89 @@
-import { useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { Plus } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 
-// Main reusable FAQ component
-export const FAQ = ({
-  title = 'FAQs',
-  subtitle = 'Frequently Asked Questions',
-  categories,
-  faqData,
-  className,
-  ...props
-}) => {
-  const categoryKeys = Object.keys(categories)
-  const [selectedCategory, setSelectedCategory] = useState(categoryKeys[0])
-
+export function FaqsSection() {
   return (
-    <section
-      className={cn(
-        'relative overflow-hidden bg-background px-4 py-32 text-foreground',
-        className,
-      )}
-      {...props}
-    >
-      <FAQHeader title={title} subtitle={subtitle} />
-      <FAQTabs
-        categories={categories}
-        selected={selectedCategory}
-        setSelected={setSelectedCategory}
-      />
-      <FAQList faqData={faqData} selected={selectedCategory} />
-    </section>
+    <div className="mx-auto w-full max-w-3xl space-y-7 px-4 mt-32">
+      <div className="space-y-2">
+        <h2 className="text-3xl font-bold md:text-4xl">
+          Frequently Asked Questions
+        </h2>
+        <p className="text-muted-foreground max-w-2xl">
+          Here are some common questions and answers that you might encounter
+          when using Efferd. If you don't find the answer you're looking for,
+          feel free to reach out.
+        </p>
+      </div>
+      <Accordion
+        type="single"
+        collapsible
+        className="bg-card dark:bg-card/50 w-full -space-y-px rounded-lg "
+        defaultValue="item-1"
+      >
+        {questions.map((item) => (
+          <AccordionItem
+            value={item.id}
+            key={item.id}
+            className="relative border-x first:rounded-t-lg first:border-t last:rounded-b-lg last:border-b"
+          >
+            <AccordionTrigger className="px-4 py-4 text-[15px] leading-6 hover:no-underline">
+              {item.title}
+            </AccordionTrigger>
+            <AccordionContent className="text-muted-foreground pb-4 px-4">
+              {item.content}
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </div>
   )
 }
 
-const FAQHeader = ({ title, subtitle }) => (
-  <div className="relative z-10 flex flex-col items-center justify-center">
-    <span className="mb-8 bg-gradient-to-r from-primary to-primary/60 bg-clip-text font-medium text-transparent">
-      {subtitle}
-    </span>
-    <h2 className="mb-8 text-5xl font-bold">{title}</h2>
-    <span className="absolute -top-[350px] left-[50%] z-0 h-[500px] w-[600px] -translate-x-[50%] rounded-full bg-gradient-to-r from-primary/10 to-primary/5 blur-3xl" />
-  </div>
-)
-
-const FAQTabs = ({ categories, selected, setSelected }) => (
-  <div className="relative z-10 flex flex-wrap items-center justify-center gap-4">
-    {Object.entries(categories).map(([key, label]) => (
-      <button
-        key={key}
-        onClick={() => setSelected(key)}
-        className={cn(
-          'relative overflow-hidden whitespace-nowrap rounded-md border px-3 py-1.5 text-sm font-medium transition-colors duration-500',
-          selected === key
-            ? 'border-primary text-background'
-            : 'border-border bg-transparent text-muted-foreground hover:text-foreground',
-        )}
-      >
-        <span className="relative z-10">{label}</span>
-        <AnimatePresence>
-          {selected === key && (
-            <motion.span
-              initial={{ y: '100%' }}
-              animate={{ y: '0%' }}
-              exit={{ y: '100%' }}
-              transition={{ duration: 0.5, ease: 'backIn' }}
-              className="absolute inset-0 z-0 bg-gradient-to-r from-primary to-primary/80"
-            />
-          )}
-        </AnimatePresence>
-      </button>
-    ))}
-  </div>
-)
-
-const FAQList = ({ faqData, selected }) => (
-  <div className="mx-auto mt-12 max-w-3xl">
-    <AnimatePresence mode="wait">
-      {Object.entries(faqData).map(([category, questions]) => {
-        if (selected === category) {
-          return (
-            <motion.div
-              key={category}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.5, ease: 'backIn' }}
-              className="space-y-4"
-            >
-              {questions.map((faq, index) => (
-                <FAQItem key={index} {...faq} />
-              ))}
-            </motion.div>
-          )
-        }
-        return null
-      })}
-    </AnimatePresence>
-  </div>
-)
-
-const FAQItem = ({ question, answer }) => {
-  const [isOpen, setIsOpen] = useState(false)
-
-  return (
-    <motion.div
-      animate={isOpen ? 'open' : 'closed'}
-      className={cn(
-        'rounded-xl border transition-colors',
-        isOpen ? 'bg-muted/50' : 'bg-card',
-      )}
-    >
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between gap-4 p-4 text-left"
-      >
-        <span
-          className={cn(
-            'text-lg font-medium transition-colors',
-            isOpen ? 'text-foreground' : 'text-muted-foreground',
-          )}
-        >
-          {question}
-        </span>
-        <motion.span
-          variants={{
-            open: { rotate: '45deg' },
-            closed: { rotate: '0deg' },
-          }}
-          transition={{ duration: 0.2 }}
-        >
-          <Plus
-            className={cn(
-              'h-5 w-5 transition-colors',
-              isOpen ? 'text-foreground' : 'text-muted-foreground',
-            )}
-          />
-        </motion.span>
-      </button>
-      <motion.div
-        initial={false}
-        animate={{
-          height: isOpen ? 'auto' : '0px',
-          marginBottom: isOpen ? '16px' : '0px',
-        }}
-        transition={{ duration: 0.3, ease: 'easeInOut' }}
-        className="overflow-hidden px-4"
-      >
-        <p className="text-muted-foreground">{answer}</p>
-      </motion.div>
-    </motion.div>
-  )
-}
+const questions = [
+  {
+    id: 'item-1',
+    title: 'What is Efferd?',
+    content:
+      'Efferd is a collection of beautifully crafted Shadcn UI blocks and components, designed to help developers build modern websites with ease.',
+  },
+  {
+    id: 'item-2',
+    title: 'Who can benefit from Efferd?',
+    content:
+      'Efferd is built for founders, product teams, and agencies that want to accelerate idea validation and delivery.',
+  },
+  {
+    id: 'item-3',
+    title: 'What features does Efferd include?',
+    content:
+      'Efferd offers a collaborative workspace where you can design and build beautiful web applications, with reusable UI blocks, deployment automation, and comprehensive analytics all in one place. With Efferd, you can streamline your team’s workflow and deliver high-quality websites quickly and efficiently.',
+  },
+  {
+    id: 'item-4',
+    title: 'Can I customize components in Efferd?',
+    content:
+      'Yes. Efferd offers editable design systems and code scaffolding so you can tailor blocks to your brand and workflow.',
+  },
+  {
+    id: 'item-5',
+    title: 'Does Efferd integrate with my existing tools?',
+    content:
+      'Efferd connects with popular source control, design tools, and cloud providers to fit into your current stack.',
+  },
+  {
+    id: 'item-6',
+    title: 'How do I get support while using Efferd?',
+    content:
+      'You can access detailed docs, community forums, and dedicated customer success channels for help at any time.',
+  },
+  {
+    id: 'item-7',
+    title: 'How do I get started with Efferd?',
+    content:
+      'You can access detailed docs, community forums, and dedicated customer success channels for help at any time.',
+  },
+]

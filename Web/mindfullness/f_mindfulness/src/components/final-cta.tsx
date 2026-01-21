@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 
 export function FinalCTA() {
   return (
-    <section className="relative overflow-hidden bg-muted/30 py-24 md:py-32">
+    <section className="relative overflow-hidden bg-muted/30 mt-32 py-24 md:py-32">
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5" />
 
@@ -32,15 +32,15 @@ export function FinalCTA() {
               {/* Heading */}
               <div className="space-y-4">
                 <h2 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-                  Ready to stop talking and{' '}
+                  Commencez aujourd'hui votre chemin vers un
                   <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                    start shipping
+                    bien-être énergétique
                   </span>
                   ?
                 </h2>
                 <p className="mx-auto max-w-2xl text-lg text-muted-foreground md:text-xl">
-                  Join developers and designers who are tired of working alone.
-                  Find your partner. Build something real. Ship in 30 days.
+                  Rejoignez notre studio et transformez votre quotidien avec nos
+                  outils de pleine conscience.
                 </p>
               </div>
 
@@ -50,14 +50,14 @@ export function FinalCTA() {
                   size="lg"
                   className="h-14 px-10 text-lg font-semibold shadow-lg transition-all hover:scale-105 hover:shadow-xl"
                 >
-                  Create Your Account
+                  Create Votre Compte
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
                   className="h-14 px-10 text-lg"
                 >
-                  Browse Projects
+                  Decouvrir Nos Formations
                 </Button>
               </div>
 

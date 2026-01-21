@@ -59,8 +59,12 @@ export function Header() {
           },
         )}
       >
-        <WordmarkIcon className="h-4" />
-        <div className="hidden items-center gap-2 md:flex">
+        <img
+          src="../../assets/logo-typo.png"
+          alt="Mindfulness Studio"
+          className="h-60"
+        />
+        <div className="hidden items-center gap-2 md:flex ">
           {links.map((link, i) => (
             <a
               key={i}

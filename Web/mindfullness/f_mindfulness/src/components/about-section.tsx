@@ -3,103 +3,116 @@ import { Heart, Infinity, Target, Zap } from 'lucide-react'
 export const AboutSection: React.FC = () => {
   const values = [
     {
-      icon: <Target className="w-7 h-7" />,
+      icon: Target,
       title: 'Approche Holistique',
-      desc: "Le bien-être inclut l'énergie, la conscience et l'harmonie intérieure.",
+      desc: 'Le bien-être intègre le corps, l’esprit, l’énergie et la conscience.',
     },
     {
-      icon: <Infinity className="w-7 h-7" />,
+      icon: Infinity,
       title: 'Respect du Rythme',
-      desc: 'Chaque élève avance à son propre rythme, selon sa propre sensibilité.',
+      desc: 'Chaque parcours est unique, progressif et profondément personnel.',
     },
     {
-      icon: <Zap className="w-7 h-7" />,
+      icon: Zap,
       title: 'Autonomie & Pratique',
-      desc: 'Des outils concrets pour une application immédiate dans votre vie.',
+      desc: 'Des outils concrets pour une intégration réelle dans le quotidien.',
     },
     {
-      icon: <Heart className="w-7 h-7" />,
+      icon: Heart,
       title: 'Bienveillance',
-      desc: "Un accompagnement structuré mais ancré dans le respect de l'autre.",
+      desc: 'Un cadre structuré, respectueux et profondément humain.',
     },
   ]
 
   return (
-    <section id="a-propos" className="py-24  overflow-hidden">
+    <section id="a-propos" className="py-11 bg-background">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-          <div className="relative order-2 lg:order-1">
+        {/* HEADER CENTRÉ */}
+        <div className="max-w-3xl mx-auto text-center mb-24 space-y-6">
+          <p className="text-sm font-semibold uppercase tracking-widest text-primary">
+            Notre vision
+          </p>
+
+          <h2 className="text-4xl md:text-5xl font-extrabold text-foreground leading-tight">
+            Une vision moderne, consciente et profondément humaine
+          </h2>
+
+          <p className="text-lg text-muted-foreground leading-relaxed">
+            Une approche du bien-être qui dépasse les méthodes superficielles
+            pour reconnecter l’individu à son équilibre intérieur.
+          </p>
+        </div>
+
+        {/* CONTENT GRID */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 items-start">
+          {/* IMAGES GRID */}
+          <div className="lg:col-span-6 relative">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-4 pt-12">
                 <img
                   src="https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?q=80&w=600&auto=format&fit=crop"
-                  className="rounded-3xl shadow-lg w-full aspect-square object-cover"
+                  className="rounded-3xl w-full aspect-square object-cover shadow-lg"
                   alt="Zen"
                 />
                 <img
                   src="https://images.unsplash.com/photo-1508672019048-805c876b67e2?q=80&w=600&auto=format&fit=crop"
-                  className="rounded-3xl shadow-lg w-full aspect-[3/4] object-cover"
+                  className="rounded-3xl w-full aspect-[3/4] object-cover shadow-lg"
                   alt="Relaxation"
                 />
               </div>
+
               <div className="space-y-4">
                 <img
                   src="https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?q=80&w=600&auto=format&fit=crop"
-                  className="rounded-3xl shadow-lg w-full aspect-[3/4] object-cover"
+                  className="rounded-3xl w-full aspect-[3/4] object-cover shadow-lg"
                   alt="Meditation course"
                 />
                 <img
                   src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=2000&auto=format&fit=crop"
-                  className="rounded-3xl shadow-lg w-full aspect-square object-cover"
+                  className="rounded-3xl w-full aspect-square object-cover shadow-lg"
                   alt="Stones"
                 />
               </div>
             </div>
-            {/* Background elements */}
-            <div className="absolute -z-10 -top-20 -left-20 w-64 h-64 bg-indigo-200/50 rounded-full blur-3xl"></div>
+
+            {/* Subtle glow */}
+            <div className="absolute -z-10 -bottom-16 -left-16 w-72 h-72 bg-primary/20 rounded-full blur-3xl" />
           </div>
 
-          <div className="space-y-8 order-1 lg:order-2">
-            <div>
-              <h2 className="text-indigo-600 font-bold uppercase tracking-widest text-sm mb-4">
-                Notre Vision
-              </h2>
-              <h3 className="text-4xl md:text-5xl font-black text-slate-900 leading-tight">
-                Une approche globale du bien-être et de l’énergétique
-              </h3>
+          {/* TEXT + VALUES */}
+          <div className="lg:col-span-6 space-y-12">
+            <div className="space-y-6 max-w-xl">
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Nos formations associent la{' '}
+                <span className="text-primary font-semibold">
+                  pleine conscience
+                </span>
+                , les pratiques énergétiques et l’autonomie personnelle pour un
+                cheminement durable, aligné et profondément transformateur.
+              </p>
             </div>
 
-            <p className="text-lg text-slate-600 leading-relaxed">
-              Le bien-être ne se limite pas au mental ou au corps. Il inclut
-              également l’énergie, la conscience et l’harmonie intérieure.
-            </p>
+            {/* VALUES */}
+            <div className="pt-10 border-t border-border space-y-6 max-w-xl">
+              {values.map((v, i) => {
+                const Icon = v.icon
+                return (
+                  <div key={i} className="flex gap-6 items-start">
+                    <div className="mt-1 text-primary">
+                      <Icon className="w-6 h-6" />
+                    </div>
 
-            <p className="text-lg text-slate-600 leading-relaxed">
-              Nos formations associent la{' '}
-              <span className="text-indigo-600 font-bold">mindfulness</span>{' '}
-              (pleine conscience) à des pratiques énergétiques reconnues, afin
-              de favoriser un mieux-être durable, une meilleure gestion du
-              stress et un alignement profond.
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
-              {values.map((v, i) => (
-                <div
-                  key={i}
-                  className="feature-card hover-lift reveal"
-                  style={{ animationDelay: `${i * 0.1}s` }}
-                >
-                  <div className="w-14 h-14 bg-gradient-to-br from-indigo-100 to-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 mb-4 group-hover:from-indigo-600 group-hover:to-indigo-700 group-hover:text-white transition-all">
-                    {v.icon}
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground">
+                        {v.title}
+                      </h4>
+                      <p className="text-muted-foreground leading-relaxed">
+                        {v.desc}
+                      </p>
+                    </div>
                   </div>
-                  <h4 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-indigo-600 transition-colors">
-                    {v.title}
-                  </h4>
-                  <p className="text-sm text-slate-600 leading-snug font-medium">
-                    {v.desc}
-                  </p>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
         </div>

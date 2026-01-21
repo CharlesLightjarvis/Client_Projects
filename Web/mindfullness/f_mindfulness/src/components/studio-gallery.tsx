@@ -1,5 +1,4 @@
 import React from 'react'
-import { Camera } from 'lucide-react'
 
 const galleryItems = [
   {
@@ -51,7 +50,7 @@ export const StudioGallery: React.FC = () => {
               <span className="text-indigo-500 italic">studio</span>
             </h2>
           </div>
-          <p className="text-slate-800 text-lg font-medium max-w-sm text-center lg:text-right">
+          <p className=" text-lg font-medium max-w-sm text-center lg:text-right">
             Une expérience pédagogique pensée pour l'éveil des sens et la clarté
             de l'esprit.
           </p>

@@ -1,5 +1,13 @@
-import { CheckCircle, Clock, Home, Lock } from 'lucide-react'
-import React from 'react'
+import { motion } from 'framer-motion'
+import { CheckCircle, Clock, Home, Lock, Sparkles } from 'lucide-react'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 
 export const FeaturesSection: React.FC = () => {
   const targets = [
@@ -12,93 +20,126 @@ export const FeaturesSection: React.FC = () => {
 
   const benefits = [
     {
-      icon: <Clock />,
+      icon: Clock,
       title: 'À votre rythme',
       desc: 'Plus de pression, étudiez quand vous voulez.',
     },
     {
-      icon: <Home />,
+      icon: Home,
       title: 'Depuis chez vous',
       desc: 'Disponible sur ordinateur, tablette et mobile.',
     },
     {
-      icon: <Lock />,
+      icon: Lock,
       title: 'Accès illimité',
       desc: 'Reprenez vos cours aussi souvent que nécessaire.',
     },
   ]
 
   return (
-    <section id="public" className="py-24  overflow-hidden relative">
+    <section id="public" className="py-20 md:py-28 overflow-hidden relative bg-muted/30">
       {/* Decorative background elements */}
-      <div className="absolute top-0 left-0 w-96 h-96  rounded-full blur-[120px] opacity-20 -translate-x-1/2 -translate-y-1/2"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96  rounded-full blur-[120px] opacity-20 translate-x-1/2 translate-y-1/2"></div>
+      <div className="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-[120px] translate-x-1/2 translate-y-1/2 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
-          <div>
-            <h2 className="text-indigo-300 font-bold uppercase tracking-widest text-sm mb-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+          {/* Left Column */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <Badge variant="secondary" className="mb-4">
               Profils & Public
-            </h2>
-            <h3 className="text-4xl md:text-5xl font-black mb-8 leading-tight">
+            </Badge>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-6">
               À qui s'adressent nos formations ?
-            </h3>
-            <p className="text-indigo-100/80 mb-10 leading-relaxed text-lg">
+            </h2>
+            <p className="text-muted-foreground mb-10 leading-relaxed text-lg">
               Nos formations en mindfulness et bien-être énergétique s'adaptent
               à votre parcours, quel qu'il soit. Aucune capacité particulière
-              n’est requise.
+              n'est requise.
             </p>
 
-            <ul className="space-y-4">
+            <ul className="space-y-3">
               {targets.map((item, i) => (
-                <li
+                <motion.li
                   key={i}
-                  className="flex items-center gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all hover-lift"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: i * 0.1 }}
+                  className="flex items-center gap-4 p-4 rounded-xl border border-border bg-card/50 hover:bg-card hover:border-primary/20 transition-all group"
                 >
-                  <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-full flex items-center justify-center text-white shadow-lg">
-                    <CheckCircle size={18} />
+                  <div className="flex-shrink-0 w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                    <CheckCircle className="w-4 h-4" />
                   </div>
-                  <span className="text-lg text-indigo-50 font-medium">
+                  <span className="text-foreground font-medium">
                     {item}
                   </span>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="bg-white rounded-[2.5rem] p-8 md:p-12 text-slate-900 shadow-3xl">
-            <h3 className="text-3xl font-black mb-10 text-center">
-              Apprendre à son rythme, où que vous soyez
-            </h3>
+          {/* Right Column */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <Card className="h-full">
+              <CardHeader className="text-center pb-8">
+                <CardTitle className="text-2xl sm:text-3xl">
+                  Apprendre à son rythme, où que vous soyez
+                </CardTitle>
+              </CardHeader>
 
-            <div className="space-y-10">
-              {benefits.map((b, i) => (
-                <div key={i} className="flex gap-6 items-start">
-                  <div className="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center flex-shrink-0">
-                    {/* Fix: cast to React.ReactElement<any> to resolve 'size' property error during cloning */}
-                    {React.cloneElement(b.icon as React.ReactElement<any>, {
-                      size: 32,
-                    })}
+              <CardContent className="space-y-8">
+                {benefits.map((benefit, i) => {
+                  const IconComponent = benefit.icon
+                  return (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: i * 0.1 }}
+                      className="flex gap-5 items-start"
+                    >
+                      <div className="w-14 h-14 bg-primary/10 text-primary rounded-2xl flex items-center justify-center flex-shrink-0">
+                        <IconComponent className="w-7 h-7" />
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-semibold mb-1">{benefit.title}</h4>
+                        <p className="text-muted-foreground leading-relaxed">
+                          {benefit.desc}
+                        </p>
+                      </div>
+                    </motion.div>
+                  )
+                })}
+
+                {/* Quote Card */}
+                <div className="mt-10 p-6 bg-muted/50 rounded-2xl border border-border">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Sparkles className="w-4 h-4 text-primary" />
+                    <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+                      Notre Objectif
+                    </p>
                   </div>
-                  <div>
-                    <h4 className="text-xl font-bold mb-2">{b.title}</h4>
-                    <p className="text-slate-500 leading-relaxed">{b.desc}</p>
-                  </div>
+                  <p className="text-foreground italic leading-relaxed">
+                    "Rendre les pratiques énergétiques et la mindfulness
+                    accessibles, tout en conservant une approche sérieuse,
+                    structurée et de qualité."
+                  </p>
                 </div>
-              ))}
-            </div>
-
-            <div className="mt-12 p-8 bg-slate-50 rounded-3xl border border-slate-100 text-center">
-              <p className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4">
-                Notre Objectif
-              </p>
-              <p className="text-lg font-medium text-slate-700 italic leading-relaxed">
-                "Rendre les pratiques énergétiques et la mindfulness
-                accessibles, tout en conservant une approche sérieuse,
-                structurée et de qualité."
-              </p>
-            </div>
-          </div>
+              </CardContent>
+            </Card>
+          </motion.div>
         </div>
       </div>
     </section>
