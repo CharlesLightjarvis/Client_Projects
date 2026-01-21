@@ -1,7 +1,8 @@
 import { Header } from '@/components/header'
 import { Footer } from '@/components/modem-animated-footer'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
-import { Github, Linkedin, Mail, Twitter, User } from 'lucide-react'
+import { Github, Linkedin, Mail, Twitter } from 'lucide-react'
+import logo from '../../../assets/logo.png'
 
 export const Route = createFileRoute('/_layout')({
   component: RouteComponent,
@@ -50,7 +51,7 @@ function RouteComponent() {
         creatorName="Deepak Modi"
         creatorUrl="https://deepakmodi.tech"
         brandIcon={
-          <img src="../../../assets/logo.png" alt="Mindfulness Studio" />
+          <img src={logo} alt="Mindfulness Studio" className="w-full h-full object-contain" />
         }
       />
     </>

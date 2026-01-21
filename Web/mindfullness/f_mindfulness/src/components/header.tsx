@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 import { MenuToggleIcon } from '@/components/menu-toggle-icon'
 import { useScroll } from '@/components/use-scroll'
 import { ModeToggle } from './mode-toggle'
+import logoTypo from '../../assets/logo-typo.png'
 
 export function Header() {
   const [open, setOpen] = React.useState(false)
@@ -60,7 +61,7 @@ export function Header() {
         )}
       >
         <img
-          src="../../assets/logo-typo.png"
+          src={logoTypo}
           alt="Mindfulness Studio"
           className="h-60"
         />
