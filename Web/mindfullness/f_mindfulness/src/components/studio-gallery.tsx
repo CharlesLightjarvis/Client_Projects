@@ -22,7 +22,7 @@ const galleryItems = [
     tag: 'Focus',
   },
   {
-    img: 'https://images.unsplash.com/photo-1536622296737-0306394bf61c?q=80&w=800&auto=format&fit=crop',
+    img: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=800&auto=format&fit=crop',
     title: 'Rééquilibrage',
     tag: 'Chakras',
   },

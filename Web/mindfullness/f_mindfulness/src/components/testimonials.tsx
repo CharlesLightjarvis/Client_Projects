@@ -3,58 +3,67 @@ import { TestimonialsColumn } from './testimonials-column'
 
 const testimonials = [
   {
-    text: 'This ERP revolutionized our operations, streamlining finance and inventory. The cloud-based platform keeps us productive, even remotely.',
-    image: 'https://randomuser.me/api/portraits/women/1.jpg',
-    name: 'Briana Patton',
-    role: 'Operations Manager',
+    text: 'La formation en lithothérapie a transformé ma relation avec les pierres. Je comprends maintenant comment les utiliser au quotidien pour équilibrer mes chakras.',
+    image:
+      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face',
+    name: 'Marie Laurent',
+    role: 'Praticienne Reiki',
   },
   {
-    text: 'Implementing this ERP was smooth and quick. The customizable, user-friendly interface made team training effortless.',
-    image: 'https://randomuser.me/api/portraits/men/2.jpg',
-    name: 'Bilal Ahmed',
-    role: 'IT Manager',
+    text: "Les techniques de mindfulness m'ont permis de gérer mon stress de manière efficace. Je dors mieux et je me sens plus connectée à moi-même.",
+    image:
+      'https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=100&h=100&fit=crop&crop=face',
+    name: 'Sophie Martin',
+    role: 'Enseignante',
   },
   {
-    text: 'The support team is exceptional, guiding us through setup and providing ongoing assistance, ensuring our satisfaction.',
-    image: 'https://randomuser.me/api/portraits/women/3.jpg',
-    name: 'Saman Malik',
-    role: 'Customer Support Lead',
+    text: "La formation sur les chakras et l'équilibre énergétique est complète et bien structurée. J'ai pu intégrer ces pratiques dans ma vie professionnelle.",
+    image:
+      'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop&crop=face',
+    name: 'Thomas Dubois',
+    role: 'Ostéopathe',
   },
   {
-    text: "This ERP's seamless integration enhanced our business operations and efficiency. Highly recommend for its intuitive interface.",
-    image: 'https://randomuser.me/api/portraits/men/4.jpg',
-    name: 'Omar Raza',
-    role: 'CEO',
+    text: "Grâce à cette plateforme, j'ai découvert la radiesthésie et développé mon intuition. Les supports pédagogiques sont excellents.",
+    image:
+      'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop&crop=face',
+    name: 'Claire Renard',
+    role: 'Coach de vie',
   },
   {
-    text: 'Its robust features and quick support have transformed our workflow, making us significantly more efficient.',
-    image: 'https://randomuser.me/api/portraits/women/5.jpg',
-    name: 'Zainab Hussain',
-    role: 'Project Manager',
+    text: "L'approche holistique des formations m'a permis d'approfondir ma pratique de la méditation. Les exercices pratiques sont très bénéfiques.",
+    image:
+      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
+    name: 'Pierre Leroy',
+    role: 'Consultant',
   },
   {
-    text: 'The smooth implementation exceeded expectations. It streamlined processes, improving overall business performance.',
-    image: 'https://randomuser.me/api/portraits/women/6.jpg',
-    name: 'Aliza Khan',
-    role: 'Business Analyst',
+    text: "La communauté d'apprenants est très bienveillante. J'ai pu échanger avec des passionnés et progresser ensemble dans mon parcours.",
+    image:
+      'https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop&crop=face',
+    name: 'Julie Moreau',
+    role: 'Thérapeute',
   },
   {
-    text: 'Our business functions improved with a user-friendly design and positive customer feedback.',
-    image: 'https://randomuser.me/api/portraits/men/7.jpg',
-    name: 'Farhan Siddiqui',
-    role: 'Marketing Director',
+    text: "Les formations sont accessibles à vie, ce qui me permet de revenir sur les concepts quand j'en ai besoin. Excellent rapport qualité-prix.",
+    image:
+      'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=100&h=100&fit=crop&crop=face',
+    name: 'Nicolas Bernard',
+    role: 'Entrepreneur',
   },
   {
-    text: 'They delivered a solution that exceeded expectations, understanding our needs and enhancing our operations.',
-    image: 'https://randomuser.me/api/portraits/women/8.jpg',
-    name: 'Sana Sheikh',
-    role: 'Sales Manager',
+    text: "J'ai appris à travailler avec l'énergie et les minéraux de manière professionnelle. Cette formation a changé ma carrière.",
+    image:
+      'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=100&h=100&fit=crop&crop=face',
+    name: 'Isabelle Petit',
+    role: 'Guérisseuse',
   },
   {
-    text: 'Using this ERP, our online presence and conversions significantly improved, boosting business performance.',
-    image: 'https://randomuser.me/api/portraits/men/9.jpg',
-    name: 'Hassan Ali',
-    role: 'E-commerce Manager',
+    text: "Le support technique et pédagogique est réactif et efficace. Je recommande vivement ces formations à tous ceux qui s'intéressent au bien-être.",
+    image:
+      'https://images.unsplash.com/photo-1536622296737-0306394bf61c?w=100&h=100&fit=crop&crop=face',
+    name: 'David Garnier',
+    role: 'Coach sportif',
   },
 ]
 
@@ -78,10 +87,11 @@ export const Testimonials = () => {
           </div>
 
           <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tighter mt-5">
-            What our users say
+            Ce que disent nos étudiants
           </h2>
           <p className="text-center mt-5 opacity-75">
-            See what our customers have to say about us.
+            Découvrez ce que les membres de notre communauté disent de leur
+            expérience.
           </p>
         </motion.div>
 

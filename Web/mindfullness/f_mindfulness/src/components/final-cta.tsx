@@ -34,7 +34,7 @@ export function FinalCTA() {
                 <h2 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
                   Commencez aujourd'hui votre chemin vers un
                   <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                    bien-être énergétique
+                    {''} bien-être énergétique
                   </span>
                   ?
                 </h2>
@@ -60,83 +60,6 @@ export function FinalCTA() {
                   Decouvrir Nos Formations
                 </Button>
               </div>
-
-              {/* Trust Indicators */}
-              <div className="flex flex-wrap items-center justify-center gap-6 pt-4 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <svg
-                    className="h-5 w-5 text-green-500"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
-                  <span>Free to join</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <svg
-                    className="h-5 w-5 text-blue-500"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
-                  <span>No credit card required</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <svg
-                    className="h-5 w-5 text-purple-500"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
-                  <span>Start building today</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Bottom Warning/Call-out */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-12 text-center"
-          >
-            <div className="mx-auto inline-flex max-w-2xl flex-col gap-4 rounded-xl border bg-background/50 p-6 backdrop-blur-sm">
-              <div className="flex items-center justify-center gap-3">
-                <svg
-                  className="h-6 w-6 text-yellow-500"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                <p className="font-semibold">Not for everyone</p>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Bridge is only for devs and designers who commit to finishing
-                what they start. If you're looking for "maybe later" or
-                "flexible deadlines", this isn't your place.
-              </p>
             </div>
           </motion.div>
         </div>

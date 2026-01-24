@@ -1,20 +1,13 @@
 import { useEffect, useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
-import {
-  MoveRight,
-  Calendar,
-  Sparkles,
-  Accessibility,
-  CloudSun,
-  PersonStanding,
-  Gem,
-  Play,
-} from 'lucide-react'
+import { MoveRight, Gem } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { AnimatedTooltip } from './animated-tooltip'
+import { useNavigate } from '@tanstack/react-router'
 
 function Hero() {
   const [titleNumber, setTitleNumber] = useState(0)
+  const navigate = useNavigate()
   const titles = useMemo(
     () => ['Équilibre', 'Bien-être', 'Harmonie', 'Prospérité', 'Plénitude'],
     [],
@@ -79,7 +72,7 @@ function Hero() {
   return (
     <div className="relative">
       {/* Hero Section with Background Image */}
-      <section className="relative min-h-screen flex flex-col justify-center items-center pt-24 pb-8 px-6 lg:px-12 xl:px-20 overflow-hidden -mt-14">
+      <section className="relative min-h-screen flex flex-col justify-center items-center pt-24 pb-8 px-6 lg:px-12 xl:px-20 overflow-hidden -mt-20">
         {/* Background Image - extends behind header */}
         <div className="absolute inset-0 top-0 -z-10">
           <img
@@ -149,6 +142,7 @@ function Hero() {
             <Button
               size="lg"
               className="gap-2 h-12 sm:h-14 px-6 sm:px-8 rounded-xl w-full sm:w-auto"
+              onClick={() => navigate({ to: '/formations' })}
             >
               <span>Découvrir nos formations</span>
               <MoveRight className="w-4 h-4" />

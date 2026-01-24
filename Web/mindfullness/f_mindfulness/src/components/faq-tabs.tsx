@@ -9,13 +9,13 @@ export function FaqsSection() {
   return (
     <div className="mx-auto w-full max-w-3xl space-y-7 px-4 mt-32">
       <div className="space-y-2">
-        <h2 className="text-3xl font-bold md:text-4xl">
-          Frequently Asked Questions
+        <h2 className="text-4xl md:text-6xl font-black leading-tight">
+          Questions <span className="text-indigo-500 italic">Fréquentes</span>
         </h2>
         <p className="text-muted-foreground max-w-2xl">
-          Here are some common questions and answers that you might encounter
-          when using Efferd. If you don't find the answer you're looking for,
-          feel free to reach out.
+          Voici quelques questions et réponses fréquentes sur nos formations de
+          mindfulness et bien-être. Si vous ne trouvez pas la réponse que vous
+          cherchez, n'hésitez pas à nous contacter.
         </p>
       </div>
       <Accordion
@@ -46,44 +46,32 @@ export function FaqsSection() {
 const questions = [
   {
     id: 'item-1',
-    title: 'What is Efferd?',
+    title: 'Comment se déroulent les formations ?',
     content:
-      'Efferd is a collection of beautifully crafted Shadcn UI blocks and components, designed to help developers build modern websites with ease.',
+      'Nos formations sont 100% en ligne, accessibles 24h/24. Vous avancez à votre propre rythme avec des supports vidéo et PDF.',
   },
   {
     id: 'item-2',
-    title: 'Who can benefit from Efferd?',
+    title: 'Proposez-vous des facilités de paiement ?',
     content:
-      'Efferd is built for founders, product teams, and agencies that want to accelerate idea validation and delivery.',
+      'Oui, la plupart de nos programmes peuvent être réglés en 2 ou 3 fois sans frais supplémentaires.',
   },
   {
     id: 'item-3',
-    title: 'What features does Efferd include?',
+    title: 'Puis-je obtenir une facture pour mon entreprise ?',
     content:
-      'Efferd offers a collaborative workspace where you can design and build beautiful web applications, with reusable UI blocks, deployment automation, and comprehensive analytics all in one place. With Efferd, you can streamline your team’s workflow and deliver high-quality websites quickly and efficiently.',
+      'Absolument. Une facture détaillée est générée automatiquement après chaque achat dans votre espace membre.',
   },
   {
     id: 'item-4',
-    title: 'Can I customize components in Efferd?',
+    title: 'Les formations sont-elles accessibles à vie ?',
     content:
-      'Yes. Efferd offers editable design systems and code scaffolding so you can tailor blocks to your brand and workflow.',
+      'Oui, une fois inscrit, vous avez un accès illimité à vie à tous les contenus de la formation.',
   },
   {
     id: 'item-5',
-    title: 'Does Efferd integrate with my existing tools?',
+    title: 'Y a-t-il un support pendant la formation ?',
     content:
-      'Efferd connects with popular source control, design tools, and cloud providers to fit into your current stack.',
-  },
-  {
-    id: 'item-6',
-    title: 'How do I get support while using Efferd?',
-    content:
-      'You can access detailed docs, community forums, and dedicated customer success channels for help at any time.',
-  },
-  {
-    id: 'item-7',
-    title: 'How do I get started with Efferd?',
-    content:
-      'You can access detailed docs, community forums, and dedicated customer success channels for help at any time.',
+      "Oui, vous bénéficiez d'un support personnalisé par email et d'une communauté d'apprenants pour vous accompagner.",
   },
 ]

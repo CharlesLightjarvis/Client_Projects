@@ -33,8 +33,9 @@ export const AboutSection: React.FC = () => {
             Notre vision
           </p>
 
-          <h2 className="text-4xl md:text-5xl font-extrabold text-foreground leading-tight">
-            Une vision moderne, consciente et profondément humaine
+          <h2 className="text-4xl md:text-6xl font-black leading-tight">
+            Une vision <span className="text-indigo-500 italic">moderne</span>,
+            consciente et profondément humaine
           </h2>
 
           <p className="text-lg text-muted-foreground leading-relaxed">

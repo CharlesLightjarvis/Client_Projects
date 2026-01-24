@@ -37,7 +37,10 @@ export const FeaturesSection: React.FC = () => {
   ]
 
   return (
-    <section id="public" className="py-20 md:py-28 overflow-hidden relative bg-muted/30">
+    <section
+      id="public"
+      className="py-20 md:py-28 overflow-hidden relative bg-muted/30"
+    >
       {/* Decorative background elements */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-[120px] translate-x-1/2 translate-y-1/2 pointer-events-none" />
@@ -54,8 +57,9 @@ export const FeaturesSection: React.FC = () => {
             <Badge variant="secondary" className="mb-4">
               Profils & Public
             </Badge>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-6">
-              À qui s'adressent nos formations ?
+            <h2 className="text-4xl md:text-6xl font-black leading-tight mb-6">
+              À qui s'adressent nos{' '}
+              <span className="text-indigo-500 italic">formations</span> ?
             </h2>
             <p className="text-muted-foreground mb-10 leading-relaxed text-lg">
               Nos formations en mindfulness et bien-être énergétique s'adaptent
@@ -76,9 +80,7 @@ export const FeaturesSection: React.FC = () => {
                   <div className="flex-shrink-0 w-8 h-8 bg-primary/10 text-primary rounded-full flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                     <CheckCircle className="w-4 h-4" />
                   </div>
-                  <span className="text-foreground font-medium">
-                    {item}
-                  </span>
+                  <span className="text-foreground font-medium">{item}</span>
                 </motion.li>
               ))}
             </ul>
@@ -114,7 +116,9 @@ export const FeaturesSection: React.FC = () => {
                         <IconComponent className="w-7 h-7" />
                       </div>
                       <div>
-                        <h4 className="text-lg font-semibold mb-1">{benefit.title}</h4>
+                        <h4 className="text-lg font-semibold mb-1">
+                          {benefit.title}
+                        </h4>
                         <p className="text-muted-foreground leading-relaxed">
                           {benefit.desc}
                         </p>

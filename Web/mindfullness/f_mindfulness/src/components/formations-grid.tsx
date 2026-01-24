@@ -1,6 +1,3 @@
-import { motion } from 'framer-motion'
-import { Activity, ArrowRight, Brain, Clock, Gem, Users } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -9,6 +6,10 @@ import {
   CardTitle,
 } from '@/components/optics/card'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { useNavigate } from '@tanstack/react-router'
+import { motion } from 'framer-motion'
+import { Activity, ArrowRight, Brain, Clock, Gem, Users } from 'lucide-react'
 
 export const courses = [
   {
@@ -59,6 +60,8 @@ interface FormationsGridProps {
 export const FormationsGrid: React.FC<FormationsGridProps> = ({
   onCourseClick,
 }) => {
+  const navigate = useNavigate()
+
   return (
     <section
       id="formations"
@@ -81,16 +84,21 @@ export const FormationsGrid: React.FC<FormationsGridProps> = ({
             <Badge variant="secondary" className="mb-4">
               Nos Formations
             </Badge>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
+            <h2 className="text-4xl md:text-6xl font-black leading-tight mb-4">
               Éveillez votre{' '}
-              <span className="text-primary italic">potentiel</span> intérieur
+              <span className="text-indigo-500 italic">potentiel</span>{' '}
+              intérieur
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
               Explorez nos programmes conçus par des experts pour transformer
               votre conscience et harmoniser vos énergies.
             </p>
           </div>
-          <Button variant="outline" className="self-start lg:self-auto gap-2">
+          <Button
+            variant="outline"
+            className="self-start lg:self-auto gap-2"
+            onClick={() => navigate({ to: '/formations' })}
+          >
             Voir toutes les formations
             <ArrowRight className="w-4 h-4" />
           </Button>

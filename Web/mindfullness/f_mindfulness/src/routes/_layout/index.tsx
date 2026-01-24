@@ -4,7 +4,6 @@ import { FeaturesSection } from '@/components/features-section'
 import { FinalCTA } from '@/components/final-cta'
 import { FormationsGrid } from '@/components/formations-grid'
 import { Hero } from '@/components/hero'
-import { InstructorSection } from '@/components/Instructor-section'
 import { HeroBanner } from '@/components/scroll-banner'
 import { StudioGallery } from '@/components/studio-gallery'
 import { Testimonials } from '@/components/testimonials'
@@ -20,7 +19,6 @@ function App() {
       <Hero />
       <HeroBanner />
       <AboutSection />
-      <InstructorSection />
       {/* <HowItWorks /> */}
       {/* <Stats /> */}
       <StudioGallery />
